@@ -1,17 +1,38 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+/* Resetear estilos por defecto del navegador */
+body, h1, h2, ul, p {
+    margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
 
-h1 {
-    color: #333;
+/* Estilo general */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff; /* Blanco de fondo */
+    color: #000000; /* Texto negro */
+    line-height: 1.6;
+    text-align: center; /* Centrar el texto en el cuerpo */
+}
+
+/* Encabezado */
+header {
+    background-color: #333333; /* Fondo gris oscuro para el encabezado */
+    color: #ffffff; /* Texto blanco para el encabezado */
+    padding: 10px;
+}
+
+/* Títulos */
+h1, h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+/* Lista de contratos */
+main {
+    padding: 20px;
 }
 
 ul {
     list-style-type: none;
-    padding: 0;
 }
 
 li {
@@ -20,10 +41,52 @@ li {
 
 a {
     text-decoration: none;
-    color: #0066cc;
-    font-weight: bold;
+    color: #0066cc; /* Enlace azul */
 }
 
 a:hover {
-    color: #004080;
+    text-decoration: underline;
+}
+
+/* Pie de página */
+footer {
+    background-color: #333333; /* Fondo gris oscuro para el pie de página */
+    color: #ffffff; /* Texto blanco para el pie de página */
+    padding: 10px;
+}
+
+/* Enlace del pie de página */
+footer a {
+    color: #ffffff; /* Texto blanco para los enlaces del pie de página */
+}
+
+/* Estilo para los enlaces de la lista de contratos */
+main a {
+    color: #0066cc; /* Enlace azul para la lista de contratos */
+}
+
+main a:hover {
+    text-decoration: underline;
+}
+
+/* Media query para tabletas */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px; /* Tamaño de fuente ajustado para tabletas */
+    }
+
+    main {
+        padding: 10px; /* Reducción del espacio en tabletas */
+    }
+}
+
+/* Media query para dispositivos móviles como iPhone */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px; /* Tamaño de fuente más pequeño para dispositivos móviles */
+    }
+
+    main {
+        padding: 5px; /* Reducción adicional del espacio en dispositivos móviles */
+    }
 }
