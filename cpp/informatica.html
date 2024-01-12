@@ -19,6 +19,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="css/humv/logos.css">
 	<link rel="stylesheet" href="css/humv/fonts.css">
+	<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 	<!-- /CSS -->
 </head>
 
@@ -29,7 +30,7 @@
 			<img id="logo_humv" class="logos" src="img/logo_humv.svg"
 				alt="Logo Hospital Universitario Marqués de Valdecilla">
 			<img id="logo_tragsa" class="logos" src="img/logo_tragsa.svg" alt="Logo Tragsa">
-			<a href="informatica.html?print-pdf" id="impresora" onclick="cambiarEnlace()">
+			<a id="enlace_impresora" href="informatica.html?print-pdf">
 				<img id="logo_printer" class="logos" src="img/logo_printer.svg" alt="Imprimir">
 			</a>
 			<a href="../index.html">
@@ -63,6 +64,9 @@
 			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 		});
 	</script>
+
+	<!-- Alternar la vista de impresión con la vista de diapositivas -->
+	<script src="js/humv/printer.js"></script>
 </body>
 
 </html>
