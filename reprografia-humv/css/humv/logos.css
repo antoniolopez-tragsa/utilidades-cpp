@@ -1,0 +1,59 @@
+/* Logos */
+.logos {
+	position: fixed;
+	z-index: 1000;
+	width: 200px;
+	height: auto;
+	top: 1%;
+}
+
+/* Logo HUMV */
+#logo_humv {
+	right: 1%;
+}
+
+/* Logo Tragsa */
+#logo_tragsa {
+	left: 1%;
+}
+
+/* Logo impresión */
+#logo_printer {
+	top: auto;
+	width: 50px;
+	left: 1%;
+	bottom: 1%;
+}
+
+#logo_casa {
+	top: auto;
+	width: 50px;
+	left: 1%;
+	bottom: 10%;
+}
+
+/* Responsive */
+@media (max-width: 820px) {	
+	/* Adaptamos el tamaño */
+	.logos {
+        top: auto;
+        max-width: 125px;
+    }
+
+	/* Mandamos para abajo a la derecha el logo de HUMV */
+    #logo_humv {
+        bottom: 5%;
+    }
+	
+	/* Disminuimos tamaño de esos logos */
+	#logo_printer, #logo_casa {
+		width: 25px;
+	}
+}
+
+/* Para que al imprimir no muestre esos logos */
+@media print {  
+	#logo_printer, #logo_casa {
+		display: none;
+	}
+}

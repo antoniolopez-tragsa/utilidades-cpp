@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<!-- Título personalizado -->
+	<title>Anexo 8.12 - Impresión y reprografía</title>
+	<!-- /Título -->
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/simple.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/humv/logos.css">
+	<link rel="stylesheet" href="css/humv/fonts.css">
+	<!-- /CSS -->
+</head>
+
+<body>
+	<div class="reveal">
+		<!-- Logos -->
+		<section>
+			<img id="logo_humv" class="logos" src="img/logo_humv.svg"
+				alt="Logo Hospital Universitario Marqués de Valdecilla">
+			<img id="logo_tragsa" class="logos" src="img/logo_tragsa.svg" alt="Logo Tragsa">
+			<a href="index.html?print-pdf">
+				<img id="logo_printer" class="logos" src="img/logo_printer.svg" alt="Imprimir">
+			</a>
+			<a href="index.html">
+				<img id="logo_casa" class="logos" src="img/logo_house.svg" alt="Inicio">
+			</a>
+		</section>
+		<!-- /Logos -->
+
+		<!-- Transparencias Markdown -->
+		<div class="slides">
+			<section data-markdown="md/reprografia-humv.md"></section>
+		</div>
+		<!-- /Transparencias -->
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Números de página
+			slideNumber: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>
