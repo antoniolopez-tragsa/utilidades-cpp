@@ -1,11 +1,3 @@
----
-title: "IMPRESIÓN Y SERVICIO DE REPROGRAFÍA"
-format:
-  revealjs:
-    transition: slide
-    background-transition: fade
----
-
 # **IMPRESIÓN Y SERVICIO DE REPROGRAFÍA**
 
 ---
