@@ -1,5 +1,9 @@
 /* Resetear estilos por defecto del navegador */
-body, h1, h2, ul, p {
+body,
+h1,
+h2,
+ul,
+p {
     margin: 0;
     padding: 0;
 }
@@ -7,21 +11,27 @@ body, h1, h2, ul, p {
 /* Estilo general */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #ffffff; /* Blanco de fondo */
-    color: #000000; /* Texto negro */
+    background-color: #ffffff;
+    /* Blanco de fondo */
+    color: #000000;
+    /* Texto negro */
     line-height: 1.6;
-    text-align: center; /* Centrar el texto en el cuerpo */
+    text-align: center;
+    /* Centrar el texto en el cuerpo */
 }
 
 /* Encabezado */
 header {
-    background-color: #333333; /* Fondo gris oscuro para el encabezado */
-    color: #ffffff; /* Texto blanco para el encabezado */
+    background-color: #333333;
+    /* Fondo gris oscuro para el encabezado */
+    color: #ffffff;
+    /* Texto blanco para el encabezado */
     padding: 10px;
 }
 
 /* Títulos */
-h1, h2 {
+h1,
+h2 {
     font-family: 'Arial', sans-serif;
     font-weight: bold;
 }
@@ -41,7 +51,8 @@ li {
 
 a {
     text-decoration: none;
-    color: #0066cc; /* Enlace azul */
+    color: #0066cc;
+    /* Enlace azul */
 }
 
 a:hover {
@@ -50,19 +61,23 @@ a:hover {
 
 /* Pie de página */
 footer {
-    background-color: #333333; /* Fondo gris oscuro para el pie de página */
-    color: #ffffff; /* Texto blanco para el pie de página */
+    background-color: #333333;
+    /* Fondo gris oscuro para el pie de página */
+    color: #ffffff;
+    /* Texto blanco para el pie de página */
     padding: 10px;
 }
 
 /* Enlace del pie de página */
 footer a {
-    color: #ffffff; /* Texto blanco para los enlaces del pie de página */
+    color: #ffffff;
+    /* Texto blanco para los enlaces del pie de página */
 }
 
 /* Estilo para los enlaces de la lista de contratos */
 main a {
-    color: #0066cc; /* Enlace azul para la lista de contratos */
+    color: #0066cc;
+    /* Enlace azul para la lista de contratos */
 }
 
 main a:hover {
@@ -70,23 +85,27 @@ main a:hover {
 }
 
 /* Media query para tabletas */
-@media (width <= 926px) {
+@media (width <=926px) {
     body {
-        font-size: 16px; /* Tamaño de fuente ajustado para tabletas */
+        font-size: 16px;
+        /* Tamaño de fuente ajustado para tabletas */
     }
 
     main {
-        padding: 10px; /* Reducción del espacio en tabletas */
+        padding: 10px;
+        /* Reducción del espacio en tabletas */
     }
 }
 
 /* Media query para dispositivos móviles como iPhone */
-@media (width <= 480px) {
+@media (width <=480px) {
     body {
-        font-size: 14px; /* Tamaño de fuente más pequeño para dispositivos móviles */
+        font-size: 14px;
+        /* Tamaño de fuente más pequeño para dispositivos móviles */
     }
 
     main {
-        padding: 5px; /* Reducción adicional del espacio en dispositivos móviles */
+        padding: 5px;
+        /* Reducción adicional del espacio en dispositivos móviles */
     }
 }

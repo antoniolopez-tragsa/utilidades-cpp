@@ -34,14 +34,14 @@
 }
 
 /* Responsive */
-@media (width <= 926px) {
+@media (width <=926px) {
 	#logo_printer {
 		display: none;
 	}
 
 	#logo_casa {
 		bottom: 1%;
-	}	
+	}
 }
 
 @media (orientation: portrait) {
@@ -56,7 +56,8 @@
 }
 
 @media print {
-	#logo_printer, #logo_casa {
+	#logo_printer,
+	#logo_casa {
 		display: none;
 	}
-} 
+}
