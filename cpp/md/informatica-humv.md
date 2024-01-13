@@ -1,9 +1,5 @@
-# **INFORMÁTICA**
-
+## **INFORMÁTICA**
 ---
 
-
-
 ---
-
 ## **FIN**

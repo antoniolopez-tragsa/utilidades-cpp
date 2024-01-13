@@ -6,10 +6,10 @@ enlace_impresora.addEventListener("click", function (event) {
     var url = new URL(window.location.href);
     var parametros = new URLSearchParams(url.search);
 
-    if (parametros.has("?print-pdf")) {
-        parametros.delete("?print-pdf");
+    if (parametros.has("print-pdf")) {
+        parametros.delete("print-pdf");
     } else {
-        parametros.set("?print-pdf", "");
+        parametros.set("print-pdf", "");
     }
 
     url.search = parametros.toString();

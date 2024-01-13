@@ -24,7 +24,7 @@
 </head>
 
 <body>
-	<div class="reveal">
+	<div class="reveal r-fit-text">
 		<!-- Logos -->
 		<section>
 			<img id="logo_humv" class="logos" src="img/logo_humv.svg"
@@ -41,7 +41,8 @@
 
 		<!-- Transparencias Markdown -->
 		<div class="slides">
-			<section data-markdown="md/informatica-humv.md"></section>
+			<section data-markdown="md/informatica-humv.md">
+			</section>
 		</div>
 		<!-- /Transparencias -->
 	</div>
@@ -63,6 +64,9 @@
 			// Enables touch navigation on devices with touch input
 			touch: true,
 
+			// Soluciona el bug cuando se lanza la página desde un teléfono móvil
+			scrollActivationWidth: null,
+
 			// Learn about plugins: https://revealjs.com/plugins/
 			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 		});
@@ -70,6 +74,10 @@
 
 	<!-- Alternar la vista de impresión con la vista de diapositivas -->
 	<script src="js/humv/printer.js"></script>
+	<!-- Alternar la vista de impresión con la vista de diapositivas -->
+	<script src="js/humv/printer.js"></script>
+	<!-- Transparencias 100% responsive -->
+	<script src="js/humv/responsive.js"></script>
 </body>
 
 </html>
