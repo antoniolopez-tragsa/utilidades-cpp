@@ -25,16 +25,16 @@
 	bottom: 1%;
 }
 
-/* Logo volver atrás */
+/* Logo volver a casa */
 #logo_casa {
 	top: auto;
 	width: 50px;
 	left: 1%;
-	bottom: 20%;
+	bottom: 10%;
 }
 
 /* Responsive */
-@media (width <= 768px) {
+@media (width <= 926px) {
 	#logo_printer {
 		display: none;
 	}
@@ -42,6 +42,17 @@
 	#logo_casa {
 		bottom: 1%;
 	}	
+}
+
+@media (orientation: portrait) {
+	#logo_casa {
+		bottom: 1%;
+	}
+
+	#logo_valdecilla {
+		left: 1%;
+		top: 10%;
+	}
 }
 
 @media (print) {
