@@ -45,13 +45,12 @@
 }
 
 @media (orientation: portrait) {
+	.logos {
+		width: 100px;
+	}
+	
 	#logo_casa {
 		bottom: 1%;
-	}
-
-	#logo_valdecilla {
-		left: 1%;
-		top: 10%;
 	}
 }
 
