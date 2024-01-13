@@ -55,7 +55,7 @@
 	}
 }
 
-@media (print) {
+@media print {
 	#logo_printer, #logo_casa {
 		display: none;
 	}

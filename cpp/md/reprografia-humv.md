@@ -19,7 +19,7 @@ Reducir el número de impresoras.
 - Adjudicatario establece:
   - Uso racional (cuotas, etc.)
   - Sistemas informáticos necesarios
-  ---
+---
   ## **Mantenimiento**
 - **Preventivo:**
   - Limpieza, engrase, ajuste de equipos
