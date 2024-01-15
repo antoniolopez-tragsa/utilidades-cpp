@@ -112,4 +112,15 @@ A3.1|Promociones entre entornos/Pasos a producción|<= 8 horas
     - **Se aprueben los entregables** previos al hito
     - **Aprobada por un responsable** del HUMV-SCS
 ---
+## Ejecución de proyectos del servicio
+### Indicadores de servicio
+Código|Indicador de servicio
+-|-
+A4.1|Desfase en hito 1
+| |...
+A4.n|Desfase en hito n
+---
+## Ejecución de tareas de administración y explotación
+
+---
 ## **FIN**
