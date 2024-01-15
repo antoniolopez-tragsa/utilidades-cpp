@@ -22,11 +22,11 @@ Reducir el número de impresoras.
 ---
   ## **Mantenimiento**
 - **Preventivo:**
-  - Limpieza, engrase, ajuste de equipos
-  - Inspección de máquinas para:
-    - Aumentar vida útil
-    - Disminuir averías
-  - Periodicidad mínima: 3 meses
+    - Limpieza, engrase, ajuste de equipos
+    - Inspección de máquinas para:
+      - Aumentar vida útil
+      - Disminuir averías
+    - Periodicidad mínima: 3 meses
 - **Correctivo:** Servicio de reparación
 - **Transporte:** Por cuenta del adjudicatario
 ---
