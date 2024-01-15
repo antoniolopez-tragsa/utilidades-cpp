@@ -55,6 +55,10 @@ a {
     /* Enlace azul */
 }
 
+.icons {
+    width: 15px;
+}
+
 a:hover {
     text-decoration: underline;
 }
