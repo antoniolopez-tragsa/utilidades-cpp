@@ -121,6 +121,72 @@ A4.1|Desfase en hito 1
 A4.n|Desfase en hito n
 ---
 ## Ejecución de tareas de administración y explotación
-
+### Definición
+- Cualquier solicitud de trabajo que NO sean: 
+    - Incidencias
+    - Promociones de entorno
+    - Creación/modificación de entornos
+- Ejemplos:
+    - Ejecución de procesos no automatizados
+    - Reorganización de bases de datos
+---
+## Ejecución de tareas de administración y explotación
+### Categorías
+- Solicitud con prioridad "alta"
+- Solicitud con prioridad "media"
+- Solicitud con prioridad "baja"
+---
+## Ejecución de tareas de administración y explotación
+### Tiempo de respuesta
+Código|Indicador de servicio|Valor máximo
+-|-|-
+A5.1|Plazo máximo de respuesta a una petición o tarea de prioridad "alta"|<= 60 minutos
+---
+## Ejecución de tareas de administración y explotación
+### Tiempo de respuesta
+Código|Indicador de servicio|Valor máximo
+-|-|-
+A5.2|Plazo máximo de respuesta al resto de peticiones|<= 90 minutos
+---
+## Ejecución de tareas de administración y explotación
+### Tiempo de respuesta
+Código|Indicador de servicio|Valor máximo
+-|-|-
+A5.3|Plazo máximo de respuesta a una petición o tarea de prioridad "alta"|<= 1 hora
+---
+## Ejecución de tareas de administración y explotación
+### Tiempo de respuesta
+Código|Indicador de servicio|Valor máximo
+-|-|-
+A5.4|Plazo máximo de respuesta a una petición o tarea de prioridad "media"|<= 4 horas
+---
+## Ejecución de tareas de administración y explotación
+### Tiempo de respuesta
+Código|Indicador de servicio|Valor máximo
+-|-|-
+A5.5|Plazo máximo de respuesta a una petición o tarea de prioridad "baja"|<= 24 horas
+---
+## Ejecución de tareas de administración y explotación
+### Observaciones 1/4
+- **Valores de prestación de servicio**: de **lunes a jueves de 07:45 a 19:00** y los **viernes de 07:45 a 15:00**
+- **Si** la petición **tiene prioridad alta, los periodos son naturales**
+---
+## Ejecución de tareas de administración y explotación
+### Observaciones 2/4
+- La **petición no está cerrada hasta que**:
+    - **Se entregue la** correspondiente **documentación** en 5 días laborables
+        - En caso contrario, es igual que si no estuviera solucionado en plazo
+    - **Aprobada por un responsable** del HUMV-SCS
+---
+## Ejecución de tareas de administración y explotación
+### Observaciones 3/4
+- Los **valores máximos se refieren a**:
+    - **Tiempos de preparación**
+    - **Ejecución de labores manuales**
+    - **Verificación de las tareas**
+---
+## Ejecución de tareas de administración y explotación
+### Observaciones 4/4
+- Ejemplo: **si una tarea de prioridad baja conlleva ejecutar un proceso que se extiende 3 horas**, el proveedor **dispondrá de 27 horas (24 + 3)**
 ---
 ## **FIN**
