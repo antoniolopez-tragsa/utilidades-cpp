@@ -188,5 +188,9 @@ A5.5|Plazo máximo de respuesta a una petición o tarea de prioridad "baja"|<= 2
 ## Ejecución de tareas de administración y explotación
 ### Observaciones 4/4
 - Ejemplo: **si una tarea de prioridad baja conlleva ejecutar un proceso que se extiende 3 horas**, el proveedor **dispondrá de 27 horas (24 + 3)**
+- Al inicio del contrato, **se propondrá un catálogo de tiempos que servirá como referencia**. Las **nuevas tareas se irán añadiendo**.
+---
+## CAU: atención telefónica
+
 ---
 ## **FIN**
