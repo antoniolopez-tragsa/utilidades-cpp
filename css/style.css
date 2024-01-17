@@ -1,115 +1,84 @@
-/* Resetear estilos por defecto del navegador */
-body,
-h1,
-h2,
-ul,
-p {
+/* Estilos generales */
+* {
     margin: 0;
     padding: 0;
 }
 
-/* Estilo general */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #ffffff;
-    /* Blanco de fondo */
-    color: #000000;
-    /* Texto negro */
-    line-height: 1.6;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+        "cabecera"
+        "principal"
+        "pie";
+
+    align-items: center;
+}
+
+/* Cabecera */
+.cabecera {
+    grid-area: cabecera;
+
+    background: #bbb;
+    color: white;
+}
+
+.cabecera h1 {
     text-align: center;
-    /* Centrar el texto en el cuerpo */
 }
 
-/* Encabezado */
-header {
-    background-color: #333333;
-    /* Fondo gris oscuro para el encabezado */
-    color: #ffffff;
-    /* Texto blanco para el encabezado */
-    padding: 10px;
-}
-
-/* Títulos */
-h1,
-h2 {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-}
-
-/* Lista de contratos */
-main {
+.cabecera,
+.pie {
     padding: 20px;
 }
 
-ul {
-    list-style-type: none;
+/* Principal */
+.principal {
+    grid-area: principal;
+
+    text-align: left;
+    margin: 0 20px;
 }
 
-li {
+.principal h2 {
+    text-align: center;
     margin-bottom: 10px;
 }
 
-a {
-    text-decoration: none;
-    color: #0066cc;
-    /* Enlace azul */
+.principal ul li {
+    list-style: none;
+}
+
+.principal a {
+    color: black;
+    text-decoration-line: underline;
+}
+
+.principal a:hover {
+    text-decoration: underline;
+}
+
+.titulo-contrato {
+    font-weight: bold;
 }
 
 .icons {
-    width: 15px;
-}
-
-a:hover {
-    text-decoration: underline;
+    width: 20px;
 }
 
 /* Pie de página */
-footer {
-    background-color: #333333;
-    /* Fondo gris oscuro para el pie de página */
-    color: #ffffff;
-    /* Texto blanco para el pie de página */
-    padding: 10px;
+.pie {
+    grid-area: pie;
+
+    background: #bbb;
+    color: white;
+    text-align: center;
 }
 
-/* Enlace del pie de página */
-footer a {
-    color: #ffffff;
-    /* Texto blanco para los enlaces del pie de página */
-}
-
-/* Estilo para los enlaces de la lista de contratos */
-main a {
-    color: #0066cc;
-    /* Enlace azul para la lista de contratos */
-}
-
-main a:hover {
-    text-decoration: underline;
-}
-
-/* Media query para tabletas */
-@media (width <=926px) {
-    body {
-        font-size: 16px;
-        /* Tamaño de fuente ajustado para tabletas */
-    }
-
-    main {
-        padding: 10px;
-        /* Reducción del espacio en tabletas */
-    }
-}
-
-/* Media query para dispositivos móviles como iPhone */
-@media (width <=480px) {
-    body {
-        font-size: 14px;
-        /* Tamaño de fuente más pequeño para dispositivos móviles */
-    }
-
-    main {
-        padding: 5px;
-        /* Reducción adicional del espacio en dispositivos móviles */
-    }
+.pie a {
+    color: white;
 }
