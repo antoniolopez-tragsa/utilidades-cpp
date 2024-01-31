@@ -204,6 +204,47 @@ A6.2|Llamadas telefónicas perdidas|<= 2 %
 ---
 ## CAU: atención telefónica
 ### Observaciones
-- **Si coinciden con una caída de servicio, no serán contabilizados** ni el tiempo de espera ni las llamadas telefónicas perdidas
+- **Si coinciden con una caída de servicio, no serán contabilizados** ni el **tiempo de espera** ni las **llamadas telefónicas perdidas**
+---
+## CAU: resolución de consultas e incidencias
+### Indicadores de servicio 1/3
+Código|Indicador de servicio|Valor objetivo|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-|-
+A7.1|Resolución|90%|95%
+---
+## CAU: resolución de consultas e incidencias
+### Indicadores de servicio 2/3
+Código|Indicador de servicio|Valor objetivo|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-|-
+A7.2|Tiempo de resolución|<= 60 minutos|90%
+---
+## CAU: resolución de consultas e incidencias
+### Indicadores de servicio 3/3
+Código|Indicador de servicio|Valor objetivo|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-|-
+A7.3|Índice de reaperturas|<= 5%|<= 5%
+---
+## CAU: resolución de consultas e incidencias
+### Observaciones 1/5
+- **Porcentaje de cumplimiento mínimo (PCm)**: **si** el adjudicatario **le supera, no se tendrán en cuenta fallos de calidad**
+---
+## CAU: resolución de consultas e incidencias
+### Observaciones 2/5
+- El **indicador A7.1 hace referencia a** productos que conforman **el software de los puestos de trabajo** tanto en _local_ como en _remoto_: sistema operativo, herramientas ofimáticas, correo electrónico, navegador web, etc.
+---
+## CAU: resolución de consultas e incidencias
+### Observaciones 3/5
+- El **tiempo de resolución** recogido en el indicador A7.2 **es el que transcurre desde que se comunica la consulta o incidencia hasta el cierre de la misma**
+---
+## CAU: resolución de consultas e incidencias
+### Observaciones 4/5
+- El **Índice de reapertura de incidencias** recogido en el indicador A7.3 **no contempla los tiques creados para consultas**
+---
+## CAU: resolución de consultas e incidencias
+### Observaciones 5/5
+- **No serán contabilizadas** las consultas/incidencias que:
+    - **Requieran información de aplicaciones externas**
+    - **Conlleven mucho tiempo de realización**
+    - Estén **generadas** por el usuario **a través del módulo web**
 ---
 ## **FIN**
