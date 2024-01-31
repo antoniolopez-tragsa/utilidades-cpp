@@ -193,6 +193,17 @@ A5.5|Plazo máximo de respuesta a una petición o tarea de prioridad "baja"|<= 2
 ## CAU: atención telefónica
 ### Definición
 - Tiempo de espera: **desde que** el usuario **llama al CAU hasta que es atendido**
-- Llamadas telefónicas perdidas: $\frac{\text{llamadas sin atender}}{\text{llamadas atendidas}}$
+- Llamadas telefónicas perdidas: $\frac{\text{llamadas sin atender}}{\text{llamadas recibidas}}$
+---
+## CAU: atención telefónica
+### Indicadores de servicio
+Código|Indicador de servicio|Valor objetivo
+-|-|-
+A6.1|Tiempo de espera en llamadas telefónicas|<= 12 seg
+A6.2|Llamadas telefónicas perdidas|<= 2 %
+---
+## CAU: atención telefónica
+### Observaciones
+- **Si coinciden con una caída de servicio, no serán contabilizados** ni el tiempo de espera ni las llamadas telefónicas perdidas
 ---
 ## **FIN**
