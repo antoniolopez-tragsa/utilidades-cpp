@@ -102,7 +102,7 @@ A3.1|Promociones entre entornos/Pasos a producción|<= 8 horas
     - **Optimización de sistemas**
     - **Soporte preventivo**
     - **Derivados de las consultorías o auditorías de seguridad**
-    - **Puesta en marcha de sistemas, servicios o tecnologías asociadas**
+    - **Puesta en marcha de sistemas**
 ---
 ## Ejecución de proyectos del servicio
 ### Observaciones
