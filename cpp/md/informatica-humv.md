@@ -191,6 +191,8 @@ A5.5|Plazo máximo de respuesta a una petición o tarea de prioridad "baja"|<= 2
 - Al inicio del contrato, **se propondrá un catálogo de tiempos que servirá como referencia**. Las **nuevas tareas se irán añadiendo**.
 ---
 ## CAU: atención telefónica
-
+### Definición
+- Tiempo de espera: **desde que** el usuario **llama al CAU hasta que es atendido**
+- Llamadas telefónicas perdidas: $\frac{\text{llamadas sin atender}}{\text{llamadas atendidas}}$
 ---
 ## **FIN**
