@@ -281,4 +281,36 @@ A8.2|Exactitud del resto del inventario|95% de todos los elementos
     - Hace referencia al **resto de inventario TIC desplegado en el HUMV‐SCS** (equipos, impresoras, software...) y sujetos a este contrato
     - El objeto es **contar con un inventario actualizado**
 ---
+## Realización de copias de seguridad
+### Definición
+- **Porcentaje de copias de seguridad bien realizadas**: $\frac{\text{copias correctas}}{\text{copias totales}}$, se realizan **cada semana**
+- **Pruebas periódicas de verificación de copias de seguridad**: $\frac{\text{restauraciones correctas}}{\text{restauraciones totales}}$, se realizan **cada seis meses**
+---
+## Realización de copias de seguridad
+### Indicadores de servicio
+Código|Indicador|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A9.1|Porcentaje de copias de seguridad bien realizadas|95%
+---
+## Realización de copias de seguridad
+### Indicadores de servicio
+Código|Indicador|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A9.2|Pruebas periódicas de verificación de copias de seguridad|95%
+---
+## Realización de copias de seguridad
+### Observaciones
+- **Si las copias fallan, se debe investigar el por qué y resolverlo**
+- **Porcentaje de cumplimiento mínimo (PCm)**: **si** el adjudicatario **le supera, no se tendrán en cuenta fallos de calidad**
+---
+## Gestión del conocimiento
+### Indicadores de servicio
+Código|Indicador|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A10.1|Porcentaje de incidentes, problemas, cambios y demás tareas que estén documentadas siguiendo el estándar|95%
+---
+## Gestión del conocimiento
+### Observaciones
+- **Porcentaje de cumplimiento mínimo (PCm)**: **si** el adjudicatario **le supera, no se tendrán en cuenta fallos de calidad**
+---
 ## **FIN**
