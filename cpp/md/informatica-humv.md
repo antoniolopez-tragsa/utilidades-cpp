@@ -247,4 +247,38 @@ A7.3|Índice de reaperturas|<= 5%|<= 5%
     - **Conlleven mucho tiempo de realización**
     - Estén **generadas** por el usuario **a través del módulo web**
 ---
+## Grado de exactitud del inventario TIC
+### Indicadores de servicio
+Código|Indicador de servicio|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A8.1|Exactitud del inventario del CPD|99% de todos los elementos del CPD
+---
+## Grado de exactitud del inventario TIC
+### Indicadores de servicio
+Código|Indicador de servicio|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A8.2|Exactitud del resto del inventario|95% de todos los elementos
+---
+## Grado de exactitud del inventario TIC
+### Observaciones 1/4
+- **Porcentaje de cumplimiento mínimo (PCm)**: **si** el adjudicatario **le supera, no se tendrán en cuenta fallos de calidad**
+---
+## Grado de exactitud del inventario TIC
+### Observaciones 2/4
+- **Inventario del indicador A8.1**:
+    - **Hardware**: armarios, elementos de soporte al CPD, servidores y elementos asociados (procesadores, memoria, discos...)
+    - **Redes**: enlaces, parcheo de tomas, mapa de conexiones...
+---
+## Grado de exactitud del inventario TIC
+### Observaciones 3/4
+- **Inventario del indicador A8.1**:
+    - **Arquitectura**: servidores, DMZ, direccionamientos...
+    - **Software**: tanto base como de aplicación
+---
+## Grado de exactitud del inventario TIC
+### Observaciones 4/4
+- **Inventario del indicador A8.2**:
+    - Hace referencia al resto de inventario TIC desplegado en el HUMV‐SCS (equipos, impresoras, software...) y sujetos a este contrato
+    - El objeto es contar con un inventario actualizado
+---
 ## **FIN**
