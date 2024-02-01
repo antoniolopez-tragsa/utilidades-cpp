@@ -273,12 +273,12 @@ A8.2|Exactitud del resto del inventario|95% de todos los elementos
 ### Observaciones 3/4
 - **Inventario del indicador A8.1**:
     - **Arquitectura**: servidores, DMZ, direccionamientos...
-    - **Software**: tanto base como de aplicación
+    - **Software**: tanto base como de aplicación, versionado
 ---
 ## Grado de exactitud del inventario TIC
 ### Observaciones 4/4
 - **Inventario del indicador A8.2**:
-    - Hace referencia al resto de inventario TIC desplegado en el HUMV‐SCS (equipos, impresoras, software...) y sujetos a este contrato
-    - El objeto es contar con un inventario actualizado
+    - Hace referencia al **resto de inventario TIC desplegado en el HUMV‐SCS** (equipos, impresoras, software...) y sujetos a este contrato
+    - El objeto es **contar con un inventario actualizado**
 ---
 ## **FIN**
