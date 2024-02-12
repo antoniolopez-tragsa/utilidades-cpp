@@ -116,3 +116,39 @@ Con respecto al **porcentaje de cumplimiento mínimo (PCm), si** el adjudicatari
 El **indicador A7.1 hace referencia a** productos que conforman **el software de los puestos de trabajo** tanto en _local_ como en _remoto_: sistema operativo, herramientas ofimáticas, correo electrónico, navegador web, etc.
 El **tiempo de resolución** recogido en el indicador A7.2 **es el que transcurre desde que se comunica la consulta o incidencia hasta el cierre de la misma**. 
 El **Índice de reapertura de incidencias** recogido en el indicador A7.3 **no contempla los tiques creados para consultas**. **No serán contabilizadas** las consultas/incidencias que **requieran información de aplicaciones externas**, **conlleven mucho tiempo de realización** o estén **generadas** por el usuario **a través del módulo web**.
+
+## Grado de exactitud del inventario TIC
+### Indicadores de servicio
+Código|Indicador de servicio|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A8.1|Exactitud del inventario del CPD|99% de todos los elementos del CPD
+A8.2|Exactitud del resto del inventario|95% de todos los elementos
+
+### Observaciones
+Con respecto al **porcentaje de cumplimiento mínimo (PCm), si** el adjudicatario **le supera, no se tendrán en cuenta fallos de calidad**.
+El **inventario del indicador A8.1** hace referencia a **hardware** (armarios, elementos de soporte al CPD, servidores y elementos asociados como procesadores, memoria, discos...), **redes** (enlaces, parcheo de tomas, mapa de conexiones...), **arquitectura** (servidores, DMZ, direccionamientos...) o **software** (tanto base como de aplicación).
+El **inventario del indicador A8.2** hace referencia al **resto de inventario TIC desplegado en el HUMV‐SCS** (equipos, impresoras, software...) y sujetos a este contrato, con el fin de **contar con un inventario actualizado**.
+
+## Realización de copias de seguridad
+### Definición
+El **porcentaje de copias de seguridad bien realizadas** es $\frac{\text{copias correctas}}{\text{copias totales}}$, se realizan **cada semana**
+Las **pruebas periódicas de verificación de copias de seguridad** son $\frac{\text{restauraciones correctas}}{\text{restauraciones totales}}$, se realizan **cada seis meses**
+
+### Indicadores de servicio
+Código|Indicador|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A9.1|Porcentaje de copias de seguridad bien realizadas|95%
+A9.2|Pruebas periódicas de verificación de copias de seguridad|95%
+
+### Observaciones
+**Si las copias fallan, se debe investigar el por qué y resolverlo**. 
+Con respecto al **porcentaje de cumplimiento mínimo (PCm), si** el adjudicatario **le supera, no se tendrán en cuenta fallos de calidad**.
+
+## Gestión del conocimiento
+### Indicadores de servicio
+Código|Indicador|Porcentaje de cumplimiento mínimo (PCm)
+-|-|-
+A10.1|Porcentaje de incidentes, problemas, cambios y demás tareas que estén documentadas siguiendo el estándar|95%
+
+### Observaciones
+Con respecto al **porcentaje de cumplimiento mínimo (PCm), si** el adjudicatario **le supera, no se tendrán en cuenta fallos de calidad**.
