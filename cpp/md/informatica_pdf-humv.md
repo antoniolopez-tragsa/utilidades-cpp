@@ -131,8 +131,8 @@ El **inventario del indicador A8.2** hace referencia al **resto de inventario TI
 
 ## Realización de copias de seguridad
 ### Definición
-El **porcentaje de copias de seguridad bien realizadas** es $\frac{\text{copias correctas}}{\text{copias totales}}$, se realizan **cada semana**
-Las **pruebas periódicas de verificación de copias de seguridad** son $\frac{\text{restauraciones correctas}}{\text{restauraciones totales}}$, se realizan **cada seis meses**
+El **porcentaje de copias de seguridad bien realizadas** se obtiene de dividir las copias correctas entre las copias totales, estas se realizan **cada semana**
+Las **pruebas periódicas de verificación de copias de seguridad** se obtiene de dividir las restauraciones correctas entre las restauraciones totales, estas se realizan **cada seis meses**
 
 ### Indicadores de servicio
 Código|Indicador|Porcentaje de cumplimiento mínimo (PCm)
