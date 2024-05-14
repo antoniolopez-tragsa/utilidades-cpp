@@ -49,6 +49,10 @@ body {
     margin-bottom: 10px;
 }
 
+.principal p {
+    text-align: justify;
+}
+
 .principal ul li {
     list-style: none;
 }
