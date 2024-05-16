@@ -21,6 +21,7 @@ ID|Indicador|Tipo de defecto|Disponibilidad
 
 ### Indicadores de servicio
 Los indicadores están recogidos en la siguiente tabla:
+
 Código|Indicador de servicio|Valor máximo
 -|-|-
 A1.1|Plazo máximo de respuesta ante una incidencia de prioridad "alta"|<= 15 minutos
