@@ -2,51 +2,54 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
 }
 
 .wrapper {
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: auto 1fr auto;
     grid-template-areas:
         "cabecera"
         "principal"
         "pie";
-
-    align-items: center;
 }
 
 /* Cabecera */
 .cabecera {
     grid-area: cabecera;
-
-    background: #bbb;
+    background: #4a5568; /* Color más oscuro para un look profesional */
     color: white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .cabecera h1 {
     text-align: center;
-}
-
-.cabecera,
-.pie {
-    padding: 20px;
+    font-size: 1.8rem;
 }
 
 /* Principal */
 .principal {
     grid-area: principal;
-
-    text-align: left;
-    margin: 0 20px;
+    margin: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .principal h2 {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #2d3748;
 }
 
 .principal p {
@@ -56,15 +59,31 @@ body {
 
 .principal ul li {
     list-style: none;
+    margin: 5px 0;
+    padding-left: 15px;
+    position: relative;
+}
+
+.principal ul li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #4a5568; /* Color de acento */
 }
 
 .principal a {
-    color: black;
-    text-decoration-line: underline;
+    color: #3182ce;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.principal a:hover {
+    color: #2b6cb0;
 }
 
 .titulo-contrato {
     font-weight: bold;
+    color: #2d3748;
 }
 
 .icons {
@@ -74,12 +93,19 @@ body {
 /* Pie de página */
 .pie {
     grid-area: pie;
-
-    background: #bbb;
+    background: #4a5568;
     color: white;
     text-align: center;
+    padding: 15px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .pie a {
-    color: white;
+    color: #e2e8f0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.pie a:hover {
+    color: #cbd5e0;
 }
