@@ -13,31 +13,27 @@ body {
 }
 
 .wrapper {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    grid-template-areas:
-        "cabecera"
-        "principal"
-        "pie";
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Hace que la envoltura tenga al menos la altura de la pantalla */
 }
 
 /* Cabecera */
 .cabecera {
-    grid-area: cabecera;
-    background: #4a5568; /* Color más oscuro para un look profesional */
+    background: #4a5568;
     color: white;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .cabecera h1 {
-    text-align: center;
     font-size: 1.8rem;
 }
 
 /* Principal */
 .principal {
-    grid-area: principal;
+    flex-grow: 1; /* Permite que el contenido principal se expanda */
     margin: 20px;
     background: white;
     padding: 20px;
@@ -68,7 +64,7 @@ body {
     content: '•';
     position: absolute;
     left: 0;
-    color: #4a5568; /* Color de acento */
+    color: #4a5568;
 }
 
 .principal a {
@@ -92,7 +88,6 @@ body {
 
 /* Pie de página */
 .pie {
-    grid-area: pie;
     background: #4a5568;
     color: white;
     text-align: center;
