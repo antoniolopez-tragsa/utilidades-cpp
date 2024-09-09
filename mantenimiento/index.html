@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario para cálculo de pluses de nocturnidad/turnicidad de mantenimiento</title>
+
+    <!-- No indexar por los motores de búsqueda -->
+    <meta name="robots" content="noindex">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FSYV03MVDZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-FSYV03MVDZ');
+    </script>
+    <!-- /Google tag -->
+</head>
+
+<body>
+    <!-- Contenedor principal -->
+    <div class="wrapper">
+        <!-- Encabezado -->
+        <header class="cabecera">
+            <h1>Formulario para cálculo de pluses de nocturnidad/turnicidad de mantenimiento</h1>
+        </header>
+
+        <!-- Principal -->
+        <main class="principal">
+            <button id="botonVolver" type="button" onclick="volverAtras()">Volver Atrás</button>
+            <h2>Sube tus archivos Excel</h2>
+            <form id="formularioSubida">
+                <label for="ficheroExcelFestivos">Festivos:</label>
+                <input type="file" id="ficheroExcelFestivos" accept=".xlsx" required>
+
+                <label for="ficheroExcelEmpleados">Empleados:</label>
+                <input type="file" id="ficheroExcelEmpleados" accept=".xlsx" required>
+
+                <label for="ficheroExcelFichajes">Fichajes:</label>
+                <input type="file" id="ficheroExcelFichajes" accept=".xls" required>
+
+                <button type="submit">Cargar archivos</button>
+            </form>
+
+            <!-- Contenedor para la tabla -->
+            <section id="resultados">
+                <h2>Totales por empleado</h2>
+                <button id="exportarExcel" type="button">Exportar a <img id="imagen-excel" src="img/excel.png" alt="Excel" ></button>
+                <table id="totalesTabla">
+                    <thead>
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Horas turno</th>
+                            <th>Plus turno</th>
+                            <th>Horas noche</th>
+                            <th>Plus noche</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas de la tabla se llenarán dinámicamente con JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+        <!-- Pie de página -->
+        <footer class="pie">
+            <p>Bajo licencia <a href="LICENSE.txt">MIT</a> | Desarrollado por <a
+                    href="mailto:alopez62@tragsa.es">Antonio
+                    López
+                    Fernández</a> de <a href="https://tragsa.es" target="_blank">Tragsatec</a></p>
+        </footer>
+    </div>
+
+    <!-- Librerias -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="js/script.js"></script>
+    <!-- /Librerías -->
+</body>
+
+</html>
