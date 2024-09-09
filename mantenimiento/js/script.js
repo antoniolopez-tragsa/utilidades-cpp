@@ -355,7 +355,7 @@ function exportToExcel() {
     XLSX.utils.book_append_sheet(wb, ws, 'Totales');
 
     // Genera el archivo Excel y dispara la descarga
-    XLSX.writeFile(wb, 'datos_totales.xlsx');
+    XLSX.writeFile(wb, 'totales_por_empleado.xlsx');
 }
 
 function volverAtras() {
