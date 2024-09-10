@@ -204,10 +204,19 @@ function extractEmployeeData(data) {
 }
 
 // Verifica si una fecha es fin de semana o festivo
-function isWeekendOrHoliday(date, festivos) {
-    const dayOfWeek = date.getDay();
+function isWeekendOrHoliday(currentDate, festivos) {
+    const dayOfWeek = currentDate.getDay();
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-    const isHoliday = festivos.includes(date);
+
+    // Bucle manual para verificar si la fecha es festivo
+    let isHoliday = false; // Inicializamos como false
+    for (let i = 0; i < festivos[0].length; i++) {
+        if (festivos[0][i].festivo.toISOString() === currentDate.toISOString()) {
+            isHoliday = true; // Si encontramos una coincidencia, lo marcamos como festivo
+            break; // Salimos del bucle porque ya encontramos lo que buscábamos
+        }
+    }
+
     return isWeekend || isHoliday;
 }
 
@@ -228,6 +237,8 @@ function calculateShiftPlus(shift, isSpecialDay) {
 
 // Calcula el plus de nocturnidad según el turno
 function calculateNightPlus(shift, employeeCategory) {
+    const allowedCategories = ['OFICIAL 2 MANTENIMIENTO', 'ENCARGADO/A'];
+    if (!allowedCategories.includes(employeeCategory)) return 0;
     switch (shift) {
         case 'NOCHE':
             return 9;
@@ -278,7 +289,7 @@ function calculatePlusForEmployee(data) {
         const isSpecialDay = isWeekendOrHoliday(record.date, festivosData);
         const shiftPlusHours = calculateShiftPlus(record.shift, isSpecialDay);
         const shiftAmmount = shiftPlusHours * shiftMultiplier;
-        const nightPlusHours = calculateNightPlus(record.shift);
+        const nightPlusHours = calculateNightPlus(record.shift, employeeCategory);
         const nightAmmount = nightPlusHours * nightMultiplier;
 
         return {
