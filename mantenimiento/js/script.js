@@ -30,6 +30,7 @@ async function handleFileUpload(event) {
             fichajesData = await readExcelFile(fichajesFile, 'Fichajes');
             processedDataArray.push(fichajesData);
 
+            // Agrupa los datos de fichajes por empleado
             totalData = groupByEmployee(fichajesData);
             processedDataArray.push(totalData);
 
@@ -326,10 +327,12 @@ function groupByEmployee(data) {
     }, {});
 }
 
+// Muestra los datos agrupados en una tabla HTML
 function displayTotalsInTable(totals) {
     const tableBody = document.querySelector('#totalesTabla tbody');
     tableBody.innerHTML = ''; // Limpiar contenido anterior
 
+    // Recorre los datos totales y crea una fila por empleado
     for (const [empleado, data] of Object.entries(totals)) {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -343,6 +346,7 @@ function displayTotalsInTable(totals) {
     }
 }
 
+// Formatea un valor numérico como moneda
 function formatCurrency(value) {
     return new Intl.NumberFormat('es-ES', {
         style: 'currency',
@@ -350,8 +354,10 @@ function formatCurrency(value) {
     }).format(value);
 }
 
+// Añade un evento al botón de exportar para generar y descargar un archivo Excel
 document.getElementById('exportarExcel').addEventListener('click', exportToExcel);
 
+// Función que exporta los datos de la tabla a un archivo Excel
 function exportToExcel() {
     // Obtén los datos de la tabla
     const table = document.getElementById('totalesTabla');
@@ -369,6 +375,7 @@ function exportToExcel() {
     XLSX.writeFile(wb, 'totales_por_empleado.xlsx');
 }
 
+// Función para volver a la página anterior
 function volverAtras() {
     window.history.back();
 }
