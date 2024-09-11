@@ -337,10 +337,10 @@ function displayTotalsInTable(totals) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${empleado}</td>
-            <td>${Math.floor(data.shiftPlusHours)}</td>
-            <td>${formatCurrency(data.shiftAmmount)}</td>
             <td>${Math.floor(data.nightPlusHours)}</td>
             <td>${formatCurrency(data.nightAmmount)}</td>
+            <td>${Math.floor(data.shiftPlusHours)}</td>
+            <td>${formatCurrency(data.shiftAmmount)}</td>
         `;
         tableBody.appendChild(row);
     }
