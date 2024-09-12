@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario para cálculo de pluses de comidas de restauración</title>
+
+    <!-- No indexar por los motores de búsqueda -->
+    <meta name="robots" content="noindex">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf_viewer.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FSYV03MVDZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-FSYV03MVDZ');
+    </script>
+    <!-- /Google tag -->
+</head>
+
+<body>
+    <!-- Contenedor principal -->
+    <div class="wrapper">
+        <!-- Encabezado -->
+        <header class="cabecera">
+            <h1>Formulario para cálculo de pluses de comidas de restauración</h1>
+        </header>
+
+        <!-- Principal -->
+        <main class="principal">
+            <button id="botonVolver" type="button" onclick="volverAtras()">Volver Atrás</button>
+            <h2>Sube tus archivos PDF</h2>
+            <form id="formularioSubida">
+                <label for="ficheroPDFFichajes">Fichajes:</label>
+                <input type="file" id="ficheroPDFFichajes" accept=".pdf" required>
+
+                <label for="ficheroPDFPersonal">Personal:</label>
+                <input type="file" id="ficheroPDFPersonal" accept=".pdf" required>
+
+                <button type="submit">Cargar archivos</button>
+            </form>
+
+            <!-- Contenedor para la tabla -->
+            <section id="resultados">
+                <h2>Totales por empleado</h2>
+                <button id="exportarExcel" type="button">Exportar a <img id="imagen-excel" src="img/excel.png" alt="Excel" ></button>
+                <table id="totalesTabla">
+                    <thead>
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Plus mañanas</th>
+                            <th>Plus tardes</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <!-- Las filas de la tabla se llenarán dinámicamente con JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+        <!-- Pie de página -->
+        <footer class="pie">
+            <p>Bajo licencia <a href="LICENSE.txt">MIT</a> | Desarrollado por <a
+                    href="mailto:alopez62@tragsa.es">Antonio
+                    López
+                    Fernández</a> de <a href="https://tragsa.es" target="_blank">Tragsatec</a></p>
+        </footer>
+    </div>
+
+    <!-- Librerias -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.mjs"></script>
+    <script src="js/script.js"></script>
+    <!-- /Librerías -->
+</body>
+
+</html>
