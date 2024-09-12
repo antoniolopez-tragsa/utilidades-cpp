@@ -13,28 +13,30 @@ async function handleFileUpload(event) {
     const fichajesFile = document.getElementById('ficheroPDFFichajes').files[0];
     const personalFile = document.getElementById('ficheroPDFPersonal').files[0];
 
+    // Loaded via <script> tag, create shortcut to access PDF.js exports.
+    var { pdfjsLib } = globalThis;
+
+    // The workerSrc property shall be specified.
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.mjs';
+
     // Array para almacenar los datos procesados de los archivos
     const processedDataArray = [];
 
     // Verifica que los tres archivos hayan sido seleccionados antes de proceder
-    if (festivosFile && personalFile) {
+    if (fichajesFile && personalFile) {
         try {
             // Procesa los archivos PDF y almacena los resultados en el array
             fichajesData = await readPDFFile(fichajesFile, 'Fichajes');
-            processedDataArray.push(fichajesData);
+            processedDataArray.push(processSigningData(fichajesData));
 
             personalData = await readPDFFile(personalFile, 'Personal');
-            processedDataArray.push(empleadosData);
-
-            // Agrupa los datos de fichajes por empleado
-            totalData = groupByEmployee(fichajesData);
-            processedDataArray.push(totalData);
+            processedDataArray.push(processEmployeeData(personalData));
 
             // Muestra los datos procesados en la consola
             console.log('Datos procesados:', processedDataArray);
 
             // Muestra los datos en una tabla
-            displayTotalsInTable(totalData);
+            displayTotalsInTable(processedDataArray);
 
             // Muestra la sección con resultados
             document.getElementById('resultados').style.display = 'block';
@@ -44,32 +46,136 @@ async function handleFileUpload(event) {
         }
     } else {
         // Muestra una alerta si no se han seleccionado todos los archivos necesarios
-        alert('Por favor, selecciona los tres archivos Excel.');
+        alert('Por favor, selecciona los dos archivos PDF.');
     }
 }
 
 // Función que lee un archivo PDF y lo convierte en datos JSON
-function readPDFFile(file, tipoArchivo) {
+function readPDFFile(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
-        // Evento que se ejecuta cuando se carga el archivo
-        reader.onload = (e) => {
+        reader.onload = async function () {
+            const typedArray = new Uint8Array(this.result);
             try {
-                
+                const pdf = await pdfjsLib.getDocument(typedArray).promise;
+                let textContent = '';
 
-                // Resuelve la promesa con los datos procesados
-                resolve(processedData);
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContentObj = await page.getTextContent();
+                    const pageText = textContentObj.items.map(item => item.str).join(' ');
+                    textContent += pageText + '\n';
+                }
+
+                resolve(textContent); // Resuelve la promesa con el contenido del texto
             } catch (error) {
-                // Rechaza la promesa en caso de error
-                reject('Error al procesar el archivo:', error);
+                reject(`Error al leer el archivo PDF: ${error}`);
             }
         };
 
-        // Lee el archivo como un ArrayBuffer para poder procesarlo
         reader.readAsArrayBuffer(file);
     });
 }
+
+// Función que transforma los datos en bruto del PDF en un array de objetos de tipo empleado
+function processEmployeeData(input) {
+    // Remover la palabra "TOTAL" y la suma total del final
+    const data = input.replace(/TOTAL\s+\d+\s+\d+\s+\d+/g, '');
+
+    // Dividir el texto por los espacios excesivos para obtener un array plano de elementos
+    const tokens = data.split(/\s{2,}/);
+
+    // Inicializamos un array para guardar los objetos
+    const employees = [];
+
+    // Función para verificar si un valor es un número válido
+    function esNumeroValido(valor) {
+        return !isNaN(parseInt(valor, 10));
+    }
+
+    // Recorre los tokens y verifica que se agrupan correctamente
+    let i = 0;
+    while (i < tokens.length) {
+        const nombre = tokens[i].trim();
+
+        // Si el siguiente token no es un número válido, podría ser parte del nombre
+        if (!esNumeroValido(tokens[i + 1])) {
+            i++;
+            continue; // Saltamos este índice ya que es parte del nombre
+        }
+
+        // Verificar que los siguientes tres tokens son números
+        if (esNumeroValido(tokens[i + 1]) && esNumeroValido(tokens[i + 2]) && esNumeroValido(tokens[i + 3])) {
+            const dias = parseInt(tokens[i + 1], 10) || 0; // Días trabajados
+            const mananas = parseInt(tokens[i + 2], 10) || 0; // Días de mañanas
+            const tardes = parseInt(tokens[i + 3], 10) || 0; // Días de tardes/noches
+
+            // Agregar el empleado solo si hay un nombre válido y días correctos
+            if (nombre && dias >= 0 && mananas >= 0 && tardes >= 0) {
+                employees.push({
+                    nombre: nombre,
+                    totalDays: dias,
+                    morningDays: mananas,
+                    eveningDays: tardes
+                });
+            }
+            // Mover el índice al siguiente conjunto de datos
+            i += 4;
+        } else {
+            // En caso de datos inesperados, mover al siguiente elemento
+            i++;
+        }
+    }
+
+    return employees;
+}
+
+// Función que transforma los datos en texto plano del PDF en un array de objetos de fichajes
+function processSigningData(text) {
+    // Dividir el texto en bloques usando "Manual" como delimitador
+    const blocks = text.trim().split('Manual');
+
+    // Array para almacenar los datos procesados
+    const fichajes = [];
+    let currentEmpleado = '';
+
+    blocks.forEach(block => {
+        // Si el bloque no está vacío
+        if (block.trim()) {
+            // Dividir el bloque en líneas
+            const lines = block.trim().split('\n');
+
+            // Procesar cada línea
+            lines.forEach(line => {
+                // Separar los datos de la línea por espacios múltiples
+                const parts = line.split(/\s{2,}/);
+
+                // Verificar que la línea tiene la cantidad correcta de partes
+                if (parts.length >= 5) {
+                    const [empleado_nombre, empleado_apellidos, jornada, entrada, salida] = parts;
+
+                    // Agregar el registro a la lista de fichajes
+                    fichajes.push({
+                        empleado: empleado_nombre.trim().concat(' ', empleado_apellidos.trim()),
+                        jornada: jornada.trim(),
+                        entrada: entrada.trim(),
+                        salida: salida.trim()
+                    });
+
+                    // Resetear el nombre del empleado para el siguiente registro
+                    currentEmpleado = '';
+                } else {
+                    // Si la línea no contiene datos de fichajes, se asume que es parte del nombre del empleado
+                    currentEmpleado += line.trim() + ' ';
+                }
+            });
+        }
+    });
+
+    return fichajes;
+}
+
 
 // Muestra los datos agrupados en una tabla HTML
 function displayTotalsInTable(totals) {
