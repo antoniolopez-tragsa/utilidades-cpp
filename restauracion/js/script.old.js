@@ -13,14 +13,16 @@ async function handleFileUpload(event) {
     const fichajesFile = document.getElementById('ficheroPDFFichajes').files[0];
     const personalFile = document.getElementById('ficheroPDFPersonal').files[0];
 
-    // Carga la biblioteca pdf.js
+    // Loaded via <script> tag, create shortcut to access PDF.js exports.
     var { pdfjsLib } = globalThis;
+
+    // The workerSrc property shall be specified.
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.mjs';
 
     // Array para almacenar los datos procesados de los archivos
     const processedDataArray = [];
 
-    // Verifica que los dos archivos hayan sido seleccionados antes de proceder
+    // Verifica que los tres archivos hayan sido seleccionados antes de proceder
     if (fichajesFile && personalFile) {
         try {
             // Procesa los archivos PDF y almacena los resultados en el array
@@ -112,7 +114,7 @@ function processEmployeeData(input) {
             // Agregar el empleado solo si hay un nombre válido y días correctos
             if (nombre && dias >= 0 && mananas >= 0 && tardes >= 0) {
                 employees.push({
-                    nombre: reformatName(nombre),
+                    nombre: nombre,
                     totalDays: dias,
                     morningDays: mananas,
                     eveningDays: tardes
@@ -151,7 +153,7 @@ function reformatName(name) {
 // Función que transforma los datos en texto plano del PDF en un array de objetos de fichajes
 function processSigningData(text) {
     // Dividir el texto en líneas por el separador 'Trabajo'
-    const lines = text.trim().split('Trabajo').slice(0, -1);
+    const lines = text.trim().split('Trabajo');
 
     // Array para almacenar los datos procesados
     const fichajes = [];
