@@ -34,7 +34,7 @@ async function handleFileUpload(event) {
             console.log('Datos procesados:', processedDataArray);
 
             // Muestra los datos en una tabla
-            displayTotalsInTable(processedDataArray);
+            displayTotalsInTable(processedDataArray[1]);
 
             // Muestra la sección con resultados
             document.getElementById('resultados').style.display = 'block';
@@ -126,6 +126,9 @@ function processEmployeeData(input) {
         }
     }
 
+    // Ordenar alfabéticamente por el nombre del empleado
+    employees.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
     return employees;
 }
 
@@ -185,6 +188,9 @@ function processSigningData(text) {
         });
     });
 
+    // Ordenar alfabéticamente por el nombre del empleado
+    fichajes.sort((a, b) => a.empleado_nombre.localeCompare(b.empleado_nombre));
+
     return fichajes;
 }
 
@@ -194,13 +200,13 @@ function displayTotalsInTable(totals) {
     tableBody.innerHTML = ''; // Limpiar contenido anterior
 
     // Recorre los datos totales y crea una fila por empleado
-    for (const [empleado, data] of Object.entries(totals)) {
+    for (empleado of totals) {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${empleado}</td>
-            <td>${formatCurrency(data.morningPlusAmmount)}</td>
-            <td>${formatCurrency(data.eveningPlusAmmount)}</td>
-            <td>${formatCurrency(data.morningPlusAmmount + data.eveningPlusAmmount)}</td>
+            <td>${empleado.nombre}</td>
+            <td>${empleado.morningDays}</td>
+            <td>${empleado.eveningDays}</td>
+            <td>${empleado.totalDays}</td>
         `;
         tableBody.appendChild(row);
     }
