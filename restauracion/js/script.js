@@ -2,7 +2,7 @@
 document.getElementById('formularioSubida').addEventListener('submit', handleFileUpload);
 
 // Variables para almacenar los datos de los archivos Excel
-let fichajesData, personalData, totalData;
+let fichajesData, personalData, signingData, totalData;
 
 // Función que maneja la subida y procesamiento de archivos cuando se envía el formulario
 async function handleFileUpload(event) {
@@ -29,6 +29,10 @@ async function handleFileUpload(event) {
 
             personalData = await readPDFFile(personalFile, 'Personal');
             processedDataArray.push(processEmployeeData(personalData));
+
+            // Procesa los turnos de los trabajadores y lo anexa al array
+            signingData = totalizarTurnos(processedDataArray);
+            processedDataArray.push(signingData);
 
             // Muestra los datos procesados en la consola
             console.log('Datos procesados:', processedDataArray);
@@ -110,7 +114,7 @@ function processEmployeeData(input) {
             const tardes = parseInt(tokens[i + 3], 10) || 0; // Días de tardes/noches
 
             // Agregar el empleado solo si hay un nombre válido y días correctos
-            if (nombre && dias >= 0 && mananas >= 0 && tardes >= 0) {
+            if (nombre && dias > 0 && mananas >= 0 && tardes >= 0) {
                 employees.push({
                     nombre: reformatName(nombre),
                     totalDays: dias,
@@ -139,7 +143,11 @@ function reformatName(name) {
 
     if (commaIndex === -1) {
         // Si no se encuentra una coma, simplemente devuelve el nombre tal como está
-        return name;
+        return name.toUpperCase().normalize('NFD')
+            .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+            .replace(/Mª/gi, 'MARIA')
+            .replace('.', '')
+            .normalize();
     }
 
     // Divide el nombre en apellido y nombre
@@ -147,7 +155,10 @@ function reformatName(name) {
     const nombre = name.substring(commaIndex + 1).trim();
 
     // Reuniéndolos en el formato deseado
-    const text = `${nombre} ${apellido}`;
+    const text = `${nombre} ${apellido}`.toUpperCase().normalize('NFD')
+        .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+        .replace(/Mª/gi, 'MARIA')
+        .normalize();
     return text.replace(/\s+/g, ' ').trim();
 }
 
@@ -184,7 +195,9 @@ function processSigningData(text) {
             empleado_nombre: reformatName(empleado_nombre),
             jornada: jornada,
             entrada: entrada,
-            salida: salida
+            salida: salida,
+            duracion: calcularDiferenciaHoras(entrada, salida),
+            turno: determinarTurno(entrada)
         });
     });
 
@@ -218,6 +231,75 @@ function formatCurrency(value) {
         style: 'currency',
         currency: 'EUR'
     }).format(value);
+}
+
+// Función para calcular la diferencia de tiempo en horas y minutos
+function calcularDiferenciaHoras(entrada, salida) {
+    // Convertir las horas de entrada y salida en objetos Date
+    const [hEntrada, mEntrada, sEntrada] = entrada.split(':').map(Number);
+    const [hSalida, mSalida, sSalida] = salida.split(':').map(Number);
+
+    // Crear fechas usando una fecha arbitraria, ya que solo nos interesa el tiempo
+    const fechaEntrada = new Date(0, 0, 0, hEntrada, mEntrada, sEntrada);
+    const fechaSalida = new Date(0, 0, 0, hSalida, mSalida, sSalida);
+
+    // Calcular la diferencia en milisegundos
+    let diferenciaMs = fechaSalida - fechaEntrada;
+
+    // Asegurar que la salida es posterior a la entrada, considerando cambios de día
+    if (diferenciaMs < 0) {
+        // Si la salida es pasada la medianoche, ajustamos sumando 24 horas (un día completo)
+        diferenciaMs += 24 * 60 * 60 * 1000; // 24 horas en milisegundos
+    }
+
+    // Convertir la diferencia a horas y minutos
+    const horas = Math.floor(diferenciaMs / (1000 * 60 * 60));
+    const minutos = Math.floor((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    // Formatear la diferencia como "hh:mm"
+    return `${horas}h ${minutos}m`;
+}
+
+// Función para determinar si la entrada es "mañana" o "tarde"
+function determinarTurno(entrada) {
+    const [hEntrada] = entrada.split(':').map(Number); // Obtener la hora de entrada
+
+    // Considerar "mañana" si la hora es antes de las 12:00 PM
+    return hEntrada < 12 ? 'mañana' : 'tarde';
+}
+
+// Función para totalizar los turnos por nombre de empleado
+function totalizarTurnos(registros) {
+    // Objeto para almacenar los resultados agrupados por nombre de empleado
+    const resultados = {};
+
+    // Iterar sobre cada registro de fichaje
+    registros[0].forEach(registro => {
+        const nombre = registro.empleado_nombre;
+
+        // Si el empleado aún no está en el objeto de resultados, inicializarlo
+        if (!resultados[nombre]) {
+            resultados[nombre] = {
+                empleado_nombre: nombre,
+                turnos_mañana: 0,
+                turnos_tarde: 0,
+                turnos_totales: 0
+            };
+        }
+
+        // Contar los turnos según si son de mañana o tarde
+        if (registro.turno === "mañana") {
+            resultados[nombre].turnos_mañana++;
+        } else if (registro.turno === "tarde") {
+            resultados[nombre].turnos_tarde++;
+        }
+
+        // Incrementar el contador total de turnos
+        resultados[nombre].turnos_totales++;
+    });
+
+    // Convertir el objeto de resultados en un array
+    return Object.values(resultados);
 }
 
 // Añade un evento al botón de exportar para generar y descargar un archivo Excel
