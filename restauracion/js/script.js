@@ -221,6 +221,9 @@ function displayTotalsInTable(totals) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${total.empleado_nombre}</td>
+            <td>${total.coste_mañanas}</td>
+            <td>${total.coste_tardes}</td>
+            <td>${total.coste_totales}</td>
             <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}">${total.coincidente ? 'OK' : 'KO'}</td>
             <td>${total.motivo}</td>
         `;
@@ -276,6 +279,18 @@ function totalizarTurnos(registros) {
     // Objeto para almacenar los resultados agrupados por nombre de empleado
     const resultados = {};
 
+    // Obtener los valores de precios desde el formulario
+    const precioManana = parseFloat(document.getElementById('precioManana').value);
+    const precioTarde = parseFloat(document.getElementById('precioTarde').value);
+
+    // Configuración para el formato de moneda (ajustar según la moneda local)
+    const formatCurrency = new Intl.NumberFormat('es-ES', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
     // Iterar sobre cada registro de fichaje
     registros[0].forEach(registro => {
         const nombre = registro.empleado_nombre;
@@ -286,7 +301,10 @@ function totalizarTurnos(registros) {
                 empleado_nombre: nombre,
                 turnos_mañana: 0,
                 turnos_tarde: 0,
-                turnos_totales: 0
+                turnos_totales: 0,
+                coste_mañanas: 0,
+                coste_tardes: 0,
+                coste_totales: 0
             };
         }
 
@@ -299,6 +317,16 @@ function totalizarTurnos(registros) {
 
         // Incrementar el contador total de turnos
         resultados[nombre].turnos_totales++;
+
+        // Calcular los costes
+        resultados[nombre].coste_mañanas = resultados[nombre].turnos_mañana * precioManana;
+        resultados[nombre].coste_tardes = resultados[nombre].turnos_tarde * precioTarde;
+        resultados[nombre].coste_totales = resultados[nombre].coste_mañanas + resultados[nombre].coste_tardes;
+
+        // Formatear los costes
+        resultados[nombre].coste_mañanas = formatCurrency.format(resultados[nombre].coste_mañanas);
+        resultados[nombre].coste_tardes = formatCurrency.format(resultados[nombre].coste_tardes);
+        resultados[nombre].coste_totales = formatCurrency.format(resultados[nombre].coste_totales);
     });
 
     // Convertir el objeto de resultados en un array
@@ -396,6 +424,9 @@ function generarResultados(arrayTurnos, arrayFichajes) {
         // Añadir el resultado al array con el nombre, estado de coincidencia y motivos detallados
         resultados.push({
             empleado_nombre: turno.nombre,
+            coste_mañanas: coincidencia.coste_mañanas,
+            coste_tardes: coincidencia.coste_tardes,
+            coste_totales: coincidencia.coste_totales,
             coincidente: coincidente, // true si todos los valores coinciden, false en caso contrario
             motivo: motivos.join(', ') || 'COINCIDENTE' // Si coincidente es true, el motivo será "COINCIDENTE"
         });
