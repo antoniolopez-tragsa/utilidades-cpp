@@ -124,6 +124,10 @@ function processEmployeeData(input) {
     // Inicializamos un array para guardar los objetos
     const employees = [];
 
+    // Obtener los valores de precios desde el formulario
+    const precioManana = parseFloat(document.getElementById('precioManana').value);
+    const precioTarde = parseFloat(document.getElementById('precioTarde').value);
+
     // Función para verificar si un valor es un número válido
     function esNumeroValido(valor) {
         return !isNaN(parseInt(valor, 10));
@@ -150,9 +154,12 @@ function processEmployeeData(input) {
             if (nombre && dias > 0 && mananas >= 0 && tardes >= 0) {
                 employees.push({
                     nombre: reformatName(nombre),
-                    totalDays: dias,
                     morningDays: mananas,
-                    eveningDays: tardes
+                    morningCost: formatCurrency(mananas * precioManana),
+                    eveningDays: tardes,
+                    eveningCost: formatCurrency(tardes * precioTarde),
+                    totalDays: dias,
+                    totalCost: mananas * precioManana + tardes * precioTarde
                 });
             }
             // Mover el índice al siguiente conjunto de datos
@@ -200,8 +207,8 @@ function processSigningData(text) {
     // Dividir el texto en líneas por el separador 'Trabajo'
     const lines = text.trim().split('Trabajo').slice(0, -1);
 
-    // Array para almacenar los datos procesados
-    const fichajes = [];
+    // Objeto para almacenar los datos procesados temporalmente
+    const fichajesTemp = {};
 
     // Expresiones regulares
     const empleadoRegex = /(?:[A-ZÁÉÍÓÚÄËÏÖÜÑ,ºª\s]+),?\s*(?=\d{2}\/\d{2}\/\d{4})/;
@@ -223,16 +230,27 @@ function processSigningData(text) {
         const entrada = horasMatch && horasMatch.length > 0 ? horasMatch[0].trim() : '';
         const salida = horasMatch && horasMatch.length > 1 ? horasMatch[1].trim() : '';
 
-        // Agregar el registro a la lista de fichajes
-        fichajes.push({
-            nombre: reformatName(nombre),
-            jornada: jornada,
-            entrada: entrada,
-            salida: salida,
-            duracion: calcularDiferenciaHoras(entrada, salida),
-            turno: determinarTurno(entrada)
-        });
+        // Determinar el turno
+        const turno = determinarTurno(entrada);
+
+        // Crear un identificador único para la combinación de nombre y fecha
+        const key = `${nombre}|${jornada}`;
+
+        // Solo añadir el turno de mañana si aún no existe un registro con turno de mañana para esa fecha
+        if (!fichajesTemp[key] || (turno === 'mañana' && fichajesTemp[key].turno !== 'mañana')) {
+            fichajesTemp[key] = {
+                nombre: reformatName(nombre),
+                jornada: jornada,
+                entrada: entrada,
+                salida: salida,
+                duracion: calcularDiferenciaHoras(entrada, salida),
+                turno: turno
+            };
+        }
     });
+
+    // Convertir el objeto en un array
+    const fichajes = Object.values(fichajesTemp);
 
     // Ordenar alfabéticamente por el nombre del empleado
     fichajes.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -255,7 +273,7 @@ function displayTotalsInTable(totals) {
             <td>${total.turnos_tarde}</td>
             <td>${total.coste_tardes}</td>
             <td>${total.turnos_totales}</td>
-            <td>${total.coste_totales}</td>
+            <td>${formatCurrency(total.coste_totales)}</td>
             <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}">${total.coincidente ? 'OK' : 'KO'}</td>
             <td>${total.motivo}</td>
         `;
@@ -358,7 +376,7 @@ function totalizarTurnos(registros) {
         // Formatear los costes
         resultados[nombre].coste_mañanas = formatCurrency.format(resultados[nombre].coste_mañanas);
         resultados[nombre].coste_tardes = formatCurrency.format(resultados[nombre].coste_tardes);
-        resultados[nombre].coste_totales = formatCurrency.format(resultados[nombre].coste_totales);
+        resultados[nombre].coste_totales = resultados[nombre].coste_totales;
     });
 
     // Convertir el objeto de resultados en un array
@@ -465,7 +483,7 @@ function generarResultados(arrayTurnos, arrayFichajes) {
             turnos_totales: turno.totalDays,
             coste_totales: coincidencia.coste_totales,
             coincidente: coincidente, // true si todos los valores coinciden, false en caso contrario
-            motivo: motivos.join(', ') || 'COINCIDENTE' // Si coincidente es true, el motivo será "COINCIDENTE"
+            motivo: motivos.join(', ') || 'COINCIDEN FICHAJES CON PERSONAL' // Si coincidente es true, el motivo será "COINCIDENTE"
         });
     });
 
@@ -473,14 +491,18 @@ function generarResultados(arrayTurnos, arrayFichajes) {
     return resultados;
 }
 
-// Función para comparar dos arrays de datos de empleados
 function compararArrays(personalData, signingData) {
     // Inicializar el objeto para almacenar resultados de diferencias
     const diferencias = {
         soloEnPersonalData: [], // Empleados que solo están en personalData
         soloEnSigningData: [], // Empleados que solo están en signingData
-        diferentesDatos: [] // Empleados que están en ambos arrays pero con datos distintos
+        diferentesDatos: [], // Empleados que están en ambos arrays pero con datos distintos
+        sobrecoste: [] // Cálculo del sobrecoste para cada empleado con discrepancias
     };
+
+    // Obtener los valores de coste desde los elementos del documento
+    const precioManana = parseFloat(document.getElementById('precioManana').value) || 0;
+    const precioTarde = parseFloat(document.getElementById('precioTarde').value) || 0;
 
     // Extraer nombres de empleados de personalData
     const personalNombres = personalData.map(item => item.nombre);
@@ -501,16 +523,44 @@ function compararArrays(personalData, signingData) {
             if (datosPersonal.totalDays !== datosSigning.turnos_totales ||
                 datosPersonal.morningDays !== datosSigning.turnos_mañana ||
                 datosPersonal.eveningDays !== datosSigning.turnos_tarde) {
-                // Si hay discrepancias en los datos, añadir a diferencias.diferentesDatos
+                
+                // Calcular el sobrecoste
+                const diferenciaManana = datosPersonal.morningDays - datosSigning.turnos_mañana;
+                const diferenciaTarde = datosPersonal.eveningDays - datosSigning.turnos_tarde;
+                const sobrecosteManana = diferenciaManana * precioManana;
+                const sobrecosteTarde = diferenciaTarde * precioTarde;
+                const sobrecosteTotal = sobrecosteManana + sobrecosteTarde;
+
+                // Si hay discrepancias en los datos, añadir a diferencias.diferentesDatos y sobrecoste
                 diferencias.diferentesDatos.push({
                     nombre,
                     personal: datosPersonal,
-                    signing: datosSigning
+                    signing: datosSigning,
+                    sobrecoste: sobrecosteTotal // Agregar el sobrecoste calculado
+                });
+
+                diferencias.sobrecoste.push({
+                    nombre,
+                    sobrecoste: sobrecosteTotal // Agregar el sobrecoste calculado
                 });
             }
         } else {
-            // Si no se encuentra coincidencia, añadir a diferencias.soloEnPersonalData
-            diferencias.soloEnPersonalData.push({ nombre });
+            // Si no se encuentra coincidencia, calcular el sobrecoste
+            const datosPersonal = personalData.find(item => item.nombre === nombre);
+            const sobrecosteManana = datosPersonal.morningDays * precioManana;
+            const sobrecosteTarde = datosPersonal.eveningDays * precioTarde;
+            const sobrecosteTotal = sobrecosteManana + sobrecosteTarde;
+
+            // Añadir a diferencias.soloEnPersonalData y sobrecoste
+            diferencias.soloEnPersonalData.push({
+                nombre,
+                sobrecoste: sobrecosteTotal // Agregar el sobrecoste calculado
+            });
+
+            diferencias.sobrecoste.push({
+                nombre,
+                sobrecoste: sobrecosteTotal // Agregar el sobrecoste calculado
+            });
         }
     });
 
@@ -519,15 +569,28 @@ function compararArrays(personalData, signingData) {
         // Buscar la coincidencia más cercana en personalData usando la función de Levenshtein
         const coincidencia = buscarCoincidencia(nombre, personalData);
         if (!coincidencia) {
-            // Si no se encuentra coincidencia, añadir a diferencias.soloEnSigningData
-            diferencias.soloEnSigningData.push({ nombre });
+            // Si no se encuentra coincidencia, calcular el sobrecoste
+            const datosSigning = signingData.find(item => item.nombre === nombre);
+            const sobrecosteManana = datosSigning.turnos_mañana * precioManana;
+            const sobrecosteTarde = datosSigning.turnos_tarde * precioTarde;
+            const sobrecosteTotal = sobrecosteManana + sobrecosteTarde;
+
+            // Añadir a diferencias.soloEnSigningData y sobrecoste
+            diferencias.soloEnSigningData.push({
+                nombre,
+                sobrecoste: sobrecosteTotal // Agregar el sobrecoste calculado
+            });
+
+            diferencias.sobrecoste.push({
+                nombre,
+                sobrecoste: sobrecosteTotal // Agregar el sobrecoste calculado
+            });
         }
     });
 
     // Retornar el objeto con todas las diferencias encontradas
     return diferencias;
 }
-
 
 // Añade un evento al botón de exportar para generar y descargar un archivo Excel
 document.getElementById('exportarExcel').addEventListener('click', exportToExcel);
