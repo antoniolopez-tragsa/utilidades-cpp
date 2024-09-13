@@ -2,7 +2,7 @@
 document.getElementById('formularioSubida').addEventListener('submit', handleFileUpload);
 
 // Variables para almacenar los datos de los archivos Excel
-let fichajesData, personalData, signingData, resultData;
+let fichajesData, personalData, signingData, resultData, comparationData;
 
 // Función que maneja la subida y procesamiento de archivos cuando se envía el formulario
 async function handleFileUpload(event) {
@@ -34,6 +34,10 @@ async function handleFileUpload(event) {
             signingData = totalizarTurnos(processedDataArray);
             processedDataArray.push(signingData);
 
+            // Compara los datos de ambos arrays
+            comparationData = compararArrays(processedDataArray[1], processedDataArray[2]);
+            processedDataArray.push(comparationData);
+
             // Genera los resultados de la comparación entre fichajes y turnos
             resultData = generarResultados(processedDataArray[1], processedDataArray[2]);
             processedDataArray.push(resultData);
@@ -41,8 +45,33 @@ async function handleFileUpload(event) {
             // Muestra los datos procesados en la consola
             console.log('Datos procesados:', processedDataArray);
 
+            if (comparationData.soloEnPersonalData.length > 0 || comparationData.soloEnSigningData.length > 0) {
+                let mensaje = '';
+
+                // Verifica si hay elementos solo en personal
+                if (comparationData.soloEnPersonalData.length > 0) {
+                    mensaje += 'Trabajadores que están solo en el fichero de personal:\n';
+                    // Añade cada elemento solo en personal al mensaje
+                    comparationData.soloEnPersonalData.forEach(item => {
+                        mensaje += `- ${item.nombre}\n`;
+                    });
+                }
+
+                // Verifica si hay elementos solo en fichajes
+                if (comparationData.soloEnSigningData.length > 0) {
+                    mensaje += 'Trabajadores que están solo en el fichero de fichajes:\n';
+                    // Añade cada elemento solo en fichajes al mensaje
+                    comparationData.soloEnSigningData.forEach(item => {
+                        mensaje += `- ${item.nombre}\n`;
+                    });
+                }
+
+                // Muestra el mensaje en una alerta
+                alert(mensaje);
+            }
+
             // Muestra los datos en una tabla
-            displayTotalsInTable(processedDataArray[3]);
+            displayTotalsInTable(processedDataArray[4]);
 
             // Muestra la sección con resultados
             document.getElementById('resultados').style.display = 'block';
@@ -183,7 +212,7 @@ function processSigningData(text) {
     lines.forEach(line => {
         // Extraer el nombre del empleado
         const empleadoMatch = line.match(empleadoRegex);
-        const empleado_nombre = empleadoMatch ? empleadoMatch[0].trim() : '';
+        const nombre = empleadoMatch ? empleadoMatch[0].trim() : '';
 
         // Extraer la fecha
         const fechaMatch = line.match(fechaRegex);
@@ -196,7 +225,7 @@ function processSigningData(text) {
 
         // Agregar el registro a la lista de fichajes
         fichajes.push({
-            empleado_nombre: reformatName(empleado_nombre),
+            nombre: reformatName(nombre),
             jornada: jornada,
             entrada: entrada,
             salida: salida,
@@ -206,7 +235,7 @@ function processSigningData(text) {
     });
 
     // Ordenar alfabéticamente por el nombre del empleado
-    fichajes.sort((a, b) => a.empleado_nombre.localeCompare(b.empleado_nombre));
+    fichajes.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
     return fichajes;
 }
@@ -220,9 +249,12 @@ function displayTotalsInTable(totals) {
     for (total of totals) {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${total.empleado_nombre}</td>
+            <td>${total.nombre}</td>
+            <td>${total.turnos_mañana}</td>
             <td>${total.coste_mañanas}</td>
+            <td>${total.turnos_tarde}</td>
             <td>${total.coste_tardes}</td>
+            <td>${total.turnos_totales}</td>
             <td>${total.coste_totales}</td>
             <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}">${total.coincidente ? 'OK' : 'KO'}</td>
             <td>${total.motivo}</td>
@@ -293,12 +325,12 @@ function totalizarTurnos(registros) {
 
     // Iterar sobre cada registro de fichaje
     registros[0].forEach(registro => {
-        const nombre = registro.empleado_nombre;
+        const nombre = registro.nombre;
 
         // Si el empleado aún no está en el objeto de resultados, inicializarlo
         if (!resultados[nombre]) {
             resultados[nombre] = {
-                empleado_nombre: nombre,
+                nombre: nombre,
                 turnos_mañana: 0,
                 turnos_tarde: 0,
                 turnos_totales: 0,
@@ -373,12 +405,12 @@ function buscarCoincidencia(nombre, array) {
     // Iniciar con la primera coincidencia en el array
     let coincidenciaCercana = array[0];
     // Calcular la distancia mínima usando la primera coincidencia
-    let distanciaMinima = levenshteinDistance(nombre.toLowerCase(), coincidenciaCercana.empleado_nombre.toLowerCase());
+    let distanciaMinima = levenshteinDistance(nombre.toLowerCase(), coincidenciaCercana.nombre.toLowerCase());
 
     // Recorrer el array desde el segundo elemento
     for (let i = 1; i < array.length; i++) {
         // Calcular la distancia de Levenshtein entre el nombre y el nombre actual en el array
-        const distancia = levenshteinDistance(nombre.toLowerCase(), array[i].empleado_nombre.toLowerCase());
+        const distancia = levenshteinDistance(nombre.toLowerCase(), array[i].nombre.toLowerCase());
         // Si se encuentra una distancia menor, actualizar la coincidencia más cercana y la distancia mínima
         if (distancia < distanciaMinima) {
             coincidenciaCercana = array[i];
@@ -387,10 +419,12 @@ function buscarCoincidencia(nombre, array) {
     }
 
     // Retornar la coincidencia más cercana encontrada
-    return coincidenciaCercana;
+    if (distanciaMinima < 10) {
+        return coincidenciaCercana;
+    }
+    return null;
 }
 
-// Función para generar un array de resultados comparando turnos y fichajes
 // Función para generar un array de resultados comparando turnos y fichajes
 function generarResultados(arrayTurnos, arrayFichajes) {
     // Inicializar un array vacío para almacenar los resultados
@@ -423,9 +457,12 @@ function generarResultados(arrayTurnos, arrayFichajes) {
 
         // Añadir el resultado al array con el nombre, estado de coincidencia y motivos detallados
         resultados.push({
-            empleado_nombre: turno.nombre,
+            nombre: turno.nombre,
+            turnos_mañana: turno.morningDays,
             coste_mañanas: coincidencia.coste_mañanas,
+            turnos_tarde: turno.eveningDays,
             coste_tardes: coincidencia.coste_tardes,
+            turnos_totales: turno.totalDays,
             coste_totales: coincidencia.coste_totales,
             coincidente: coincidente, // true si todos los valores coinciden, false en caso contrario
             motivo: motivos.join(', ') || 'COINCIDENTE' // Si coincidente es true, el motivo será "COINCIDENTE"
@@ -435,6 +472,62 @@ function generarResultados(arrayTurnos, arrayFichajes) {
     // Retornar el array de resultados
     return resultados;
 }
+
+// Función para comparar dos arrays de datos de empleados
+function compararArrays(personalData, signingData) {
+    // Inicializar el objeto para almacenar resultados de diferencias
+    const diferencias = {
+        soloEnPersonalData: [], // Empleados que solo están en personalData
+        soloEnSigningData: [], // Empleados que solo están en signingData
+        diferentesDatos: [] // Empleados que están en ambos arrays pero con datos distintos
+    };
+
+    // Extraer nombres de empleados de personalData
+    const personalNombres = personalData.map(item => item.nombre);
+    // Extraer nombres de empleados de signingData
+    const signingNombres = signingData.map(item => item.nombre);
+
+    // Comparar nombres en personalData con nombres en signingData
+    personalNombres.forEach(nombre => {
+        // Buscar la coincidencia más cercana en signingData usando la función de Levenshtein
+        const coincidencia = buscarCoincidencia(nombre, signingData);
+
+        if (coincidencia) {
+            // Encontrar los datos correspondientes en ambos arrays
+            const datosPersonal = personalData.find(item => item.nombre === nombre);
+            const datosSigning = coincidencia;
+
+            // Comparar los datos de turnos entre personalData y signingData
+            if (datosPersonal.totalDays !== datosSigning.turnos_totales ||
+                datosPersonal.morningDays !== datosSigning.turnos_mañana ||
+                datosPersonal.eveningDays !== datosSigning.turnos_tarde) {
+                // Si hay discrepancias en los datos, añadir a diferencias.diferentesDatos
+                diferencias.diferentesDatos.push({
+                    nombre,
+                    personal: datosPersonal,
+                    signing: datosSigning
+                });
+            }
+        } else {
+            // Si no se encuentra coincidencia, añadir a diferencias.soloEnPersonalData
+            diferencias.soloEnPersonalData.push({ nombre });
+        }
+    });
+
+    // Comparar nombres en signingData con nombres en personalData
+    signingNombres.forEach(nombre => {
+        // Buscar la coincidencia más cercana en personalData usando la función de Levenshtein
+        const coincidencia = buscarCoincidencia(nombre, personalData);
+        if (!coincidencia) {
+            // Si no se encuentra coincidencia, añadir a diferencias.soloEnSigningData
+            diferencias.soloEnSigningData.push({ nombre });
+        }
+    });
+
+    // Retornar el objeto con todas las diferencias encontradas
+    return diferencias;
+}
+
 
 // Añade un evento al botón de exportar para generar y descargar un archivo Excel
 document.getElementById('exportarExcel').addEventListener('click', exportToExcel);

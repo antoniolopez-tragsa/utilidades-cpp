@@ -45,10 +45,10 @@
                 <label for="ficheroPDFPersonal">Personal:</label>
                 <input type="file" id="ficheroPDFPersonal" accept=".pdf" required>
 
-                <label for="precioManana">Coste mañanas (€):</label>
+                <label for="precioManana">Coste mañanas (desayuno más comida en €):</label>
                 <input type="number" id="precioManana" name="precioManana" step="0.01" min="0" value="4.45" required>
 
-                <label for="precioTarde">Coste tardes (€):</label>
+                <label for="precioTarde">Coste tardes (merienda más cena en €):</label>
                 <input type="number" id="precioTarde" name="precioTarde" step="0.01" min="0" value="3.34" required>
 
                 <button type="submit">Cargar archivos</button>
@@ -63,8 +63,11 @@
                     <thead>
                         <tr>
                             <th>Empleado</th>
+                            <th>Turnos mañana</th>
                             <th>Coste mañanas</th>
+                            <th>Turnos tarde</th>
                             <th>Coste tardes</th>
+                            <th>Turnos totales</th>
                             <th>Coste totales</th>
                             <th>Coincidente</th>
                             <th>Motivo</th>
