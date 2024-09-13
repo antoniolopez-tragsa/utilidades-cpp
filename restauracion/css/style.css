@@ -158,6 +158,23 @@ tbody tr:hover {
     /* Fondo claro al pasar el cursor */
 }
 
+/* Estilos para los íconos */
+.coincidente-true::before {
+    content: '✔'; /* Tick verde */
+    color: green;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+
+.coincidente-false::before {
+    content: '✘'; /* Cruz roja */
+    color: red;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+
 /* Estilo para el botón de exportar a Excel */
 #exportarExcel {
     padding: 10px 15px;

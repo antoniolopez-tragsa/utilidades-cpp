@@ -2,7 +2,7 @@
 document.getElementById('formularioSubida').addEventListener('submit', handleFileUpload);
 
 // Variables para almacenar los datos de los archivos Excel
-let fichajesData, personalData, signingData, totalData;
+let fichajesData, personalData, signingData, resultData;
 
 // Función que maneja la subida y procesamiento de archivos cuando se envía el formulario
 async function handleFileUpload(event) {
@@ -34,11 +34,15 @@ async function handleFileUpload(event) {
             signingData = totalizarTurnos(processedDataArray);
             processedDataArray.push(signingData);
 
+            // Genera los resultados de la comparación entre fichajes y turnos
+            resultData = generarResultados(processedDataArray[1], processedDataArray[2]);
+            processedDataArray.push(resultData);
+
             // Muestra los datos procesados en la consola
             console.log('Datos procesados:', processedDataArray);
 
             // Muestra los datos en una tabla
-            displayTotalsInTable(processedDataArray[1]);
+            displayTotalsInTable(processedDataArray[3]);
 
             // Muestra la sección con resultados
             document.getElementById('resultados').style.display = 'block';
@@ -213,13 +217,12 @@ function displayTotalsInTable(totals) {
     tableBody.innerHTML = ''; // Limpiar contenido anterior
 
     // Recorre los datos totales y crea una fila por empleado
-    for (empleado of totals) {
+    for (total of totals) {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${empleado.nombre}</td>
-            <td>${empleado.morningDays}</td>
-            <td>${empleado.eveningDays}</td>
-            <td>${empleado.totalDays}</td>
+            <td>${total.empleado_nombre}</td>
+            <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}"></td>
+            <td>${total.motivo}</td>
         `;
         tableBody.appendChild(row);
     }
@@ -300,6 +303,106 @@ function totalizarTurnos(registros) {
 
     // Convertir el objeto de resultados en un array
     return Object.values(resultados);
+}
+
+// Función para calcular la distancia de Levenshtein entre dos cadenas
+function levenshteinDistance(a, b) {
+    // Crear una matriz bidimensional de tamaño (a.length + 1) x (b.length + 1)
+    const matrix = Array(a.length + 1).fill(null).map(() =>
+        Array(b.length + 1).fill(null)
+    );
+
+    // Inicializar la primera columna de la matriz con índices (0, 1, 2, ...)
+    for (let i = 0; i <= a.length; i++) {
+        matrix[i][0] = i; // Representa las eliminaciones necesarias para transformar 'a' en una cadena vacía
+    }
+
+    // Inicializar la primera fila de la matriz con índices (0, 1, 2, ...)
+    for (let j = 0; j <= b.length; j++) {
+        matrix[0][j] = j; // Representa las inserciones necesarias para transformar una cadena vacía en 'b'
+    }
+
+    // Llenar la matriz con los cálculos de las distancias
+    for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+            // Si los caracteres actuales de 'a' y 'b' son iguales, el costo es 0; si no, es 1
+            const indicator = a[i - 1] === b[j - 1] ? 0 : 1;
+            // Calcular el valor mínimo entre inserción, eliminación y sustitución
+            matrix[i][j] = Math.min(
+                matrix[i][j - 1] + 1, // Inserción
+                matrix[i - 1][j] + 1, // Eliminación
+                matrix[i - 1][j - 1] + indicator // Sustitución
+            );
+        }
+    }
+
+    // La distancia de Levenshtein entre 'a' y 'b' es el valor en la esquina inferior derecha de la matriz
+    return matrix[a.length][b.length];
+}
+
+// Función para buscar la coincidencia más cercana de un nombre en un array utilizando Levenshtein
+function buscarCoincidencia(nombre, array) {
+    // Iniciar con la primera coincidencia en el array
+    let coincidenciaCercana = array[0];
+    // Calcular la distancia mínima usando la primera coincidencia
+    let distanciaMinima = levenshteinDistance(nombre.toLowerCase(), coincidenciaCercana.empleado_nombre.toLowerCase());
+
+    // Recorrer el array desde el segundo elemento
+    for (let i = 1; i < array.length; i++) {
+        // Calcular la distancia de Levenshtein entre el nombre y el nombre actual en el array
+        const distancia = levenshteinDistance(nombre.toLowerCase(), array[i].empleado_nombre.toLowerCase());
+        // Si se encuentra una distancia menor, actualizar la coincidencia más cercana y la distancia mínima
+        if (distancia < distanciaMinima) {
+            coincidenciaCercana = array[i];
+            distanciaMinima = distancia;
+        }
+    }
+
+    // Retornar la coincidencia más cercana encontrada
+    return coincidenciaCercana;
+}
+
+// Función para generar un array de resultados comparando turnos y fichajes
+// Función para generar un array de resultados comparando turnos y fichajes
+function generarResultados(arrayTurnos, arrayFichajes) {
+    // Inicializar un array vacío para almacenar los resultados
+    const resultados = [];
+
+    // Recorrer cada turno en arrayTurnos
+    arrayTurnos.forEach(turno => {
+        // Buscar la coincidencia más cercana del nombre en arrayFichajes
+        const coincidencia = buscarCoincidencia(turno.nombre, arrayFichajes);
+
+        // Inicializar un array para almacenar los motivos de las discrepancias
+        let motivos = [];
+
+        // Comparar los valores de turnos entre el turno y la coincidencia encontrada
+        const coincidente =
+            turno.morningDays === coincidencia.turnos_mañana && // Comparar turnos de mañana
+            turno.eveningDays === coincidencia.turnos_tarde &&   // Comparar turnos de tarde
+            turno.totalDays === coincidencia.turnos_totales; // Comparar turnos totales
+
+        // Revisar discrepancias y añadir los motivos con detalles específicos
+        if (turno.morningDays !== coincidencia.turnos_mañana) {
+            motivos.push(`MAÑANAS DISTINTAS, ${turno.morningDays} mañanas según turnos y ${coincidencia.turnos_mañana} mañanas según fichajes`);
+        }
+        if (turno.eveningDays !== coincidencia.turnos_tarde) {
+            motivos.push(`TARDES DISTINTAS, ${turno.eveningDays} tardes según turnos y ${coincidencia.turnos_tarde} tardes según fichajes`);
+        }
+        if (turno.totalDays !== coincidencia.turnos_totales) {
+            motivos.push(`TOTAL DISTINTAS, ${turno.totalDays} días totales según turnos y ${coincidencia.turnos_totales} días totales según fichajes`);
+        }
+
+        // Añadir el resultado al array con el nombre, estado de coincidencia y motivos detallados
+        resultados.push({
+            empleado_nombre: turno.nombre,
+            coincidente: coincidente, // true si todos los valores coinciden, false en caso contrario
+            motivo: motivos.join(', ') || 'COINCIDENTE' // Si coincidente es true, el motivo será "COINCIDENTE"
+        });
+    });
+
+    // Retornar el array de resultados
+    return resultados;
 }
 
 // Añade un evento al botón de exportar para generar y descargar un archivo Excel
