@@ -45,6 +45,12 @@ async function handleFileUpload(event) {
             // Muestra los datos procesados en la consola
             console.log('Datos procesados:', processedDataArray);
 
+            // Calcula y muestra otras conclusiones
+            const signingCost = calculaTotales(processedDataArray[1], 'fichajes');
+            const personalCost = calculaTotales(processedDataArray[2], 'personal');
+            const difference = signingCost - personalCost;
+            console.log(`La diferencia entre fichajes (${formatCurrency(signingCost)}) y personal (${formatCurrency(personalCost)}) es ${formatCurrency(difference)}`)
+
             if (comparationData.soloEnPersonalData.length > 0 || comparationData.soloEnSigningData.length > 0) {
                 let mensaje = '';
 
@@ -491,6 +497,7 @@ function generarResultados(arrayTurnos, arrayFichajes) {
     return resultados;
 }
 
+// Función que calcula las diferencias entre los dos arrays
 function compararArrays(personalData, signingData) {
     // Inicializar el objeto para almacenar resultados de diferencias
     const diferencias = {
@@ -523,7 +530,7 @@ function compararArrays(personalData, signingData) {
             if (datosPersonal.totalDays !== datosSigning.turnos_totales ||
                 datosPersonal.morningDays !== datosSigning.turnos_mañana ||
                 datosPersonal.eveningDays !== datosSigning.turnos_tarde) {
-                
+
                 // Calcular el sobrecoste
                 const diferenciaManana = datosPersonal.morningDays - datosSigning.turnos_mañana;
                 const diferenciaTarde = datosPersonal.eveningDays - datosSigning.turnos_tarde;
@@ -590,6 +597,15 @@ function compararArrays(personalData, signingData) {
 
     // Retornar el objeto con todas las diferencias encontradas
     return diferencias;
+}
+
+// Calcula el total acumulado de costos en un array de objetos
+function calculaTotales(data, tipo) {
+    // Determinar el campo de costo basado en el tipo de datos
+    const campoCosto = tipo === 'fichajes' ? 'totalCost' : 'coste_totales';
+
+    // Calcular el total acumulado usando el campo de costo adecuado
+    return data.reduce((acc, item) => acc + item[campoCosto], 0);
 }
 
 // Añade un evento al botón de exportar para generar y descargar un archivo Excel
