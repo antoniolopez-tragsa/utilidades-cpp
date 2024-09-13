@@ -221,7 +221,7 @@ function displayTotalsInTable(totals) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${total.empleado_nombre}</td>
-            <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}"></td>
+            <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}">${total.coincidente ? 'OK' : 'KO'}</td>
             <td>${total.motivo}</td>
         `;
         tableBody.appendChild(row);
