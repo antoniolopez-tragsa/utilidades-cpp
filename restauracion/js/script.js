@@ -49,7 +49,7 @@ async function handleFileUpload(event) {
             const signingCost = calculaTotales(processedDataArray[1], 'fichajes');
             const personalCost = calculaTotales(processedDataArray[2], 'personal');
             const difference = signingCost - personalCost;
-            console.log(`La diferencia entre fichajes (${formatCurrency(signingCost)}) y personal (${formatCurrency(personalCost)}) es ${formatCurrency(difference)}`)
+            alert(`La diferencia entre fichajes (${formatCurrency(signingCost)}) y personal (${formatCurrency(personalCost)}) es ${formatCurrency(difference)}`)
 
             if (comparationData.soloEnPersonalData.length > 0 || comparationData.soloEnSigningData.length > 0) {
                 let mensaje = '';
