@@ -38,12 +38,14 @@ async function handleFileUpload(event) {
             totalData = groupByEmployee(fichajesData);
             processedDataArray.push(totalData);
 
+            // Compara fichajes con nóminas
+            comparisonData = compareFichajesToNominas(totalData, nominasData);
+            processedDataArray.push(comparisonData);
+
             // Muestra los datos procesados en la consola
             console.log('Datos procesados:', processedDataArray);
 
             // Muestra los datos en una tabla
-            comparisonData = compareFichajesToNominas(totalData, nominasData);
-            console.log(comparisonData);
             displayTotalsInTable(comparisonData);
 
             // Muestra la sección con resultados
