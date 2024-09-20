@@ -42,7 +42,9 @@ async function handleFileUpload(event) {
             console.log('Datos procesados:', processedDataArray);
 
             // Muestra los datos en una tabla
-            displayTotalsInTable(totalData);
+            comparisonData = compareFichajesToNominas(totalData, nominasData);
+            console.log(comparisonData);
+            displayTotalsInTable(comparisonData);
 
             // Muestra la sección con resultados
             document.getElementById('resultados').style.display = 'block';
@@ -341,14 +343,18 @@ function displayTotalsInTable(totals) {
     tableBody.innerHTML = ''; // Limpiar contenido anterior
 
     // Recorre los datos totales y crea una fila por empleado
-    for (const [empleado, data] of Object.entries(totals)) {
+    for (const empleado of totals) {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${empleado}</td>
-            <td>${Math.floor(data.nightPlusHours)}</td>
-            <td>${formatCurrency(data.nightAmmount)}</td>
-            <td>${Math.floor(data.shiftPlusHours)}</td>
-            <td>${formatCurrency(data.shiftAmmount)}</td>
+            <td>${empleado.nombreEmpleado}</td>
+            <td>${Math.floor(empleado.nightPlusHours)}</td>
+            <td>${formatCurrency(empleado.nightAmmount)}</td>
+            <td>${Math.floor(empleado.shiftPlusHours)}</td>
+            <td>${formatCurrency(empleado.shiftAmmount)}</td>
+            <td>${Math.floor(empleado.nightPlusHoursPayroll)}</td>
+            <td>${formatCurrency(empleado.nightAmmountPayroll)}</td>
+            <td>${Math.floor(empleado.shiftPlusHoursPayroll)}</td>
+            <td>${formatCurrency(empleado.shiftAmmountPayroll)}</td>
         `;
         tableBody.appendChild(row);
     }
@@ -372,12 +378,63 @@ function processPayrollData(data) {
 
         // Agregar una entrada al objeto resultado con el nombre del empleado como clave
         resultado[fila[0]] = {
-            shiftPlusHours: fila[3],  // Columna para turnicidad
-            shiftAmmount: fila[4],    // Importe para turnicidad
-            nightPlusHours: fila[1],  // Columna para nocturnidad
-            nightAmmount: fila[2]     // Importe para nocturnidad
+            shiftPlusHoursPayroll: fila[3],  // Columna para turnicidad
+            shiftAmmountPayroll: fila[4],    // Importe para turnicidad
+            nightPlusHoursPayroll: fila[1],  // Columna para nocturnidad
+            nightAmmountPayroll: fila[2]     // Importe para nocturnidad
         };
     }
+
+    return resultado;
+}
+
+// Función para calcular la similitud entre dos cadenas
+function similar(a, b) {
+    const lengthA = a.length;
+    const lengthB = b.length;
+    const maxLength = Math.max(lengthA, lengthB);
+    const distance = levenshteinDistance(a, b); // Función que calcula la distancia de Levenshtein
+    return (maxLength - distance) / maxLength; // Devuelve un valor entre 0 y 1
+}
+
+// Función de distancia de Levenshtein
+function levenshteinDistance(s1, s2) {
+    const dp = Array.from({ length: s1.length + 1 }, (_, i) => Array(s2.length + 1).fill(0));
+
+    for (let i = 0; i <= s1.length; i++) dp[i][0] = i;
+    for (let j = 0; j <= s2.length; j++) dp[0][j] = j;
+
+    for (let i = 1; i <= s1.length; i++) {
+        for (let j = 1; j <= s2.length; j++) {
+            if (s1[i - 1] === s2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1]; // Sin costo
+            } else {
+                dp[i][j] = Math.min(
+                    dp[i - 1][j] + 1, // Eliminación
+                    dp[i][j - 1] + 1, // Inserción
+                    dp[i - 1][j - 1] + 1 // Sustitución
+                );
+            }
+        }
+    }
+
+    return dp[s1.length][s2.length];
+}
+
+// Función que fusiona los datos de los arrays de fichajes con los de nóminas
+function compareFichajesToNominas(totalData, nominasData) {
+    const resultado = Object.keys(totalData).map(key => {
+        // Encontrar la clave más parecida en nominasData
+        const similarKey = Object.keys(nominasData[0]).reduce((closest, current) => {
+            return similar(key, current) > similar(key, closest) ? current : closest;
+        }, Object.keys(nominasData[0])[0]);
+
+        return {
+            nombreEmpleado: key,       // La clave del elemento
+            ...totalData[key],         // Datos del primer array
+            ...nominasData[0][similarKey] // Datos del segundo array usando la clave más parecida
+        };
+    });
 
     return resultado;
 }
