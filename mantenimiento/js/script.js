@@ -355,6 +355,8 @@ function displayTotalsInTable(totals) {
             <td>${formatCurrency(empleado.nightAmmountPayroll)}</td>
             <td>${Math.floor(empleado.shiftPlusHoursPayroll)}</td>
             <td>${formatCurrency(empleado.shiftAmmountPayroll)}</td>
+            <td class="${empleado.coincidente ? 'coincidente-true' : 'coincidente-false'}">${empleado.coincidente ? 'OK' : 'KO'}</td>
+            <td>${empleado.motivo}</td>
         `;
         tableBody.appendChild(row);
     }
@@ -429,10 +431,33 @@ function compareFichajesToNominas(totalData, nominasData) {
             return similar(key, current) > similar(key, closest) ? current : closest;
         }, Object.keys(nominasData[0])[0]);
 
+        let coincidente, motivo;
+
+        if (totalData[key].nightPlusHours === nominasData[0][similarKey].nightPlusHoursPayroll
+            && totalData[key].shiftPlusHours === nominasData[0][similarKey].shiftPlusHoursPayroll) {
+            coincidente = true;
+            motivo = 'FICHAJES Y NÓMINAS COINCIDEN';
+        } else {
+            coincidente = false;
+            motivo = '';
+
+            if (totalData[key].nightPlusHours != nominasData[0][similarKey].nightPlusHoursPayroll) {
+                motivo = motivo + `HORAS PLUS NOCHE SEGÚN FICHAJES (${totalData[key].nightPlusHours}) | HORAS PLUS NOCHE SEGÚN NÓMINAS (${nominasData[0][similarKey].nightPlusHoursPayroll})`
+            }
+            if (totalData[key].shiftPlusHours != nominasData[0][similarKey].shiftPlusHoursPayroll) {
+                if (motivo != '') {
+                    motivo = motivo + '<br/>';
+                }
+                motivo = motivo + `HORAS PLUS TURNOS SEGÚN FICHAJES (${totalData[key].shiftPlusHours}) | HORAS PLUS NOCHE SEGÚN NÓMINAS (${nominasData[0][similarKey].shiftPlusHoursPayroll})`
+            }
+        }
+
         return {
             nombreEmpleado: key,       // La clave del elemento
             ...totalData[key],         // Datos del primer array
-            ...nominasData[0][similarKey] // Datos del segundo array usando la clave más parecida
+            ...nominasData[0][similarKey], // Datos del segundo array usando la clave más parecida
+            coincidente: coincidente,
+            motivo: motivo
         };
     });
 
