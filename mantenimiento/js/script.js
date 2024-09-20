@@ -450,7 +450,7 @@ function compareFichajesToNominas(totalData, nominasData) {
                 if (motivo != '') {
                     motivo = motivo + '<br/>';
                 }
-                motivo = motivo + `HORAS PLUS TURNOS SEGÚN FICHAJES (${totalData[key].shiftPlusHours}) | HORAS PLUS NOCHE SEGÚN NÓMINAS (${nominasData[0][similarKey].shiftPlusHoursPayroll})`
+                motivo = motivo + `HORAS PLUS TURNOS SEGÚN FICHAJES (${totalData[key].shiftPlusHours}) | HORAS PLUS TURNOS SEGÚN NÓMINAS (${nominasData[0][similarKey].shiftPlusHoursPayroll})`
             }
         }
 
