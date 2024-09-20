@@ -13,12 +13,13 @@ async function handleFileUpload(event) {
     const festivosFile = document.getElementById('ficheroExcelFestivos').files[0];
     const empleadosFile = document.getElementById('ficheroExcelEmpleados').files[0];
     const fichajesFile = document.getElementById('ficheroExcelFichajes').files[0];
+    const nominasFile = document.getElementById('ficheroExcelNominas').files[0];
 
     // Array para almacenar los datos procesados de los archivos
     const processedDataArray = [];
 
     // Verifica que los tres archivos hayan sido seleccionados antes de proceder
-    if (festivosFile && empleadosFile && fichajesFile) {
+    if (festivosFile && empleadosFile && fichajesFile && nominasFile) {
         try {
             // Procesa los archivos Excel y almacena los resultados en el array
             festivosData = await readExcelFile(festivosFile, 'Festivos');
@@ -29,6 +30,9 @@ async function handleFileUpload(event) {
 
             fichajesData = await readExcelFile(fichajesFile, 'Fichajes');
             processedDataArray.push(fichajesData);
+
+            nominasData = await readExcelFile(nominasFile, 'Nominas');
+            processedDataArray.push(nominasData);
 
             // Agrupa los datos de fichajes por empleado
             totalData = groupByEmployee(fichajesData);
@@ -48,7 +52,7 @@ async function handleFileUpload(event) {
         }
     } else {
         // Muestra una alerta si no se han seleccionado todos los archivos necesarios
-        alert('Por favor, selecciona los tres archivos Excel.');
+        alert('Por favor, selecciona los cuatro archivos Excel.');
     }
 }
 
@@ -93,6 +97,10 @@ function readExcelFile(file, tipoArchivo) {
                     // Procesa fichajes de empleados
                     const employeeData = calculatePlusForEmployee(jsonData);
                     processedData.push(employeeData);
+                } else if (tipoArchivo === 'Nominas') {
+                    // Procesa fichero de nóminas
+                    const payrollData = processPayrollData(jsonData);
+                    processedData.push(payrollData);
                 }
 
                 // Resuelve la promesa con los datos procesados
@@ -352,6 +360,28 @@ function formatCurrency(value) {
         style: 'currency',
         currency: 'EUR'
     }).format(value);
+}
+
+// Función que procesa los datos del fichero de nóminas
+function processPayrollData(data) {
+    const resultado = [];
+
+    // Iterar desde la tercera fila (índice 2)
+    for (let i = 2; i < data.length; i++) {
+        const fila = data[i];
+
+        const objeto = {
+            empleado: fila[0],
+            horasNocturnidad: fila[1],
+            plusNocturnidad: fila[2],
+            horasTurnicidad: fila[3],
+            plusTurnicidad: fila[4]
+        };
+
+        resultado.push(objeto);
+    }
+
+    return resultado;
 }
 
 // Añade un evento al botón de exportar para generar y descargar un archivo Excel
