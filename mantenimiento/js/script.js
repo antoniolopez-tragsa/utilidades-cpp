@@ -370,15 +370,13 @@ function processPayrollData(data) {
     for (let i = 2; i < data.length; i++) {
         const fila = data[i];
 
-        const objeto = {
-            empleado: fila[0],
-            horasNocturnidad: fila[1],
-            plusNocturnidad: fila[2],
-            horasTurnicidad: fila[3],
-            plusTurnicidad: fila[4]
+        // Agregar una entrada al objeto resultado con el nombre del empleado como clave
+        resultado[fila[0]] = {
+            shiftPlusHours: fila[3],  // Columna para turnicidad
+            shiftAmmount: fila[4],    // Importe para turnicidad
+            nightPlusHours: fila[1],  // Columna para nocturnidad
+            nightAmmount: fila[2]     // Importe para nocturnidad
         };
-
-        resultado.push(objeto);
     }
 
     return resultado;
