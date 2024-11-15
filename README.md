@@ -62,9 +62,4 @@ Este proyecto está bajo la licencia [MIT](LICENSE.txt).
 
 ## Desarrollador
 
-Desarrollado por [Antonio López Fernández](mailto:antonio.angel.lopez.fernandez@gmail.com). 
-
-### Repositorio en GitHub
-Visita el repositorio en GitHub haciendo clic en el siguiente icono:
-
-[![GitHub](img/github-mark-white.svg)](https://github.com/antoniolopez-tragsa/utilidades-cpp)
+Desarrollado por [Antonio López Fernández](mailto:antonio.angel.lopez.fernandez@gmail.com).
