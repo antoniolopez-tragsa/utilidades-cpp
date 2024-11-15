@@ -104,3 +104,9 @@ body {
 .pie a:hover {
     color: #cbd5e0;
 }
+
+.icon-github {
+    width: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
