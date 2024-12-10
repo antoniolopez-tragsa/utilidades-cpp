@@ -443,7 +443,7 @@ function buscarCoincidencia(nombre, array) {
     }
 
     // Retornar la coincidencia más cercana encontrada
-    if (distanciaMinima < 10) {
+    if (distanciaMinima <= 10) {
         return coincidenciaCercana;
     }
     return null;
