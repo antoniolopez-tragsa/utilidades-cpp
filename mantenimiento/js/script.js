@@ -354,9 +354,9 @@ function displayTotalsInTable(totals) {
             <td>${Math.floor(empleado.shiftPlusHours)}</td>
             <td>${formatCurrency(empleado.shiftAmmount)}</td>
             <td>${Math.floor(empleado.nightPlusHoursPayroll)}</td>
-            <td>${formatCurrency(empleado.nightAmmountPayroll)}</td>
+            <td>${formatCurrency(empleado.nightPlusHoursPayroll * empleado.nightAmmountPayroll)}</td>
             <td>${Math.floor(empleado.shiftPlusHoursPayroll)}</td>
-            <td>${formatCurrency(empleado.shiftAmmountPayroll)}</td>
+            <td>${formatCurrency(empleado.shiftPlusHoursPayroll * empleado.shiftAmmountPayroll)}</td>
             <td class="${empleado.coincidente ? 'coincidente-true' : 'coincidente-false'}">${empleado.coincidente ? 'OK' : 'KO'}</td>
             <td>${empleado.motivo}</td>
         `;
