@@ -364,12 +364,9 @@ function displayTotalsInTable(totals) {
     }
 }
 
-// Formatea un valor numérico como moneda
+// Devuelve el número con dos decimales
 function formatCurrency(value) {
-    return new Intl.NumberFormat('es-ES', {
-        style: 'currency',
-        currency: 'EUR'
-    }).format(value);
+    return Math.round(value * 100) / 100;
 }
 
 // Función que procesa los datos del fichero de nóminas
