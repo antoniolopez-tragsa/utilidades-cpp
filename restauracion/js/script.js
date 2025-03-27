@@ -275,11 +275,11 @@ function displayTotalsInTable(totals) {
         row.innerHTML = `
             <td>${total.nombre}</td>
             <td>${total.turnos_mañana}</td>
-            <td>${formatCurrency(total.coste_mañanas)}</td>
+            <td>${total.coste_mañanas}</td>
             <td>${total.turnos_tarde}</td>
-            <td>${formatCurrency(total.coste_tardes)}</td>
+            <td>${total.coste_tardes}</td>
             <td>${total.turnos_totales}</td>
-            <td>${formatCurrency(total.coste_totales)}</td>
+            <td>${total.coste_totales}</td>
             <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}">${total.coincidente ? 'OK' : 'KO'}</td>
             <td>${total.motivo}</td>
         `;
@@ -336,14 +336,6 @@ function totalizarTurnos(registros) {
     const precioManana = parseFloat(document.getElementById('precioManana').value);
     const precioTarde = parseFloat(document.getElementById('precioTarde').value);
 
-    // Configuración para el formato de moneda (ajustar según la moneda local)
-    const formatCurrency = new Intl.NumberFormat('es-ES', {
-        style: 'currency',
-        currency: 'EUR',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-
     // Iterar sobre cada registro de fichaje
     registros[0].forEach(registro => {
         const nombre = registro.nombre;
@@ -377,9 +369,9 @@ function totalizarTurnos(registros) {
         resultados[nombre].coste_totales = resultados[nombre].coste_mañanas + resultados[nombre].coste_tardes;
 
         // Formatear los costes
-        resultados[nombre].coste_mañanas = formatCurrency.format(resultados[nombre].coste_mañanas);
-        resultados[nombre].coste_tardes = formatCurrency.format(resultados[nombre].coste_tardes);
-        resultados[nombre].coste_totales = resultados[nombre].coste_totales;
+        resultados[nombre].coste_mañanas = formatCurrency(resultados[nombre].coste_mañanas);
+        resultados[nombre].coste_tardes = formatCurrency(resultados[nombre].coste_tardes);
+        resultados[nombre].coste_totales = formatCurrency(resultados[nombre].coste_totales);
     });
 
     // Convertir el objeto de resultados en un array
