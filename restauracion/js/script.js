@@ -275,9 +275,9 @@ function displayTotalsInTable(totals) {
         row.innerHTML = `
             <td>${total.nombre}</td>
             <td>${total.turnos_mañana}</td>
-            <td>${total.coste_mañanas}</td>
+            <td>${formatCurrency(total.coste_mañanas)}</td>
             <td>${total.turnos_tarde}</td>
-            <td>${total.coste_tardes}</td>
+            <td>${formatCurrency(total.coste_tardes)}</td>
             <td>${total.turnos_totales}</td>
             <td>${formatCurrency(total.coste_totales)}</td>
             <td class="${total.coincidente ? 'coincidente-true' : 'coincidente-false'}">${total.coincidente ? 'OK' : 'KO'}</td>
