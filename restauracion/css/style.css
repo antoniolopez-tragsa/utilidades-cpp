@@ -175,28 +175,6 @@ tbody tr:hover {
     margin-right: 5px;
 }
 
-/* Estilo para el botón de exportar a Excel */
-#exportarExcel {
-    padding: 10px 15px;
-    background-color: #3182ce; /* Color de fondo del botón */
-    color: white; /* Texto blanco */
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px; /* Espacio superior */
-}
-
-#exportarExcel:hover {
-    background-color: #2b6cb0; /* Color de fondo más oscuro al pasar el cursor */
-}
-
-#exportarExcel:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Resaltado al enfocarse */
-}
-
 /* Estilo para el botón */
 form button {
     padding: 10px 15px;
