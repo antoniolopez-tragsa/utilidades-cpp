@@ -1,0 +1,313 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Hace que la envoltura tenga al menos la altura de la pantalla */
+}
+
+/* Cabecera */
+.cabecera {
+    background: #4a5568;
+    color: white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.cabecera h1 {
+    font-size: 1.8rem;
+}
+
+/* Principal */
+.principal {
+    flex-grow: 1;
+    /* Permite que el contenido principal se expanda */
+    margin: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.principal h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #2d3748;
+}
+
+.principal p {
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+.principal ul li {
+    list-style: none;
+    margin: 5px 0;
+    padding-left: 15px;
+    position: relative;
+}
+
+.principal ul li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #4a5568;
+}
+
+.principal a {
+    color: #3182ce;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.principal a:hover {
+    color: #2b6cb0;
+}
+
+/* Estilo para el formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+    /* Centrar el formulario */
+    padding: 20px;
+    background-color: #f7fafc;
+    /* Fondo ligeramente distinto */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+form label {
+    font-size: 1rem;
+    color: #4a5568;
+    /* Color de texto coherente con el resto */
+    margin-bottom: 5px;
+}
+
+form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #cbd5e0;
+    /* Borde gris claro */
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 1rem;
+    color: #2d3748;
+    /* Color del texto */
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+form input[type="file"]:hover {
+    border-color: #3182ce;
+    /* Borde azul al pasar el cursor */
+}
+
+/* Estilo para la tabla */
+#resultados {
+    display: none;
+    margin-top: 20px; /* Opcional, para dar espacio superior */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #cbd5e0;
+    /* Borde gris claro */
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #4a5568;
+    /* Color de fondo de los encabezados */
+    color: white;
+    /* Texto blanco en encabezados */
+    font-size: 1rem;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f7fafc;
+    /* Fila alternante */
+}
+
+tbody tr:hover {
+    background-color: #edf2f7;
+    /* Fondo claro al pasar el cursor */
+}
+
+/* Estilos para los íconos */
+.coincidente-true::before {
+    content: '✔'; /* Tick verde */
+    color: green;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+
+.coincidente-false::before {
+    content: '✘'; /* Cruz roja */
+    color: red;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+
+/* Estilo para el botón de exportar a Excel */
+#exportarExcel {
+    padding: 10px 15px;
+    background-color: #3182ce; /* Color de fondo del botón */
+    color: white; /* Texto blanco */
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Espacio superior */
+}
+
+#exportarExcel:hover {
+    background-color: #2b6cb0; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+#exportarExcel:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Resaltado al enfocarse */
+}
+
+/* Estilo para el botón */
+form button {
+    padding: 10px 15px;
+    background-color: #3182ce;
+    /* Color de fondo del botón */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #2b6cb0;
+    /* Color de fondo más oscuro al pasar el cursor */
+}
+
+form button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5);
+    /* Resaltado al enfocarse */
+}
+
+/* Estilo para el botón de exportar a Excel */
+#exportarExcel {
+    padding: 10px 15px;
+    background-color: #3182ce; /* Color de fondo del botón */
+    color: white; /* Texto blanco */
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Espacio superior */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el texto y la imagen */
+}
+
+#exportarExcel img {
+    height: 20px; /* Ajusta el tamaño de la imagen si es necesario */
+    vertical-align: middle;
+}
+
+#exportarExcel:hover {
+    background-color: #2b6cb0; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+#exportarExcel:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Resaltado al enfocarse */
+}
+
+/* Estilo para el botón de volver atrás */
+#botonVolver {
+    padding: 10px 15px;
+    background-color: #3182ce; /* Color de fondo del botón */
+    color: white; /* Texto blanco */
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block; /* Asegura que el botón no ocupe toda la fila */
+}
+
+#botonVolver:hover {
+    background-color: #2b6cb0; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+#botonVolver:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Resaltado al enfocarse */
+}
+
+/* Adaptación para dispositivos móviles */
+@media (max-width: 600px) {
+    form {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    form input[type="file"],
+    form button {
+        font-size: 0.9rem;
+    }
+}
+
+/* Pie de página */
+.pie {
+    background: #4a5568;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pie a {
+    color: #e2e8f0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.pie a:hover {
+    color: #cbd5e0;
+}
+
+.icon-github {
+    width: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
