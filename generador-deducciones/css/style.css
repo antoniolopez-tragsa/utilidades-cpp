@@ -120,83 +120,6 @@ form input[type="file"]:hover {
     /* Borde azul al pasar el cursor */
 }
 
-/* Estilo para la tabla */
-#resultados {
-    display: none;
-    margin-top: 20px; /* Opcional, para dar espacio superior */
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th,
-td {
-    border: 1px solid #cbd5e0;
-    /* Borde gris claro */
-    padding: 12px;
-    text-align: center;
-}
-
-th {
-    background-color: #4a5568;
-    /* Color de fondo de los encabezados */
-    color: white;
-    /* Texto blanco en encabezados */
-    font-size: 1rem;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f7fafc;
-    /* Fila alternante */
-}
-
-tbody tr:hover {
-    background-color: #edf2f7;
-    /* Fondo claro al pasar el cursor */
-}
-
-/* Estilos para los íconos */
-.coincidente-true::before {
-    content: '✔'; /* Tick verde */
-    color: green;
-    font-weight: bold;
-    font-size: 1.5em;
-    margin-right: 5px;
-}
-
-.coincidente-false::before {
-    content: '✘'; /* Cruz roja */
-    color: red;
-    font-weight: bold;
-    font-size: 1.5em;
-    margin-right: 5px;
-}
-
-/* Estilo para el botón de exportar a Excel */
-#exportarExcel {
-    padding: 10px 15px;
-    background-color: #3182ce; /* Color de fondo del botón */
-    color: white; /* Texto blanco */
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px; /* Espacio superior */
-}
-
-#exportarExcel:hover {
-    background-color: #2b6cb0; /* Color de fondo más oscuro al pasar el cursor */
-}
-
-#exportarExcel:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Resaltado al enfocarse */
-}
-
 /* Estilo para el botón */
 form button {
     padding: 10px 15px;
@@ -220,36 +143,6 @@ form button:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5);
     /* Resaltado al enfocarse */
-}
-
-/* Estilo para el botón de exportar a Excel */
-#exportarExcel {
-    padding: 10px 15px;
-    background-color: #3182ce; /* Color de fondo del botón */
-    color: white; /* Texto blanco */
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px; /* Espacio superior */
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Espacio entre el texto y la imagen */
-}
-
-#exportarExcel img {
-    height: 20px; /* Ajusta el tamaño de la imagen si es necesario */
-    vertical-align: middle;
-}
-
-#exportarExcel:hover {
-    background-color: #2b6cb0; /* Color de fondo más oscuro al pasar el cursor */
-}
-
-#exportarExcel:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Resaltado al enfocarse */
 }
 
 /* Estilo para el botón de volver atrás */
