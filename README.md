@@ -12,6 +12,9 @@ Este proyecto es una página web diseñada para proporcionar un resumen de los C
 - **Cálculo de pluses de nóminas**:
   - Herramientas para gestionar y revisar compensaciones adicionales en áreas de **Mantenimiento** y **Restauración**.
 
+- **Cálculo de deducciones**:
+  - Utilidad para generar el **texto asociado a cada deducción** del informe mensual.
+
 ## Estructura del proyecto
 
 El proyecto está organizado de la siguiente manera:
@@ -34,6 +37,8 @@ El proyecto está organizado de la siguiente manera:
 │   └── index.html       # Herramienta para cálculo de pluses de mantenimiento
 ├── restauracion/
 │   └── index.html       # Herramienta para cálculo de pluses de restauración
+├── generador-deducciones/
+│   └── index.html       # Herramienta para cálculo del texto de las deducciones
 ├── LICENSE.txt          # Archivo de licencia MIT
 └── index.html           # Página principal
 ```
