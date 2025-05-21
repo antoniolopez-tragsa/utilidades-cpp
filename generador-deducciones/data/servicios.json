@@ -1,0 +1,78 @@
+{
+  "servicio": {
+    "nombre": "Reprografía",
+    "tipos_incidencia": [
+      {
+        "tipo": "emergencia",
+        "tiempo_maximo_respuesta": "1h",
+        "tiempo_maximo_resolucion": "2h",
+        "fallo_calidad": "FC1"
+      },
+      {
+        "tipo": "urgente",
+        "tiempo_maximo_respuesta": "2h",
+        "tiempo_maximo_resolucion": "12h",
+        "fallo_calidad": "FC2"
+      },
+      {
+        "tipo": "ordinaria",
+        "tiempo_maximo_respuesta": "2h",
+        "tiempo_maximo_resolucion": "24h",
+        "fallo_calidad": "FC3"
+      }
+    ],
+    "indicadores": [
+      {
+        "nombre": "No se atienden indicaciones del servicio de informática del centro",
+        "fallo_calidad": "FC2",
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      },
+      {
+        "nombre": "No se realiza un servicio global de reparaciones in situ",
+        "fallo_calidad": "FC1",
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      },
+      {
+        "nombre": "Averías reiteradas en fotocopiadoras por deficiencias en las revisiones periódicas",
+        "fallo_calidad": "FC1",
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      },
+      {
+        "nombre": "Mantenimiento fuera del lapso",
+        "fallo_calidad": "FC2",
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      },
+      {
+        "nombre": "Calidad deficiente de las impresiones",
+        "fallo_calidad": [
+          "FC1",
+          "FC2"
+        ],
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      },
+      {
+        "nombre": "Mantenimiento correctivo mal hecho",
+        "fallo_calidad": "FC",
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      },
+      {
+        "nombre": "Adjudicatario no realiza transporte del paquete requerido",
+        "fallo_calidad": "FC1",
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      },
+      {
+        "nombre": "No se atienden averías de las máquinas en tiempo",
+        "fallo_calidad": "FC",
+        "genera_fallo_disponibilidad": false,
+        "tipo": "específico"
+      }
+    ]
+  }
+}
