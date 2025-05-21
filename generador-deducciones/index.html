@@ -25,6 +25,54 @@
         <!-- Principal -->
         <main class="principal">
             <button id="botonVolver" type="button" onclick="volverAtras()">Volver Atrás</button>
+
+            <form id="formularioDeduccion">
+                <label for="servicio">Servicio:</label>
+                <select id="servicio" name="servicio">
+                    <option value="">Selecciona un servicio</option>
+                </select>
+
+                <label for="tipoIncidencia">Tipo de incidencia:</label>
+                <select id="tipoIncidencia" name="tipoIncidencia">
+                    <option value="">Selecciona una opción</option>
+                </select>
+
+                <div id="infoTiempos" style="display:none;">
+                    <p><strong>Tiempo máximo de respuesta:</strong> <span id="tiempoRespuesta"></span></p>
+                    <p><strong>Tiempo máximo de resolución:</strong> <span id="tiempoResolucion"></span></p>
+                </div>
+
+                <label for="indicador">Indicador incumplido:</label>
+                <select id="indicador" name="indicador">
+                    <option value="">Selecciona un indicador</option>
+                </select>
+
+                <div id="infoIndicador" style="display:none;">
+                    <p><strong>Fallo de disponibilidad:</strong> <span id="disponibilidad"></span></p>
+                    <p><strong>Fallo de calidad:</strong> <span id="calidad"></span></p>
+                </div>
+
+                <label for="fechaRegistro">Fecha de registro:</label>
+                <input type="text" id="fechaRegistro" placeholder="DD/MM/AAAA hh:mm:ss">
+
+                <label for="fechaRespuestaMaxima">Fecha de respuesta máxima:</label>
+                <input type="text" id="fechaRespuestaMaxima" placeholder="DD/MM/AAAA hh:mm:ss">
+
+                <label for="fechaRespuesta">Fecha de respuesta:</label>
+                <input type="text" id="fechaRespuesta" placeholder="DD/MM/AAAA hh:mm:ss">
+
+                <label for="fechaResolucionMaxima">Fecha de resolución máxima:</label>
+                <input type="text" id="fechaResolucionMaxima" placeholder="DD/MM/AAAA hh:mm:ss">
+
+                <label for="fechaResolucion">Fecha de resolución:</label>
+                <input type="text" id="fechaResolucion" placeholder="DD/MM/AAAA hh:mm:ss">
+
+                <button type="button" onclick="evaluarDeduccion()">Evaluar deducción</button>
+
+                <div id="resultadoDeduccion" style="display:none; margin-top: 15px;">
+                    <p><strong>Resultado:</strong> <span id="mensajeDeduccion"></span></p>
+                </div>
+            </form>
         </main>
 
         <!-- Pie de página -->

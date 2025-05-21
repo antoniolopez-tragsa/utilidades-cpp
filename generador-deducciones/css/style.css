@@ -145,6 +145,29 @@ form button:focus {
     /* Resaltado al enfocarse */
 }
 
+#infoTiempos {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #edf2f7;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+}
+
+#resultadoDeduccion {
+    background-color: #e6fffa;
+    border: 1px solid #38b2ac;
+    padding: 15px;
+    border-radius: 6px;
+    color: #234e52;
+    font-size: 1rem;
+}
+
+#resultadoDeduccion strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #2c7a7b;
+}
+
 /* Estilo para el botón de volver atrás */
 #botonVolver {
     padding: 10px 15px;
