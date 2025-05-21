@@ -145,7 +145,7 @@ form button:focus {
     /* Resaltado al enfocarse */
 }
 
-#infoTiempos {
+#infoTiempos, #infoIndicador {
     margin-top: 10px;
     padding: 10px;
     background-color: #edf2f7;
