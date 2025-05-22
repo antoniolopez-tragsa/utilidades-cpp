@@ -113,6 +113,1359 @@
           "tipo": "específico"
         }
       ]
+    },
+    {
+      "nombre": "Limpieza",
+      "tipos_incidencia": [
+        {
+          "tipo": "emergencia",
+          "tiempo_maximo_respuesta": "5min",
+          "tiempo_maximo_resolucion": "5min",
+          "fallo_calidad": "FC1"
+        },
+        {
+          "tipo": "urgencia",
+          "tiempo_maximo_respuesta": "30min",
+          "tiempo_maximo_resolucion": "30min",
+          "fallo_calidad": "FC2"
+        },
+        {
+          "tipo": "ordinaria",
+          "tiempo_maximo_respuesta": "1h",
+          "tiempo_maximo_resolucion": "1h",
+          "fallo_calidad": "FC2"
+        },
+        {
+          "tipo": "programada",
+          "tiempo_maximo_respuesta": "15min",
+          "tiempo_maximo_resolucion": "15min",
+          "fallo_calidad": "FC1"
+        }
+      ],
+      "indicadores": [
+        {
+          "nombre": "La apariencia global del centro aparece desordenada en términos de higiene y estética",
+          "fallo_calidad": [
+            "FC1",
+            "FC2"
+          ],
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se perciben olores desagradables en alguna de las zonas del centro",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no implanta los programas de limpieza específicos para cada MUL previamente aprobados por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No hay personal disponible para atender el servicio en todo momento",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no ofrece una relación detallada de los productos de limpieza a utilizar siguiendo una codificación y describiendo sus características",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El uso de productos de limpieza incumple las premisas de protección al medio ambiente o las indicaciones de Medicina Preventiva",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El personal asignado al área quirúrgica, crítica o semicrítica no cumple con sus obligaciones y/o no viste el uniforme correcto",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se incumplen las indicaciones de Medicina Preventiva en cuanto a protocolos de funcionamiento y productos a utilizar",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "En alguna zona del hospital se producen molestias derivadas de la actividad desarrollada por los operarios del servicio de limpieza",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La limpieza programada no se aplica siguiendo los protocolos de limpieza establecidos",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La limpieza programada no se lleva a cabo con la periodicidad establecida",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Las peticiones de emergencia y de urgencia son atendidas fuera del tiempo de respuesta establecido",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Las peticiones ordinarias y/o programadas son atendidas fuera del tiempo de respuesta establecido",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La limpieza concreta no se aplica siguiendo los protocolos de limpieza establecidos",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La limpieza planificada no se aplica siguiendo los protocolos de limpieza establecidos",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se produce una patología infecciosa en el centro por incumplimiento de los procedimientos especiales de limpieza de protección",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los tratamientos de DDD programados, correctivos, de urgencia y de choque no se realizan con la frecuencia y en las condiciones establecidas en este PPT",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no utiliza las técnicas de limpieza establecidas para cada MUL aprobadas por la Administración",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El estado de conservación de los equipos y materiales de limpieza no es el adecuado",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Seguridad y Vigilancia",
+      "tipos_incidencia": [],
+      "indicadores": [
+        {
+          "nombre": "Se detectan personas indeseables en el recinto de los centros del perímetro",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Personal no autorizado accede a las zonas restringidas",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se producen robos u actos vandálicos reiteradamente en el interior de los centros (más de 1 al mes)",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se produce una demora de más de 5 minutos en respuesta a las situaciones de emergencia que requieran el servicio del personal de seguridad",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El servicio no está operativo las 24 horas para atender las posibles necesidades que puedan surgir",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El personal del servicio no tiene la formación adecuada en primeros auxilios y reanimación cardio‐pulmonar",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La unidad de control remoto y sus elementos de vigilancia automatizada no está en condiciones óptimas de operatividad las 24 horas del día",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se efectúan los controles de identidad en el acceso correctamente",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "A algún trabajador no se le facilita los pases de seguridad correspondientes",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se producen atascos y dificultades en las zonas de aparcamiento debido a un control defectuoso en dichas zonas",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se realizan los chequeos necesarios para la entrada y salida de paquetes del centro",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El personal del servicio omite el deber de realizar la denuncia pertinente ante las autoridades de los hechos que así lo requieran",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Las patrullas de vigilancia no realizan las acciones necesarias para garantizar la seguridad",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se oferta el servicio de escolta cuando las circunstancias así lo requieren",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no presta un servicio de custodia de objetos conforme a las normas aprobadas por la Administración",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no realiza simulacros periódicos para situaciones de emergencia según las pautas marcadas",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se omite la elaboración del parte diario de control e incidencias",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario utiliza aparatos de alarma o dispositivos de seguridad no homologados",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La empresa de seguridad carece de la habilitación especifica necesaria para el desarrollo de los servicios de seguridad privada",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Algún miembro del personal de seguridad no cuenta con la habilitación especifica necesaria",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Gestión de Residuos",
+      "tipos_incidencia": [],
+      "indicadores": [
+        {
+          "nombre": "La recogida de residuos no se realiza conforme al plan de gestión de residuos sanitarios del centro",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se perciben olores desagradables en alguna de las zonas del centro",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se incumplen las indicaciones de Medicina Preventiva",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Algún tipo de residuos no se recoge con la periodicidad establecida",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los contenedores y garrafas suministrados no están homologados para el uso que se les da",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se presentan los informes requeridos",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no suministra el material exigido en el PPT",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los contenedores y recipientes no están correctamente identificados y/o etiquetados",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cumplimenta y tramita la documentación exigida por la legislación competente",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Mantenimiento General",
+      "tipos_incidencia": [
+        {
+          "tipo": "emergencia",
+          "tiempo_maximo_respuesta": "inmediato",
+          "tiempo_maximo_resolucion": "12h"
+        },
+        {
+          "tipo": "urgencia",
+          "tiempo_maximo_respuesta": "1h",
+          "tiempo_maximo_resolucion": "24h"
+        },
+        {
+          "tipo": "ordinaria",
+          "tiempo_maximo_respuesta": "2h",
+          "tiempo_maximo_resolucion": "48h"
+        }
+      ],
+      "indicadores": [
+        {
+          "nombre": "El adjudicatario no realiza el mantenimiento de todos los activos incluidos en el ámbito del contrato",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no registra las características de los activos físicos de manera actualizada (valor real, localización, nivel de conservación, gasto generado, planes de mantenimiento asociados, recursos necesarios o normativa de cumplimiento, entre otros)",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se producen interrupciones o alteraciones en el funcionamiento de los servicios que perturban la actividad normal del hospital, derivados de las deficiencias en la implantación de los planes de mantenimiento",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El servicio no está operativo las 24 horas para atender las posibles necesidades que puedan surgir",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el edificio (pintura, carpintería, cerrajería, albañilería, etc.)",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de agua (temperatura, cortes de agua, calidad del agua‐hemodiálisis, etc.)",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de climatización (legionelosis, calefacción, aire acondicionado, etc.)",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de electricidad (falta de iluminación, grupo electrógenos, etc.)",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de detección y extinción de incendios",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de instalaciones hospitalarias",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de transporte (horizontal‐señalización, y vertical‐ascensores)",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de seguridad",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con el sistema de gases medicinales",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un mantenimiento defectuoso relacionado con cualquier otro sistema que sea competencia del adjudicatario",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no realiza un inventario de los activos del nuevo hospital en tiempo y forma establecidos",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La identificación de los activos mediante etiquetas es incorrecta en alguno de los elementos",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no implanta los planes de mantenimiento preventivo programado conforme a lo previamente aprobado por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se aplica correctamente el plan de mantenimiento para la lucha contra la legionela y/o se detectan niveles de concentración de legionela fuera de las normas en cualquier punto del hospital",
+          "fallo_calidad": [
+            "FC1",
+            "FC2"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no implanta los planes de mantenimiento correctivo conforme a lo previamente aprobado por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Existen interferencias en la actividad normal del centro derivadas de las actuaciones de mantenimiento correctivo sin tener los permisos de trabajo de la Administración para llevar a cabo dichas actuaciones",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no implanta los planes de mantenimiento técnico legal conforme a lo previamente aprobado por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detectan errores en la custodia, actualización y/o legalización de los libros oficiales de mantenimiento",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no realiza las pequeñas actuaciones de mejora bajo las indicaciones de la Administración",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cumple los tiempos de respuesta establecidos para realizar las actuaciones relacionadas con el mantenimiento correctivo",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El sistema informático de gestión del servicio no se integra con el aplicativo corporativo de gestión del inventario del Servicio Cántabro de salud",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Electromedicina",
+      "tipos_incidencia": [
+        {
+          "tipo": "emergencia",
+          "tiempo_maximo_respuesta": "Inmediato en horario laboral de 08‐22 horas y 1 hora fuera de horario laboral o sábados y festivos",
+          "tiempo_maximo_resolucion": "12 horas"
+        },
+        {
+          "tipo": "urgencia",
+          "tiempo_maximo_respuesta": "Inmediato en horario laboral de 08‐22 horas y 2 horas fuera de horario laboral o sábados y festivos",
+          "tiempo_maximo_resolucion": "24 horas"
+        },
+        {
+          "tipo": "ordinaria",
+          "tiempo_maximo_respuesta": "2 horas",
+          "tiempo_maximo_resolucion": "48 horas"
+        }
+      ],
+      "indicadores": [
+        {
+          "nombre": "El adjudicatario no realiza el mantenimiento de todos los equipos de electromedicina incluidos en el ámbito del contrato",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cumple las directrices marcadas en la recepción de aparataje",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se producen interrupciones o alteraciones en el funcionamiento del equipamiento de electromedicina que perturban la actividad normal del centro, derivados de las deficiencias en la implantación de los Planes de mantenimiento previamente aprobados por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El servicio no está operativo las 24 horas para atender las posibles necesidades que puedan surgir",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El servicio no establece una coordinación con el servicio de mantenimiento general conforme a los requerimientos de la administración",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no implanta los planes de mantenimiento preventivo programado conforme a lo previamente aprobado por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no implanta los planes de mantenimiento correctivo conforme a lo previamente aprobado por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Existen interferencias en la actividad normal del centro derivadas de las actuaciones de mantenimiento correctivo sin tener los permisos de trabajo de la Administración para llevar a cabo dichas actuaciones",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no implanta los planes de mantenimiento técnico‐legal conforme a lo previamente aprobado por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detectan errores en la custodia, actualización y/o legalización de los libros oficiales de mantenimiento",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El sistema informático de gestión del servicio no se integra con el aplicativo corporativo de gestión del inventario",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cumple los tiempos de respuesta establecidos para realizar las actuaciones relacionadas con el mantenimiento correctivo",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Viales y Jardines",
+      "tipos_incidencia": [],
+      "indicadores": [
+        {
+          "nombre": "El adjudicatario no está disponible para actuar ante las situaciones de emergencias que puedan afectar a la seguridad de los usuarios",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cuenta con la ficha explicativa correspondiente para cada uno de los productos",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se incumple con las indicaciones de realizar podas",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La altura del césped no es adecuada",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los parterres no están abastecidos con una estética objetivamente agradable",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cumple con alguno los estándares de calidad establecidos en el servicio de jardinería",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El acceso a las instalaciones a través de las rutas de circulación (vehículos o viandantes) no cumplen con las garantías de calidad establecidas",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los límites externos, estructuras externas, mobiliario urbano e instalaciones (alumbrado, bolardos, vallas, muros, etc.) no se encuentran correctamente mantenidos o en perfecto estado de limpieza",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Las papeleras no se encuentran en todo momento a menos del 75% y/o despiden olores",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Las instalaciones de riego no se encuentran en estado óptimo de mantenimiento",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El servicio de conservación de viales y jardines no cumple el plan específico de reducción y ahorro de consumo de agua previamente aprobado por la Administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Restauración",
+      "tipos_incidencia": [],
+      "indicadores": [
+        {
+          "nombre": "Algún acompañante de paciente pediátrico o cuidados paliativos no recibe el menú correspondiente",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se cumplen los horarios establecidos de suministro los menús a los usuarios del servicio, de manera que se producen retrasos en la entrega de las dietas a los pacientes",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El proceso completo del servicio (recepción, almacenamiento, manipulación, procesado, distribución y recogida) no se ajusta a las normas higiénicas establecidas por Medicina Preventiva",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los proveedores de las materias primas no cumplen con la normativa en materia de conservación y manipulación de alimentos",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se dispone de una reserva de productos almacenados listos para ser utilizados que garantice la cobertura de las necesidades de cada hospital durante dos días",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Alguno de los alimentos proporcionados a algún paciente y/o trabajador del centro le ha ocasionado una intoxicación por defectos en el control de las caducidades o por cualquier otro motivo en la prestación del servicio",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se observa en alguna etapa, la ruptura del proceso de cadena fría",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Existe algún retraso o deficiencia en la distribución de las bandejas por parte del personal del servicio",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Existe algún retraso o deficiencia en la recogida de la vajilla, bandejas, carros o menaje por parte del personal del servicio",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los menús ofertados no cubren las necesidades nutricionales de los pacientes según las RDA",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los alimentos no conservan las condiciones organolépticas y/o de temperatura óptimas en el momento en que son servidos a los usuarios para su consumo",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se oferta la rotación y ciclos de menús para los pacientes según lo establecido",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los pacientes con dieta basal no pueden elegir entre dos opciones diferentes en el primer y segundo plato del almuerzo y la cena",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se ofertan los extras establecidos para aquellos pacientes que así lo requieran por prescripción facultativa",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se dispone de menús específicos para festivos especiales",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se suministra la dieta equivocada a pacientes con alergias o intolerancias alimenticias",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se ofertan alternativas alimenticias a los colectivos minoritarios por razón de religión o hábitos alimentarios",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se ofertan menús infantiles diferenciados",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El porcentaje de rechazos de los menús servidos por el adjudicatario se encuentra por encima del 2%",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se ofertan los menús para el personal de guardia y familiares según lo establecido",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no dispone de un manual de definición de dietas basales y terapéuticas según lo establecido",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no sigue las directrices establecidas por la Unidad de Dietética del hospital",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El catálogo de los productos a utilizar no se ajusta a los requerimientos especificados en el Documento Descriptivo",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no presenta las autorizaciones sanitarias de funcionamiento de sus proveedores",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no remite los registros establecidos en el manual de procedimientos",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Las materias primas y productos suministrados no cumplen con las especificaciones del etiquetado y presentación previamente aprobadas por la Administración",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Existencia de reiteraciones en la no conformidad de los informes de las auditorías de verificación de la actividad del servicio",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los análisis de los productos alimenticios y/o superficies en contacto con los alimentos no cumplen con lo establecido por la administración",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Gestión Energética",
+      "tipos_incidencia": [
+        {
+          "tipo": "Fuentes de energía eléctrica - emergencia",
+          "tiempo_maximo_respuesta": "Inmediatamente",
+          "tiempo_maximo_resolucion": "< 1 minuto"
+        },
+        {
+          "tipo": "Fuentes de energía eléctrica - urgencia",
+          "tiempo_maximo_respuesta": "1 minuto",
+          "tiempo_maximo_resolucion": "2 minutos"
+        },
+        {
+          "tipo": "Fuentes de energía eléctrica - ordinaria",
+          "tiempo_maximo_respuesta": "5 minutos",
+          "tiempo_maximo_resolucion": "10 minutos"
+        },
+        {
+          "tipo": "Sistema de Gestión de la Energía - emergencia",
+          "tiempo_maximo_respuesta": "5 minutos",
+          "tiempo_maximo_resolucion": "1 hora"
+        },
+        {
+          "tipo": "Sistema de Gestión de la Energía - urgencia",
+          "tiempo_maximo_respuesta": "1 hora",
+          "tiempo_maximo_resolucion": "4 horas"
+        },
+        {
+          "tipo": "Sistema de Gestión de la Energía - ordinaria",
+          "tiempo_maximo_respuesta": "4 horas",
+          "tiempo_maximo_resolucion": "8 horas"
+        },
+        {
+          "tipo": "Transformación y Distribución Eléctrica - emergencia",
+          "tiempo_maximo_respuesta": "Inmediatamente",
+          "tiempo_maximo_resolucion": "< 1 minuto"
+        },
+        {
+          "tipo": "Transformación y Distribución Eléctrica - urgencia",
+          "tiempo_maximo_respuesta": "1 minuto",
+          "tiempo_maximo_resolucion": "2 minutos"
+        },
+        {
+          "tipo": "Transformación y Distribución Eléctrica - ordinaria",
+          "tiempo_maximo_respuesta": "5 minutos",
+          "tiempo_maximo_resolucion": "10 minutos"
+        },
+        {
+          "tipo": "Producción y Distribución Térmica - emergencia",
+          "tiempo_maximo_respuesta": "Inmediatamente",
+          "tiempo_maximo_resolucion": "10 minutos"
+        },
+        {
+          "tipo": "Producción y Distribución Térmica - urgencia",
+          "tiempo_maximo_respuesta": "15 minutos",
+          "tiempo_maximo_resolucion": "1 hora"
+        },
+        {
+          "tipo": "Producción y Distribución Térmica - ordinaria",
+          "tiempo_maximo_respuesta": "2 horas",
+          "tiempo_maximo_resolucion": "4 horas"
+        },
+        {
+          "tipo": "Sistema de alumbrado ordinario - emergencia",
+          "tiempo_maximo_respuesta": "1 minuto",
+          "tiempo_maximo_resolucion": "10 minutos"
+        },
+        {
+          "tipo": "Sistema de alumbrado ordinario - urgencia",
+          "tiempo_maximo_respuesta": "15 minutos",
+          "tiempo_maximo_resolucion": "1 hora"
+        },
+        {
+          "tipo": "Sistema de alumbrado ordinario - ordinaria",
+          "tiempo_maximo_respuesta": "2 horas",
+          "tiempo_maximo_resolucion": "4 horas"
+        }
+      ],
+      "indicadores": [
+        {
+          "nombre": "El suministro de energía eléctrica no está garantizado durante las 24 horas del día conforme a las especificaciones establecidas",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El suministro de energía térmica no está garantizado durante las 24 horas del día conforme a las especificaciones establecidas",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El acceso a las redes externas es defectuoso por causa imputable al adjudicatario",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no realiza la compra de energías primarias conforme a las especificaciones establecidas",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cumple con los tiempos de respuesta para situaciones de urgencia, emergencia y ordinarias",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se ha instalado o se ha instalado con deficiencias un puesto de control remoto que permita la telegestión de las instalaciones",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Abastecimiento y Tratamiento de Agua",
+      "tipos_incidencia": [
+        {
+          "tipo": "Sistemas de Control de Instalaciones - emergencia",
+          "tiempo_maximo_respuesta": "Inmediatamente",
+          "tiempo_maximo_resolucion": "12 horas"
+        },
+        {
+          "tipo": "Sistemas de Control de Instalaciones - urgencia",
+          "tiempo_maximo_respuesta": "4 horas",
+          "tiempo_maximo_resolucion": "24 horas"
+        },
+        {
+          "tipo": "Sistemas de Control de Instalaciones - ordinaria",
+          "tiempo_maximo_respuesta": "24 horas",
+          "tiempo_maximo_resolucion": "72 horas"
+        },
+        {
+          "tipo": "Sistema de Tratamiento de Aguas - emergencia",
+          "tiempo_maximo_respuesta": "Inmediatamente",
+          "tiempo_maximo_resolucion": "4 horas"
+        },
+        {
+          "tipo": "Sistema de Tratamiento de Aguas - urgencia",
+          "tiempo_maximo_respuesta": "12 horas",
+          "tiempo_maximo_resolucion": "24 horas"
+        },
+        {
+          "tipo": "Sistema de Tratamiento de Aguas - ordinaria",
+          "tiempo_maximo_respuesta": "48 horas",
+          "tiempo_maximo_resolucion": "72 horas"
+        },
+        {
+          "tipo": "Sistemas de Diálisis - emergencia",
+          "tiempo_maximo_respuesta": "Inmediatamente",
+          "tiempo_maximo_resolucion": "4 horas"
+        },
+        {
+          "tipo": "Sistemas de Diálisis - urgencia",
+          "tiempo_maximo_respuesta": "2 horas",
+          "tiempo_maximo_resolucion": "12 horas"
+        },
+        {
+          "tipo": "Sistemas de Diálisis - ordinaria",
+          "tiempo_maximo_respuesta": "24 horas",
+          "tiempo_maximo_resolucion": "24 horas"
+        },
+        {
+          "tipo": "Sistemas de Detección y Extinción de Incendios - emergencia",
+          "tiempo_maximo_respuesta": "Inmediatamente",
+          "tiempo_maximo_resolucion": "4 horas"
+        },
+        {
+          "tipo": "Sistemas de Detección y Extinción de Incendios - urgencia",
+          "tiempo_maximo_respuesta": "2 horas",
+          "tiempo_maximo_resolucion": "24 horas"
+        },
+        {
+          "tipo": "Sistemas de Detección y Extinción de Incendios - ordinaria",
+          "tiempo_maximo_respuesta": "24 horas",
+          "tiempo_maximo_resolucion": "48 horas"
+        }
+      ],
+      "indicadores": [
+        {
+          "nombre": "Los depósitos no mantienen un nivel mínimo para abastecer al hospital durante al menos 48 horas",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El tratamiento de prevención de la legionela no se realiza según la normativa vigente",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se producen alertas en el sistema al superar en +/‐ los valores establecidos",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El suministro de agua no es continuo 24 horas al día y 365 días al año",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Existen irregularidades en los tratamientos de purificación del agua",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los depósitos no están diseñados de forma que funcionen independientemente en caso de avería o reparación",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no cumple con los tiempos de respuesta para situaciones de urgencia, emergencia y ordinarias aprobadas por la Administración",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Los sistemas de control y ahorro de consumos no son adecuados y/o eficientes",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "La calidad de los diferentes tipos de agua no se ajusta a la normativa",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Logística",
+      "tipos_incidencia": [
+        {
+          "tipo": "Reposición suministros - emergencia",
+          "tiempo_maximo_respuesta": "30 minutos",
+          "tiempo_maximo_resolucion": "Ninguno"
+        },
+        {
+          "tipo": "Reposición suministros - urgencia",
+          "tiempo_maximo_respuesta": "1 hora",
+          "tiempo_maximo_resolucion": "2 horas"
+        },
+        {
+          "tipo": "Transporte interno - emergencia",
+          "tiempo_maximo_respuesta": "5 minutos",
+          "tiempo_maximo_resolucion": "Ninguno"
+        },
+        {
+          "tipo": "Transporte interno - urgencia",
+          "tiempo_maximo_respuesta": "15 minutos",
+          "tiempo_maximo_resolucion": "30 minutos"
+        },
+        {
+          "tipo": "Transporte externo - emergencia",
+          "tiempo_maximo_respuesta": "15 minutos",
+          "tiempo_maximo_resolucion": "30 minutos"
+        },
+        {
+          "tipo": "Transporte externo - urgencia",
+          "tiempo_maximo_respuesta": "30 minutos",
+          "tiempo_maximo_resolucion": "1 hora"
+        },
+        {
+          "tipo": "Transporte externo - ordinario",
+          "tiempo_maximo_respuesta": "1 hora",
+          "tiempo_maximo_resolucion": "2 horas"
+        },
+        {
+          "tipo": "Distribución Historias Clínicas - emergencia",
+          "tiempo_maximo_respuesta": "30 minutos",
+          "tiempo_maximo_resolucion": "45 minutos"
+        },
+        {
+          "tipo": "Distribución Historias Clínicas - urgencia",
+          "tiempo_maximo_respuesta": "45 minutos",
+          "tiempo_maximo_resolucion": "1 hora"
+        },
+        {
+          "tipo": "Distribución Historias Clínicas - ordinario",
+          "tiempo_maximo_respuesta": "Horario establecido",
+          "tiempo_maximo_resolucion": "30 minutos"
+        }
+      ],
+      "indicadores": [
+        {
+          "nombre": "El adjudicatario no realiza el reparto de suministros incluidos en el ámbito del contrato",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El adjudicatario no registra las características de los activos físicos de manera actualizada (valor real, localización, nivel de conservación, caducidades, …)",
+          "fallo_calidad": "FC3",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se producen interrupciones o alteraciones en el funcionamiento de los servicios que perturban la actividad normal del hospital, derivados de las deficiencias en la disponibilidad de las historias clínicas, el reparto de suministros o transporte interno‐externo",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El servicio no está operativo las 24 horas para atender las posibles necesidades que puedan surgir",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un transporte interno defectuoso",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un transporte externo defectuoso",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se detecta un reparto defectuoso de suministros relacionado con el sistema de almacenaje central",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se cumple el servicio en los tiempos establecidos.",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Se producen interrupciones o alteraciones en el funcionamiento del hospital en su actividad normal derivadas de las deficiencias en la disponibilidad de la documentación clínica.",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "El servicio no está operativo en los horarios acordado",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "No se cumplen las normas establecidas para la correcta custodia y confidencialidad de la documentación clínica.",
+          "fallo_calidad": "FC1",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Detección de fallos reiterados en la digitalización",
+          "fallo_calidad": "FC2",
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        }
+      ]
+    },
+    {
+      "nombre": "Informática",
+      "tipos_incidencia": [
+        {
+          "tipo": "Informática - alta - Incumplimiento en los indicadores de resolución de incidencias",
+          "tiempo_maximo_respuesta": "15 minutos",
+          "tiempo_maximo_resolucion": "1 hora"
+        },
+        {
+          "tipo": "Informática - media - Incumplimiento en los indicadores de resolución de incidencias",
+          "tiempo_maximo_respuesta": "1 hora",
+          "tiempo_maximo_resolucion": "4 horas"
+        },
+        {
+          "tipo": "Informática - baja - Incumplimiento en los indicadores de resolución de incidencias",
+          "tiempo_maximo_respuesta": "1 hora",
+          "tiempo_maximo_resolucion": "12 horas"
+        },
+        {
+          "tipo": "Informática - implantación - Incumplimiento en lo relativo a implantaciones y modificaciones de la configuración base",
+          "tiempo_maximo_respuesta": "-",
+          "tiempo_maximo_resolucion": "2 días"
+        },
+        {
+          "tipo": "Informática - modificación - Incumplimiento en lo relativo a implantaciones y modificaciones de la configuración base",
+          "tiempo_maximo_respuesta": "-",
+          "tiempo_maximo_resolucion": "1 día"
+        },
+        {
+          "tipo": "Informática - promociones/producción - Incumplimiento en lo relativo a las promociones entre entornos y pasos a producción de aplicaciones",
+          "tiempo_maximo_respuesta": "-",
+          "tiempo_maximo_resolucion": "8 horas"
+        },
+        {
+          "tipo": "Informática - alta - Incumplimientos en lo relativo a la ejecución de tareas de administración y explotación",
+          "tiempo_maximo_respuesta": "60 minutos",
+          "tiempo_maximo_resolucion": "1 hora"
+        },
+        {
+          "tipo": "Informática - media - Incumplimientos en lo relativo a la ejecución de tareas de administración y explotación",
+          "tiempo_maximo_respuesta": "90 minutos",
+          "tiempo_maximo_resolucion": "4 horas"
+        },
+        {
+          "tipo": "Informática - baja - Incumplimientos en lo relativo a la ejecución de tareas de administración y explotación",
+          "tiempo_maximo_respuesta": "90 minutos",
+          "tiempo_maximo_resolucion": "24 horas"
+        }
+      ],
+      "indicadores": [
+        {
+          "nombre": "Incumplimiento en los indicadores de resolución de incidencias",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimiento en lo relativo a implantaciones y modificaciones de la configuración base",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimiento en lo relativo a las promociones entre entornos y pasos a producción de aplicaciones",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimientos en lo relativo a la ejecución de proyectos.",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimientos en lo relativo a la ejecución de tareas de administración y explotación",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimientos en los aspectos relativos a la atención telefónica del CAU",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimientos en los aspectos relativos a la resolución de consultas e incidencias por parte del CAU",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimientos relativos al grado de exactitud del inventario TIC.",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimientos relativos a la realización de copias de seguridad",
+          "fallo_calidad": "FC",
+          "genera_fallo_disponibilidad": true,
+          "tipo": "específico"
+        },
+        {
+          "nombre": "Incumplimientos relativos a la gestión del conocimiento",
+          "fallo_calidad": [
+            "FC2",
+            "FC3"
+          ],
+          "genera_fallo_disponibilidad": false,
+          "tipo": "específico"
+        }
+      ]
     }
   ]
 }
