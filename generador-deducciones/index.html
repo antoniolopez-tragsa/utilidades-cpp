@@ -6,52 +6,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario para cálculo de deducciones</title>
 
-    <!-- No indexar por los motores de búsqueda -->
+    <!-- Evita que los motores de búsqueda indexen esta página -->
     <meta name="robots" content="noindex">
 
-    <!-- Estilos -->
+    <!-- Enlaces a hojas de estilo y favicon -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
 </head>
 
 <body>
-    <!-- Contenedor principal -->
+    <!-- Contenedor general del sitio -->
     <div class="wrapper">
-        <!-- Encabezado -->
+
+        <!-- Encabezado principal -->
         <header class="cabecera">
             <h1>Formulario para cálculo de deducciones</h1>
         </header>
 
-        <!-- Principal -->
+        <!-- Contenido principal -->
         <main class="principal">
+
+            <!-- Botón para volver a la página anterior -->
             <button id="botonVolver" type="button" onclick="volverAtras()">Volver Atrás</button>
 
+            <!-- Formulario principal -->
             <form id="formularioDeduccion">
+
+                <!-- Selector de servicio -->
                 <label for="servicio">Servicio:</label>
                 <select id="servicio" name="servicio">
                     <option value="">Selecciona un servicio</option>
                 </select>
 
+                <!-- Selector de área funcional -->
+                <label for="areaFuncional">Área funcional:</label>
+                <select id="areaFuncional" name="areaFuncional">
+                    <option value="">Selecciona un área funcional</option>
+                </select>
+
+                <!-- Selector de tipo de incidencia -->
                 <label for="tipoIncidencia">Tipo de incidencia:</label>
                 <select id="tipoIncidencia" name="tipoIncidencia">
                     <option value="">Selecciona una opción</option>
                 </select>
 
+                <!-- Información de tiempos de respuesta/resolución (se muestra al seleccionar tipo de incidencia) -->
                 <div id="infoTiempos" style="display:none;">
                     <p><strong>Tiempo máximo de respuesta:</strong> <span id="tiempoRespuesta"></span></p>
                     <p><strong>Tiempo máximo de resolución:</strong> <span id="tiempoResolucion"></span></p>
                 </div>
 
+                <!-- Selector de indicador incumplido -->
                 <label for="indicador">Indicador incumplido:</label>
                 <select id="indicador" name="indicador">
                     <option value="">Selecciona un indicador</option>
                 </select>
 
+                <!-- Información del indicador seleccionado (fallo de calidad y disponibilidad) -->
                 <div id="infoIndicador" style="display:none;">
                     <p><strong>Fallo de calidad:</strong> <span id="calidad"></span></p>
                     <p><strong>Fallo de disponibilidad:</strong> <span id="disponibilidad"></span></p>
                 </div>
 
+                <!-- Fechas relevantes para el cálculo de la deducción -->
                 <label for="fechaRegistro">Fecha de registro:</label>
                 <input type="text" id="fechaRegistro" placeholder="DD/MM/AAAA hh:mm:ss">
 
@@ -67,8 +84,10 @@
                 <label for="fechaResolucion">Fecha de resolución:</label>
                 <input type="text" id="fechaResolucion" placeholder="DD/MM/AAAA hh:mm:ss">
 
+                <!-- Botón para lanzar la evaluación de deducción -->
                 <button type="button" onclick="evaluarDeduccion()">Evaluar deducción</button>
 
+                <!-- Resultado de la evaluación (oculto hasta que se evalúe) -->
                 <div id="resultadoDeduccion" style="display:none; margin-top: 15px;">
                     <p><strong>Resultado:</strong> <span id="mensajeDeduccion"></span></p>
                 </div>

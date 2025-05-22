@@ -3,6 +3,7 @@ function volverAtras() {
     window.history.back();
 }
 
+// Convierte una fecha en formato "DD/MM/AAAA hh:mm:ss" a un objeto Date
 function parseFecha(fechaStr) {
     const partes = fechaStr.split(/[/ :]/);
     if (partes.length < 6) return null;
@@ -10,13 +11,15 @@ function parseFecha(fechaStr) {
     return new Date(yyyy, mm - 1, dd, hh, min, ss);
 }
 
+// Calcula el número de días de exceso (fracciones cuentan como día completo)
 function calcularDiasExceso(fechaLimite, fechaReal) {
     const msPorDia = 1000 * 60 * 60 * 24;
     const diff = fechaReal - fechaLimite;
     if (diff <= 0) return 0;
-    return Math.ceil(diff / msPorDia); // Cada fracción cuenta como día completo
+    return Math.ceil(diff / msPorDia);
 }
 
+// Evalúa si hay deducción por incumplimiento de tiempos
 function evaluarDeduccion() {
     const fechaRespMax = parseFecha(document.getElementById('fechaRespuestaMaxima').value);
     const fechaResp = parseFecha(document.getElementById('fechaRespuesta').value);
@@ -47,18 +50,42 @@ function evaluarDeduccion() {
     document.getElementById('resultadoDeduccion').style.display = 'block';
 }
 
+// Ejecuta cuando la página está completamente cargada
 document.addEventListener('DOMContentLoaded', function () {
     fetch('data/servicios.json')
         .then(response => response.json())
         .then(json => {
+            // Verifica que haya al menos un servicio en el array
+            if (!json.servicios || !Array.isArray(json.servicios) || json.servicios.length === 0) {
+                throw new Error("El archivo JSON no contiene un array 'servicios' válido o está vacío.");
+            }
+
+            // Carga servicios en el selector
+            const servicios = json.servicios;
             const servicioSelect = document.getElementById('servicio');
             const tipoSelect = document.getElementById('tipoIncidencia');
             const indicadorSelect = document.getElementById('indicador');
 
-            // Para ahora, solo un servicio en el JSON
-            const servicios = [json.servicio];
+            // Carga áreas funcionales en el selector
+            const areaSelect = document.getElementById('areaFuncional');
+            const areas = json.areas_funcionales;
 
-            // Cargar selector de servicios
+            // Recorre cada grupo: crítica, grave, leve
+            for (const [nivel, zonas] of Object.entries(areas)) {
+                const group = document.createElement('optgroup');
+                group.label = nivel.charAt(0).toUpperCase() + nivel.slice(1); // Capitaliza
+
+                zonas.forEach(area => {
+                    const option = document.createElement('option');
+                    option.value = area;
+                    option.textContent = area;
+                    group.appendChild(option);
+                });
+
+                areaSelect.appendChild(group);
+            }
+
+            // Llenar el <select> de servicios
             servicios.forEach(servicio => {
                 const option = document.createElement('option');
                 option.value = servicio.nombre;
@@ -67,14 +94,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 servicioSelect.appendChild(option);
             });
 
-            // Al seleccionar servicio
+            // Evento al seleccionar un servicio
             servicioSelect.addEventListener('change', function () {
                 const selectedOption = servicioSelect.options[servicioSelect.selectedIndex];
                 if (!selectedOption.value) return;
 
                 const servicio = JSON.parse(selectedOption.dataset.info);
 
-                // Cargar tipos de incidencia
+                // Rellena tipos de incidencia
                 tipoSelect.innerHTML = '<option value="">Selecciona una opción</option>';
                 servicio.tipos_incidencia.forEach(t => {
                     const option = document.createElement('option');
@@ -85,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     tipoSelect.appendChild(option);
                 });
 
-                // Cargar indicadores
+                // Rellena indicadores
                 indicadorSelect.innerHTML = '<option value="">Selecciona un indicador</option>';
                 servicio.indicadores.forEach(ind => {
                     const option = document.createElement('option');
@@ -98,13 +125,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     indicadorSelect.appendChild(option);
                 });
 
-                // Resetear información visual
+                // Limpia visuales anteriores
                 document.getElementById('infoTiempos').style.display = 'none';
                 document.getElementById('infoIndicador').style.display = 'none';
                 document.getElementById('resultadoDeduccion').style.display = 'none';
             });
 
-            // Tipo de incidencia seleccionado
+            // Evento para mostrar info al seleccionar tipo de incidencia
             tipoSelect.addEventListener('change', function () {
                 const selected = tipoSelect.options[tipoSelect.selectedIndex];
                 const tiempoRespuesta = selected.dataset.respuesta;
@@ -119,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Indicador seleccionado
+            // Evento para mostrar info al seleccionar un indicador
             indicadorSelect.addEventListener('change', function () {
                 const selected = indicadorSelect.options[indicadorSelect.selectedIndex];
                 const fd = selected.dataset.falloDisponibilidad === "true" ? "Sí" : "No";
@@ -134,5 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         })
-        .catch(error => console.error("Error cargando el JSON:", error));
+        .catch(error => {
+            console.error("Error cargando el JSON:", error);
+            alert("Error cargando los datos del servicio. Verifica que el archivo 'data/servicios.json' exista y tenga el formato correcto.");
+        });
 });
