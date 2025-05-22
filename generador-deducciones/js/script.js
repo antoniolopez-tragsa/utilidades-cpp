@@ -101,16 +101,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const servicio = JSON.parse(selectedOption.dataset.info);
 
-                // Rellena tipos de incidencia
                 tipoSelect.innerHTML = '<option value="">Selecciona una opción</option>';
-                servicio.tipos_incidencia.forEach(t => {
-                    const option = document.createElement('option');
-                    option.value = t.tipo;
-                    option.textContent = t.tipo.charAt(0).toUpperCase() + t.tipo.slice(1);
-                    option.dataset.respuesta = t.tiempo_maximo_respuesta;
-                    option.dataset.resolucion = t.tiempo_maximo_resolucion;
-                    tipoSelect.appendChild(option);
-                });
+                if (Array.isArray(servicio.tipos_incidencia) && servicio.tipos_incidencia.length > 0) {
+                    tipoSelect.disabled = false;
+                    servicio.tipos_incidencia.forEach(t => {
+                        const option = document.createElement('option');
+                        option.value = t.tipo;
+                        option.textContent = t.tipo.charAt(0).toUpperCase() + t.tipo.slice(1);
+                        option.dataset.respuesta = t.tiempo_maximo_respuesta;
+                        option.dataset.resolucion = t.tiempo_maximo_resolucion;
+                        tipoSelect.appendChild(option);
+                    });
+                } else {
+                    tipoSelect.disabled = true;
+                }
 
                 // Rellena indicadores
                 indicadorSelect.innerHTML = '<option value="">Selecciona un indicador</option>';
