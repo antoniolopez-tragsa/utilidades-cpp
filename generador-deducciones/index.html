@@ -70,19 +70,35 @@
 
                 <!-- Fechas relevantes para el cálculo de la deducción -->
                 <label for="fechaRegistro">Fecha de registro:</label>
-                <input type="text" id="fechaRegistro" placeholder="DD/MM/AAAA hh:mm:ss">
+                <div class="campo-fecha">
+                    <input type="text" id="fechaRegistro" placeholder="DD/MM/AAAA hh:mm:ss">
+                    <button type="button" class="btn-pegar" data-target="fechaRegistro" title="Pegar">📋</button>
+                </div>
 
                 <label for="fechaRespuestaMaxima">Fecha de respuesta máxima:</label>
-                <input type="text" id="fechaRespuestaMaxima" placeholder="DD/MM/AAAA hh:mm:ss">
+                <div class="campo-fecha">
+                    <input type="text" id="fechaRespuestaMaxima" placeholder="DD/MM/AAAA hh:mm:ss">
+                    <button type="button" class="btn-pegar" data-target="fechaRespuestaMaxima" title="Pegar">📋</button>
+                </div>
 
                 <label for="fechaRespuesta">Fecha de respuesta:</label>
-                <input type="text" id="fechaRespuesta" placeholder="DD/MM/AAAA hh:mm:ss">
+                <div class="campo-fecha">
+                    <input type="text" id="fechaRespuesta" placeholder="DD/MM/AAAA hh:mm:ss">
+                    <button type="button" class="btn-pegar" data-target="fechaRespuesta" title="Pegar">📋</button>
+                </div>
 
                 <label for="fechaResolucionMaxima">Fecha de resolución máxima:</label>
-                <input type="text" id="fechaResolucionMaxima" placeholder="DD/MM/AAAA hh:mm:ss">
+                <div class="campo-fecha">
+                    <input type="text" id="fechaResolucionMaxima" placeholder="DD/MM/AAAA hh:mm:ss">
+                    <button type="button" class="btn-pegar" data-target="fechaResolucionMaxima"
+                        title="Pegar">📋</button>
+                </div>
 
                 <label for="fechaResolucion">Fecha de resolución:</label>
-                <input type="text" id="fechaResolucion" placeholder="DD/MM/AAAA hh:mm:ss">
+                <div class="campo-fecha">
+                    <input type="text" id="fechaResolucion" placeholder="DD/MM/AAAA hh:mm:ss">
+                    <button type="button" class="btn-pegar" data-target="fechaResolucion" title="Pegar">📋</button>
+                </div>
 
                 <!-- Botón para lanzar la evaluación de deducción -->
                 <button type="button" onclick="evaluarDeduccion()">Evaluar deducción</button>

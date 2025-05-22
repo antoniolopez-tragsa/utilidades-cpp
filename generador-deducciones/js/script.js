@@ -50,6 +50,28 @@ function evaluarDeduccion() {
     document.getElementById('resultadoDeduccion').style.display = 'block';
 }
 
+// Selecciona todos los botones con la clase 'btn-pegar'
+document.querySelectorAll('.btn-pegar').forEach(boton => {
+    // Añade un evento click a cada botón
+    boton.addEventListener('click', async function() {
+        // Obtiene el valor del atributo data-target (el id del input al que debe pegar el texto)
+        const inputId = this.getAttribute('data-target');
+        // Selecciona el input correspondiente usando el id obtenido
+        const input = document.getElementById(inputId);
+        try {
+            // Usa la API moderna de portapapeles para leer el texto actual del portapapeles
+            const texto = await navigator.clipboard.readText();
+            // Pega el texto obtenido en el input
+            input.value = texto;
+            // Opcional: pone el foco en el input después de pegar
+            input.focus();
+        } catch (err) {
+            // Si ocurre algún error (por permisos, navegador, etc.), muestra una alerta
+            alert('No se pudo leer el portapapeles. Permite el acceso en tu navegador.');
+        }
+    });
+});
+
 // Ejecuta cuando la página está completamente cargada
 document.addEventListener('DOMContentLoaded', function () {
     fetch('data/servicios.json')
