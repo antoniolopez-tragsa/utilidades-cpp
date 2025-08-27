@@ -1,3 +1,78 @@
+// --- Normalización y matching genérico tipo ↔ indicador ---
+const STOPWORDS_ES = new Set([
+    "de", "del", "la", "el", "los", "las", "y", "o", "u", "a", "en", "por", "para", "con",
+    "según", "lo", "al", "un", "una", "uno", "unos", "unas",
+    "incumplimiento", "incumplimientos", "relativo", "relativos", "relativa", "relativas",
+    "indicadores", "indicador", "resolución", "resolucion", "ejecución", "ejecucion",
+    "tareas", "proyectos", "promociones", "producción", "produccion", "atención", "atencion",
+    "alta", "media", "baja", "urgente", "urgencia", "emergencia", "ordinaria", "ordinario",
+    "implantación", "implantacion", "modificación", "modificacion", "configuración", "configuracion",
+    "entre", "base", "pasos"
+]);
+
+function normalize(str) {
+    return (str || "")
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")  // quita tildes
+        .replace(/[^a-z0-9\s]/g, " ")                      // signos → espacio
+        .replace(/\s+/g, " ")                              // espacios múltiples
+        .trim();
+}
+
+function tokenize(str) {
+    return normalize(str)
+        .split(" ")
+        .filter(w => w && !STOPWORDS_ES.has(w) && w.length > 2);
+}
+
+// Similaridad basada en palabras comunes (recall respecto al indicador)
+function similarityByWords(tipoStr, indicadorStr) {
+    const tw = new Set(tokenize(tipoStr));
+    const iw = tokenize(indicadorStr);
+    if (iw.length === 0) return 0;
+    let common = 0;
+    iw.forEach(w => { if (tw.has(w)) common++; });
+    return common / iw.length; // 1 = indicador totalmente cubierto por el tipo
+}
+
+// Devuelve el índice del mejor indicador o -1 si no hay coincidencia suficiente
+function findBestIndicadorIndex(tipoText, indicadorSelect) {
+    const tipoNorm = normalize(tipoText);
+    let bestIdx = -1;
+    let bestScore = 0;
+
+    for (let i = 0; i < indicadorSelect.options.length; i++) {
+        const opt = indicadorSelect.options[i];
+        if (!opt.value) continue; // saltar placeholder
+
+        const indText = opt.value;
+        const indNorm = normalize(indText);
+
+        // Regla 1: inclusión directa (muy fuerte)
+        if (tipoNorm.includes(indNorm) || indNorm.includes(tipoNorm)) {
+            const score = indNorm.length / Math.max(tipoNorm.length, indNorm.length);
+            if (score > bestScore) { bestScore = score; bestIdx = i; }
+            continue;
+        }
+
+        // Regla 2: similitud por palabras
+        const score = similarityByWords(tipoText, indText);
+        if (score > bestScore) { bestScore = score; bestIdx = i; }
+    }
+
+    // Umbral razonable para evitar falsos positivos
+    return bestScore >= 0.6 ? bestIdx : -1;
+}
+
+// Selecciona automáticamente el indicador más parecido al tipo
+function autoSelectIndicadorDesdeTipo(tipoText, indicadorSelect) {
+    const idx = findBestIndicadorIndex(tipoText, indicadorSelect);
+    if (idx >= 0) {
+        indicadorSelect.selectedIndex = idx;
+        indicadorSelect.dispatchEvent(new Event('change')); // para refrescar panel info
+    }
+}
+
 // Función para volver a la página anterior
 function volverAtras() {
     window.history.back();
@@ -296,16 +371,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     const tiempoRespuesta = selected.dataset.respuesta;
                     const tiempoResolucion = selected.dataset.resolucion;
 
-                    const infoT = document.getElementById('infoTiempos');
-                    if (tiempoRespuesta && tiempoResolucion && infoT) {
-                        const tR = document.getElementById('tiempoRespuesta');
-                        const tZ = document.getElementById('tiempoResolucion');
-                        if (tR) tR.textContent = tiempoRespuesta;
-                        if (tZ) tZ.textContent = tiempoResolucion;
-                        infoT.style.display = 'block';
-                    } else if (infoT) {
-                        infoT.style.display = 'none';
+                    if (tiempoRespuesta && tiempoResolucion) {
+                        document.getElementById('tiempoRespuesta').textContent = tiempoRespuesta;
+                        document.getElementById('tiempoResolucion').textContent = tiempoResolucion;
+                        document.getElementById('infoTiempos').style.display = 'block';
+                    } else {
+                        document.getElementById('infoTiempos').style.display = 'none';
                     }
+
+                    // 👇 NUEVO: funciona para cualquier caso (no solo informática)
+                    autoSelectIndicadorDesdeTipo(selected.value, document.getElementById('indicador'));
                 });
             }
 
