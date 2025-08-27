@@ -3,7 +3,7 @@ function volverAtras() {
     window.history.back();
 }
 
-// Convierte una fecha en formato "DD/MM/AAAA hh:mm:ss" a un objeto Date
+// Convierte "DD/MM/AAAA hh:mm:ss" a Date (hora local)
 function parseFecha(fechaStr) {
     const partes = fechaStr.split(/[/ :]/);
     if (partes.length < 6) return null;
@@ -11,7 +11,7 @@ function parseFecha(fechaStr) {
     return new Date(yyyy, mm - 1, dd, hh, min, ss);
 }
 
-// Calcula el número de días de exceso (fracciones cuentan como día completo)
+// Días de exceso (fracciones cuentan como día completo)
 function calcularDiasExceso(fechaLimite, fechaReal) {
     const msPorDia = 1000 * 60 * 60 * 24;
     const diff = fechaReal - fechaLimite;
@@ -19,7 +19,72 @@ function calcularDiasExceso(fechaLimite, fechaReal) {
     return Math.ceil(diff / msPorDia);
 }
 
-// Evalúa si hay deducción por incumplimiento de tiempos
+/* ================================
+   Factores y utilidades
+================================ */
+const FACTOR_FC = {
+    FC1: 0.005,
+    FC2: 0.0015,
+    FC3: 0.00055,
+    FCOG1: 0.00015,
+    FCOG2: 0.005
+};
+const FACTOR_FD = {
+    FD1: 0.00525,
+    FD2: 0.001556,
+    FD3: 0.000564
+};
+
+// Mapa para saber a qué nivel (critica | grave | leve) pertenece un área funcional concreta
+const AREA_A_NIVEL = {};
+
+// Devuelve factor de calidad, teniendo en cuenta si es "FC" genérico → mapeo por área
+function obtenerFactorFalloCalidad(cadenaFc, areaElegida) {
+    if (!cadenaFc) return 0;
+
+    const codigos = String(cadenaFc)
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean);
+
+    let maxFactor = 0;
+
+    codigos.forEach(code => {
+        if (code === "FC") {
+            // FC genérico: depende del área
+            const nivel = areaElegida ? AREA_A_NIVEL[areaElegida] : null;
+            if (nivel) {
+                const fdCode = fdPorNivel(nivel); // "FD1", "FD2", "FD3"
+                // Mapeo FCx según nivel
+                if (nivel.toLowerCase() === "critica" || nivel.toLowerCase() === "crítica") {
+                    maxFactor = Math.max(maxFactor, FACTOR_FC["FC1"]);
+                } else if (nivel.toLowerCase() === "grave") {
+                    maxFactor = Math.max(maxFactor, FACTOR_FC["FC2"]);
+                } else if (nivel.toLowerCase() === "leve") {
+                    maxFactor = Math.max(maxFactor, FACTOR_FC["FC3"]);
+                }
+            }
+        } else if (FACTOR_FC.hasOwnProperty(code)) {
+            maxFactor = Math.max(maxFactor, FACTOR_FC[code]);
+        }
+    });
+
+    return maxFactor;
+}
+
+// Devuelve FDx según nivel de área funcional
+function fdPorNivel(nivel) {
+    if (!nivel) return null;
+    const n = String(nivel).toLowerCase();
+    if (n === 'critica' || n === 'crítica') return 'FD1';
+    if (n === 'grave') return 'FD2';
+    if (n === 'leve') return 'FD3';
+    return null;
+}
+
+/* ================================
+   Evaluación de deducción
+================================ */
 function evaluarDeduccion() {
     const fechaRespMax = parseFecha(document.getElementById('fechaRespuestaMaxima').value);
     const fechaResp = parseFecha(document.getElementById('fechaRespuesta').value);
@@ -27,168 +92,245 @@ function evaluarDeduccion() {
     const fechaRes = parseFecha(document.getElementById('fechaResolucion').value);
 
     if (!fechaRespMax || !fechaResp || !fechaResMax || !fechaRes) {
-        alert("Por favor, asegúrate de introducir todas las fechas correctamente.");
+        alert("Por favor, asegúrate de introducir todas las fechas correctamente (DD/MM/AAAA hh:mm:ss).");
         return;
     }
 
     const excesoRespuesta = calcularDiasExceso(fechaRespMax, fechaResp);
     const excesoResolucion = calcularDiasExceso(fechaResMax, fechaRes);
 
-    let mensaje = "";
-
+    // numeroDias: excesoRespuesta o excesoResolucion (si ambos > 0, el mayor)
+    let numeroDias = 0;
     if (excesoRespuesta > 0 || excesoResolucion > 0) {
+        numeroDias = Math.max(excesoRespuesta, excesoResolucion);
+    }
+
+    // Mensaje base
+    let mensaje = "";
+    if (numeroDias > 0) {
         mensaje += "💸 Se genera una deducción.<br>";
         if (excesoRespuesta > 0)
             mensaje += `🕒 Exceso de tiempo de respuesta: ${excesoRespuesta} día(s)<br>`;
         if (excesoResolucion > 0)
-            mensaje += `⏳ Exceso de tiempo de resolución: ${excesoResolucion} día(s)`;
+            mensaje += `⏳ Exceso de tiempo de resolución: ${excesoResolucion} día(s)<br>`;
     } else {
         mensaje = "✅ No se genera deducción. Todos los tiempos se han cumplido.";
     }
 
-    document.getElementById('mensajeDeduccion').innerHTML = mensaje;
-    document.getElementById('resultadoDeduccion').style.display = 'block';
+    // Servicio seleccionado → tas (desde dataset info cargado del JSON)
+    const servicioSelect = document.getElementById('servicio');
+    let tas = 0;
+    if (servicioSelect && servicioSelect.selectedIndex > 0) {
+        try {
+            const servicioData = JSON.parse(servicioSelect.options[servicioSelect.selectedIndex].dataset.info || "{}");
+            tas = Number(servicioData.tas) || 0;
+        } catch (_) { tas = 0; }
+    }
+
+    // Indicador → fallo_calidad (puede ser lista) y si genera fallo de disponibilidad
+    const indicadorSelect = document.getElementById('indicador');
+    let factor_fallo_calidad = 0;
+    let generaFD = false;
+
+    if (indicadorSelect && indicadorSelect.selectedIndex > 0) {
+        const opt = indicadorSelect.options[indicadorSelect.selectedIndex];
+        const cadenaFc = opt.dataset.falloCalidad; // "FC1, FC2" o "FC1"
+        factor_fallo_calidad = obtenerFactorFalloCalidad(cadenaFc);
+        generaFD = (opt.dataset.falloDisponibilidad === "true"); // string "true"/"false"
+    }
+
+    // Fallo de disponibilidad: depende del área funcional (crítica→FD1, grave→FD2, leve→FD3)
+    let factor_fallo_disponibilidad = 0;
+    let avisoFD = "";
+    if (generaFD) {
+        const areaSelect = document.getElementById('areaFuncional');
+        const areaElegida = areaSelect ? areaSelect.value : "";
+
+        if (indicadorSelect && indicadorSelect.selectedIndex > 0) {
+            const opt = indicadorSelect.options[indicadorSelect.selectedIndex];
+            const cadenaFc = opt.dataset.falloCalidad;
+            factor_fallo_calidad = obtenerFactorFalloCalidad(cadenaFc, areaElegida);
+            generaFD = (opt.dataset.falloDisponibilidad === "true");
+        }
+
+        const nivel = areaElegida ? AREA_A_NIVEL[areaElegida] : null;
+        const fdCode = fdPorNivel(nivel);
+        if (fdCode && FACTOR_FD[fdCode] != null) {
+            factor_fallo_disponibilidad = FACTOR_FD[fdCode];
+        } else {
+            avisoFD = "⚠️ El indicador genera fallo de disponibilidad, pero no se ha determinado el nivel (elige un área funcional). Se toma 0 por defecto.<br>";
+        }
+    }
+
+    // Fórmula: deducción = días * 0.8 * tas * (factor_fc + factor_fd)
+    const sumaFactores = factor_fallo_calidad + factor_fallo_disponibilidad;
+    const deduccion = numeroDias * 0.8 * tas * sumaFactores;
+
+    // Render
+    let detalle = `💰 Importe de deducción: ${deduccion.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
+
+    const contMsg = document.getElementById('mensajeDeduccion');
+    const contRes = document.getElementById('resultadoDeduccion');
+    if (contMsg && contRes) {
+        contMsg.innerHTML = mensaje + detalle;
+        contRes.style.display = 'block';
+    }
 }
 
-// Selecciona todos los botones con la clase 'btn-pegar'
+/* ================================
+   Pegar desde portapapeles
+================================ */
 document.querySelectorAll('.btn-pegar').forEach(boton => {
-    // Añade un evento click a cada botón
-    boton.addEventListener('click', async function() {
-        // Obtiene el valor del atributo data-target (el id del input al que debe pegar el texto)
+    boton.addEventListener('click', async function () {
         const inputId = this.getAttribute('data-target');
-        // Selecciona el input correspondiente usando el id obtenido
         const input = document.getElementById(inputId);
         try {
-            // Usa la API moderna de portapapeles para leer el texto actual del portapapeles
             const texto = await navigator.clipboard.readText();
-            // Pega el texto obtenido en el input
             input.value = texto;
-            // Opcional: pone el foco en el input después de pegar
             input.focus();
         } catch (err) {
-            // Si ocurre algún error (por permisos, navegador, etc.), muestra una alerta
             alert('No se pudo leer el portapapeles. Permite el acceso en tu navegador.');
         }
     });
 });
 
-// Ejecuta cuando la página está completamente cargada
+/* ================================
+   Carga de JSON e inicialización
+================================ */
 document.addEventListener('DOMContentLoaded', function () {
     fetch('data/servicios.json')
         .then(response => response.json())
         .then(json => {
-            // Verifica que haya al menos un servicio en el array
             if (!json.servicios || !Array.isArray(json.servicios) || json.servicios.length === 0) {
                 throw new Error("El archivo JSON no contiene un array 'servicios' válido o está vacío.");
             }
 
-            // Carga servicios en el selector
             const servicios = json.servicios;
             const servicioSelect = document.getElementById('servicio');
             const tipoSelect = document.getElementById('tipoIncidencia');
             const indicadorSelect = document.getElementById('indicador');
 
-            // Carga áreas funcionales en el selector
+            // Áreas funcionales
             const areaSelect = document.getElementById('areaFuncional');
-            const areas = json.areas_funcionales;
+            const areas = json.areas_funcionales || {};
 
-            // Recorre cada grupo: crítica, grave, leve
-            for (const [nivel, zonas] of Object.entries(areas)) {
-                const group = document.createElement('optgroup');
-                group.label = nivel.charAt(0).toUpperCase() + nivel.slice(1); // Capitaliza
-
-                zonas.forEach(area => {
-                    const option = document.createElement('option');
-                    option.value = area;
-                    option.textContent = area;
-                    group.appendChild(option);
-                });
-
-                areaSelect.appendChild(group);
+            // Construye opciones y mapa área→nivel
+            if (areaSelect && Object.keys(areas).length) {
+                for (const [nivel, zonas] of Object.entries(areas)) {
+                    const group = document.createElement('optgroup');
+                    group.label = nivel.charAt(0).toUpperCase() + nivel.slice(1);
+                    zonas.forEach(area => {
+                        AREA_A_NIVEL[area] = nivel; // Guardar mapeo
+                        const option = document.createElement('option');
+                        option.value = area;
+                        option.textContent = area;
+                        group.appendChild(option);
+                    });
+                    areaSelect.appendChild(group);
+                }
             }
 
-            // Llenar el <select> de servicios
-            servicios.forEach(servicio => {
-                const option = document.createElement('option');
-                option.value = servicio.nombre;
-                option.textContent = servicio.nombre;
-                option.dataset.info = JSON.stringify(servicio);
-                servicioSelect.appendChild(option);
-            });
-
-            // Evento al seleccionar un servicio
-            servicioSelect.addEventListener('change', function () {
-                const selectedOption = servicioSelect.options[servicioSelect.selectedIndex];
-                if (!selectedOption.value) return;
-
-                const servicio = JSON.parse(selectedOption.dataset.info);
-
-                tipoSelect.innerHTML = '<option value="">Selecciona una opción</option>';
-                if (Array.isArray(servicio.tipos_incidencia) && servicio.tipos_incidencia.length > 0) {
-                    tipoSelect.disabled = false;
-                    servicio.tipos_incidencia.forEach(t => {
-                        const option = document.createElement('option');
-                        option.value = t.tipo;
-                        option.textContent = t.tipo.charAt(0).toUpperCase() + t.tipo.slice(1);
-                        option.dataset.respuesta = t.tiempo_maximo_respuesta;
-                        option.dataset.resolucion = t.tiempo_maximo_resolucion;
-                        tipoSelect.appendChild(option);
-                    });
-                } else {
-                    tipoSelect.disabled = true;
-                }
-
-                // Rellena indicadores
-                indicadorSelect.innerHTML = '<option value="">Selecciona un indicador</option>';
-                servicio.indicadores.forEach(ind => {
+            // Servicios
+            if (servicioSelect) {
+                servicios.forEach(servicio => {
                     const option = document.createElement('option');
-                    option.value = ind.nombre;
-                    option.textContent = ind.nombre;
-                    option.dataset.falloDisponibilidad = ind.genera_fallo_disponibilidad;
-                    option.dataset.falloCalidad = Array.isArray(ind.fallo_calidad)
-                        ? ind.fallo_calidad.join(', ')
-                        : ind.fallo_calidad;
-                    indicadorSelect.appendChild(option);
+                    option.value = servicio.nombre;
+                    option.textContent = servicio.nombre;
+                    option.dataset.info = JSON.stringify(servicio);
+                    servicioSelect.appendChild(option);
                 });
 
-                // Limpia visuales anteriores
-                document.getElementById('infoTiempos').style.display = 'none';
-                document.getElementById('infoIndicador').style.display = 'none';
-                document.getElementById('resultadoDeduccion').style.display = 'none';
-            });
+                servicioSelect.addEventListener('change', function () {
+                    const selectedOption = servicioSelect.options[servicioSelect.selectedIndex];
+                    if (!selectedOption.value) return;
 
-            // Evento para mostrar info al seleccionar tipo de incidencia
-            tipoSelect.addEventListener('change', function () {
-                const selected = tipoSelect.options[tipoSelect.selectedIndex];
-                const tiempoRespuesta = selected.dataset.respuesta;
-                const tiempoResolucion = selected.dataset.resolucion;
+                    const servicio = JSON.parse(selectedOption.dataset.info);
 
-                if (tiempoRespuesta && tiempoResolucion) {
-                    document.getElementById('tiempoRespuesta').textContent = tiempoRespuesta;
-                    document.getElementById('tiempoResolucion').textContent = tiempoResolucion;
-                    document.getElementById('infoTiempos').style.display = 'block';
-                } else {
-                    document.getElementById('infoTiempos').style.display = 'none';
-                }
-            });
+                    // Tipos de incidencia
+                    if (tipoSelect) {
+                        tipoSelect.innerHTML = '<option value="">Selecciona una opción</option>';
+                        if (Array.isArray(servicio.tipos_incidencia) && servicio.tipos_incidencia.length > 0) {
+                            tipoSelect.disabled = false;
+                            servicio.tipos_incidencia.forEach(t => {
+                                const option = document.createElement('option');
+                                option.value = t.tipo;
+                                option.textContent = t.tipo;
+                                option.dataset.respuesta = t.tiempo_maximo_respuesta;
+                                option.dataset.resolucion = t.tiempo_maximo_resolucion;
+                                tipoSelect.appendChild(option);
+                            });
+                        } else {
+                            tipoSelect.disabled = true;
+                        }
+                    }
 
-            // Evento para mostrar info al seleccionar un indicador
-            indicadorSelect.addEventListener('change', function () {
-                const selected = indicadorSelect.options[indicadorSelect.selectedIndex];
-                const fd = selected.dataset.falloDisponibilidad === "true" ? "Sí" : "No";
-                const fc = selected.dataset.falloCalidad || "No definido";
+                    // Indicadores
+                    if (indicadorSelect) {
+                        indicadorSelect.innerHTML = '<option value="">Selecciona un indicador</option>';
+                        servicio.indicadores.forEach(ind => {
+                            const option = document.createElement('option');
+                            option.value = ind.nombre;
+                            option.textContent = ind.nombre;
+                            option.dataset.falloDisponibilidad = ind.genera_fallo_disponibilidad;
+                            option.dataset.falloCalidad = Array.isArray(ind.fallo_calidad)
+                                ? ind.fallo_calidad.join(', ')
+                                : ind.fallo_calidad;
+                            indicadorSelect.appendChild(option);
+                        });
+                    }
 
-                if (selected.value) {
-                    document.getElementById('disponibilidad').textContent = fd;
-                    document.getElementById('calidad').textContent = fc;
-                    document.getElementById('infoIndicador').style.display = 'block';
-                } else {
-                    document.getElementById('infoIndicador').style.display = 'none';
-                }
-            });
+                    // Limpia visuales
+                    const infoT = document.getElementById('infoTiempos');
+                    const infoI = document.getElementById('infoIndicador');
+                    const resD = document.getElementById('resultadoDeduccion');
+                    if (infoT) infoT.style.display = 'none';
+                    if (infoI) infoI.style.display = 'none';
+                    if (resD) resD.style.display = 'none';
+                });
+            }
+
+            // Mostrar info al seleccionar tipo
+            if (tipoSelect) {
+                tipoSelect.addEventListener('change', function () {
+                    const selected = tipoSelect.options[tipoSelect.selectedIndex];
+                    const tiempoRespuesta = selected.dataset.respuesta;
+                    const tiempoResolucion = selected.dataset.resolucion;
+
+                    const infoT = document.getElementById('infoTiempos');
+                    if (tiempoRespuesta && tiempoResolucion && infoT) {
+                        const tR = document.getElementById('tiempoRespuesta');
+                        const tZ = document.getElementById('tiempoResolucion');
+                        if (tR) tR.textContent = tiempoRespuesta;
+                        if (tZ) tZ.textContent = tiempoResolucion;
+                        infoT.style.display = 'block';
+                    } else if (infoT) {
+                        infoT.style.display = 'none';
+                    }
+                });
+            }
+
+            // Mostrar info al seleccionar indicador
+            if (indicadorSelect) {
+                indicadorSelect.addEventListener('change', function () {
+                    const selected = indicadorSelect.options[indicadorSelect.selectedIndex];
+                    const fd = selected.dataset.falloDisponibilidad === "true" ? "Sí" : "No";
+                    const fc = selected.dataset.falloCalidad || "No definido";
+
+                    const infoI = document.getElementById('infoIndicador');
+                    if (selected.value && infoI) {
+                        const disp = document.getElementById('disponibilidad');
+                        const cali = document.getElementById('calidad');
+                        if (disp) disp.textContent = fd;
+                        if (cali) cali.textContent = fc;
+                        infoI.style.display = 'block';
+                    } else if (infoI) {
+                        infoI.style.display = 'none';
+                    }
+                });
+            }
         })
         .catch(error => {
             console.error("Error cargando el JSON:", error);
-            alert("Error cargando los datos del servicio. Verifica que el archivo 'data/servicios.json' exista y tenga el formato correcto.");
+            alert("Error cargando los datos del servicio. Verifica que 'data/servicios.json' exista y tenga el formato correcto.");
         });
 });

@@ -40,6 +40,7 @@
   "servicios": [
     {
       "nombre": "Reprografía",
+      "tas": 16375.58,
       "tipos_incidencia": [
         {
           "tipo": "emergencia",
@@ -116,6 +117,7 @@
     },
     {
       "nombre": "Limpieza",
+      "tas": 1163134.92,
       "tipos_incidencia": [
         {
           "tipo": "emergencia",
@@ -264,6 +266,7 @@
     },
     {
       "nombre": "Seguridad y Vigilancia",
+      "tas": 137070.96,
       "tipos_incidencia": [],
       "indicadores": [
         {
@@ -390,6 +393,7 @@
     },
     {
       "nombre": "Gestión de Residuos",
+      "tas": 106387.89,
       "tipos_incidencia": [],
       "indicadores": [
         {
@@ -450,6 +454,7 @@
     },
     {
       "nombre": "Mantenimiento General",
+      "tas": 94191.9,
       "tipos_incidencia": [
         {
           "tipo": "emergencia",
@@ -625,6 +630,7 @@
     },
     {
       "nombre": "Electromedicina",
+      "tas": 392266.9,
       "tipos_incidencia": [
         {
           "tipo": "emergencia",
@@ -719,6 +725,7 @@
     },
     {
       "nombre": "Viales y Jardines",
+      "tas": 12203.94,
       "tipos_incidencia": [],
       "indicadores": [
         {
@@ -797,6 +804,7 @@
     },
     {
       "nombre": "Restauración",
+      "tas": 287221.94,
       "tipos_incidencia": [],
       "indicadores": [
         {
@@ -980,6 +988,7 @@
     },
     {
       "nombre": "Gestión Energética",
+      "tas": 101600.06,
       "tipos_incidencia": [
         {
           "tipo": "Fuentes de energía eléctrica - emergencia",
@@ -1222,6 +1231,7 @@
     },
     {
       "nombre": "Logística",
+      "tas": 71739.15,
       "tipos_incidencia": [
         {
           "tipo": "Reposición suministros - emergencia",
@@ -1351,6 +1361,7 @@
     },
     {
       "nombre": "Informática",
+      "tas": 422537.4,
       "tipos_incidencia": [
         {
           "tipo": "Informática - alta - Incumplimiento en los indicadores de resolución de incidencias",
