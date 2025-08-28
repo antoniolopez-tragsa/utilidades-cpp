@@ -252,20 +252,7 @@ function evaluarDeduccion() {
     const deduccion = numeroDias * 0.8 * tas * sumaFactores;
 
     // Render
-    let detalle = "";
-    detalle += `<hr>`;
-    detalle += `<strong>Parámetros de cálculo</strong><br>`;
-    detalle += `• Número de días: <strong>${numeroDias}</strong><br>`;
-    detalle += `• tas del servicio: <strong>${tas.toLocaleString(undefined, {maximumFractionDigits: 2})}</strong><br>`;
-    detalle += `• factor_fallo_calidad: <strong>${factor_fallo_calidad}</strong>`;
-    if (fcCodigoUsado) detalle += ` (FC aplicado: <strong>${fcCodigoUsado}</strong>)`;
-    detalle += `<br>`;
-    detalle += `• factor_fallo_disponibilidad: <strong>${factor_fallo_disponibilidad}</strong><br>`;
-    if (avisoFD) detalle += avisoFD;
-    detalle += `• Suma de factores: <strong>${sumaFactores}</strong><br>`;
-    detalle += `<br><strong>Deducción</strong> = días × 0.8 × tas × (fc + fd) = `;
-    detalle += `${numeroDias} × 0.8 × ${tas} × (${sumaFactores})`;
-    detalle += `<br><br><span style="font-size:1.1em">💰 <strong>Importe de deducción:</strong> ${deduccion.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>`;
+    let detalle = `💰 Importe de deducción: ${deduccion.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
     
     const contMsg = document.getElementById('mensajeDeduccion');
     const contRes = document.getElementById('resultadoDeduccion');
