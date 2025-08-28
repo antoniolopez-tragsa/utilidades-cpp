@@ -113,48 +113,47 @@ const FACTOR_FD = {
 // Mapa para saber a qué nivel (critica | grave | leve) pertenece un área funcional concreta
 const AREA_A_NIVEL = {};
 
-// Devuelve factor de calidad, teniendo en cuenta si es "FC" genérico → mapeo por área
-function obtenerFactorFalloCalidad(cadenaFc, areaElegida) {
-    if (!cadenaFc) return 0;
+function fdPorNivel(nivel) {
+    if (!nivel) return null;
+    const n = String(nivel).toLowerCase();
+    if (n === 'critica' || n === 'crítica') return 'FD1';
+    if (n === 'grave') return 'FD2';
+    if (n === 'leve')  return 'FD3';
+    return null;
+}
 
+function fcPorNivel(nivel) {
+    if (!nivel) return null;
+    const n = String(nivel).toLowerCase();
+    if (n === 'critica' || n === 'crítica') return 'FC1';
+    if (n === 'grave') return 'FC2';
+    if (n === 'leve')  return 'FC3';
+    return null;
+}
+
+// Devuelve factor/código de calidad solo para códigos explícitos (FC1/FC2/FC3/FCOG1/FCOG2).
+// Si aparece "FC" genérico aquí, se ignora (factor 0); la excepción se maneja en evaluarDeduccion()
+function obtenerFactorFalloCalidadExplicito(cadenaFc) {
+    if (!cadenaFc) return { factor: 0, codigo: null };
     const codigos = String(cadenaFc)
         .split(',')
         .map(s => s.trim())
         .filter(Boolean);
 
     let maxFactor = 0;
+    let codigoAplicado = null;
 
     codigos.forEach(code => {
-        if (code === "FC") {
-            // FC genérico: depende del área
-            const nivel = areaElegida ? AREA_A_NIVEL[areaElegida] : null;
-            if (nivel) {
-                const fdCode = fdPorNivel(nivel); // "FD1", "FD2", "FD3"
-                // Mapeo FCx según nivel
-                if (nivel.toLowerCase() === "critica" || nivel.toLowerCase() === "crítica") {
-                    maxFactor = Math.max(maxFactor, FACTOR_FC["FC1"]);
-                } else if (nivel.toLowerCase() === "grave") {
-                    maxFactor = Math.max(maxFactor, FACTOR_FC["FC2"]);
-                } else if (nivel.toLowerCase() === "leve") {
-                    maxFactor = Math.max(maxFactor, FACTOR_FC["FC3"]);
-                }
+        if (FACTOR_FC.hasOwnProperty(code)) {
+            if (FACTOR_FC[code] > maxFactor) {
+                maxFactor = FACTOR_FC[code];
+                codigoAplicado = code;
             }
-        } else if (FACTOR_FC.hasOwnProperty(code)) {
-            maxFactor = Math.max(maxFactor, FACTOR_FC[code]);
         }
+        // Nota: "FC" genérico se ignora aquí a propósito
     });
 
-    return maxFactor;
-}
-
-// Devuelve FDx según nivel de área funcional
-function fdPorNivel(nivel) {
-    if (!nivel) return null;
-    const n = String(nivel).toLowerCase();
-    if (n === 'critica' || n === 'crítica') return 'FD1';
-    if (n === 'grave') return 'FD2';
-    if (n === 'leve') return 'FD3';
-    return null;
+    return { factor: maxFactor, codigo: codigoAplicado };
 }
 
 /* ================================
@@ -162,16 +161,16 @@ function fdPorNivel(nivel) {
 ================================ */
 function evaluarDeduccion() {
     const fechaRespMax = parseFecha(document.getElementById('fechaRespuestaMaxima').value);
-    const fechaResp = parseFecha(document.getElementById('fechaRespuesta').value);
-    const fechaResMax = parseFecha(document.getElementById('fechaResolucionMaxima').value);
-    const fechaRes = parseFecha(document.getElementById('fechaResolucion').value);
+    const fechaResp    = parseFecha(document.getElementById('fechaRespuesta').value);
+    const fechaResMax  = parseFecha(document.getElementById('fechaResolucionMaxima').value);
+    const fechaRes     = parseFecha(document.getElementById('fechaResolucion').value);
 
     if (!fechaRespMax || !fechaResp || !fechaResMax || !fechaRes) {
         alert("Por favor, asegúrate de introducir todas las fechas correctamente (DD/MM/AAAA hh:mm:ss).");
         return;
     }
 
-    const excesoRespuesta = calcularDiasExceso(fechaRespMax, fechaResp);
+    const excesoRespuesta  = calcularDiasExceso(fechaRespMax, fechaResp);
     const excesoResolucion = calcularDiasExceso(fechaResMax, fechaRes);
 
     // numeroDias: excesoRespuesta o excesoResolucion (si ambos > 0, el mayor)
@@ -192,7 +191,7 @@ function evaluarDeduccion() {
         mensaje = "✅ No se genera deducción. Todos los tiempos se han cumplido.";
     }
 
-    // Servicio seleccionado → tas (desde dataset info cargado del JSON)
+    // Servicio → tas
     const servicioSelect = document.getElementById('servicio');
     let tas = 0;
     if (servicioSelect && servicioSelect.selectedIndex > 0) {
@@ -202,38 +201,49 @@ function evaluarDeduccion() {
         } catch (_) { tas = 0; }
     }
 
-    // Indicador → fallo_calidad (puede ser lista) y si genera fallo de disponibilidad
+    // Área elegida
+    const areaSelect  = document.getElementById('areaFuncional');
+    const areaElegida = areaSelect ? areaSelect.value : "";
+    const nivelArea   = areaElegida ? AREA_A_NIVEL[areaElegida] : null;
+
+    // Indicador → fallo_calidad y genera_FD
     const indicadorSelect = document.getElementById('indicador');
     let factor_fallo_calidad = 0;
+    let fcCodigoUsado = null;
+    let factor_fallo_disponibilidad = 0;
+    let avisoFD = "";
     let generaFD = false;
 
     if (indicadorSelect && indicadorSelect.selectedIndex > 0) {
         const opt = indicadorSelect.options[indicadorSelect.selectedIndex];
-        const cadenaFc = opt.dataset.falloCalidad; // "FC1, FC2" o "FC1"
-        factor_fallo_calidad = obtenerFactorFalloCalidad(cadenaFc);
-        generaFD = (opt.dataset.falloDisponibilidad === "true"); // string "true"/"false"
+        const cadenaFc = opt.dataset.falloCalidad; // "FC" | "FC1, FC2" | etc.
+        generaFD = (opt.dataset.falloDisponibilidad === "true");
+
+        // --- Regla especial SOLO para este caso: FC genérico y NO genera FD
+        if (cadenaFc && cadenaFc.trim() === "FC" && !generaFD) {
+            const fcCode = fcPorNivel(nivelArea); // FC1 | FC2 | FC3
+            if (fcCode && FACTOR_FC[fcCode] != null) {
+                factor_fallo_calidad = FACTOR_FC[fcCode];
+                fcCodigoUsado = fcCode;
+            } else {
+                factor_fallo_calidad = 0;
+                fcCodigoUsado = null;
+            }
+        } else {
+            // Caso normal: usar códigos explícitos del JSON
+            const resFC = obtenerFactorFalloCalidadExplicito(cadenaFc);
+            factor_fallo_calidad = resFC.factor;
+            fcCodigoUsado = resFC.codigo;
+        }
     }
 
-    // Fallo de disponibilidad: depende del área funcional (crítica→FD1, grave→FD2, leve→FD3)
-    let factor_fallo_disponibilidad = 0;
-    let avisoFD = "";
+    // Fallo de disponibilidad: si generaFD, depende del área
     if (generaFD) {
-        const areaSelect = document.getElementById('areaFuncional');
-        const areaElegida = areaSelect ? areaSelect.value : "";
-
-        if (indicadorSelect && indicadorSelect.selectedIndex > 0) {
-            const opt = indicadorSelect.options[indicadorSelect.selectedIndex];
-            const cadenaFc = opt.dataset.falloCalidad;
-            factor_fallo_calidad = obtenerFactorFalloCalidad(cadenaFc, areaElegida);
-            generaFD = (opt.dataset.falloDisponibilidad === "true");
-        }
-
-        const nivel = areaElegida ? AREA_A_NIVEL[areaElegida] : null;
-        const fdCode = fdPorNivel(nivel);
+        const fdCode = fdPorNivel(nivelArea); // FD1 | FD2 | FD3
         if (fdCode && FACTOR_FD[fdCode] != null) {
             factor_fallo_disponibilidad = FACTOR_FD[fdCode];
         } else {
-            avisoFD = "⚠️ El indicador genera fallo de disponibilidad, pero no se ha determinado el nivel (elige un área funcional). Se toma 0 por defecto.<br>";
+            avisoFD = "⚠️ El indicador genera fallo de disponibilidad, pero no se ha podido determinar el nivel (elige un área funcional). Se toma 0 por defecto.<br>";
         }
     }
 
@@ -256,7 +266,7 @@ function evaluarDeduccion() {
    Pegar desde portapapeles
 ================================ */
 document.querySelectorAll('.btn-pegar').forEach(boton => {
-    boton.addEventListener('click', async function () {
+    boton.addEventListener('click', async function() {
         const inputId = this.getAttribute('data-target');
         const input = document.getElementById(inputId);
         try {
@@ -288,8 +298,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // Áreas funcionales
             const areaSelect = document.getElementById('areaFuncional');
             const areas = json.areas_funcionales || {};
-
-            // Construye opciones y mapa área→nivel
             if (areaSelect && Object.keys(areas).length) {
                 for (const [nivel, zonas] of Object.entries(areas)) {
                     const group = document.createElement('optgroup');
@@ -357,10 +365,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Limpia visuales
                     const infoT = document.getElementById('infoTiempos');
                     const infoI = document.getElementById('infoIndicador');
-                    const resD = document.getElementById('resultadoDeduccion');
+                    const resD  = document.getElementById('resultadoDeduccion');
                     if (infoT) infoT.style.display = 'none';
                     if (infoI) infoI.style.display = 'none';
-                    if (resD) resD.style.display = 'none';
+                    if (resD)  resD.style.display = 'none';
                 });
             }
 
@@ -371,16 +379,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     const tiempoRespuesta = selected.dataset.respuesta;
                     const tiempoResolucion = selected.dataset.resolucion;
 
-                    if (tiempoRespuesta && tiempoResolucion) {
-                        document.getElementById('tiempoRespuesta').textContent = tiempoRespuesta;
-                        document.getElementById('tiempoResolucion').textContent = tiempoResolucion;
-                        document.getElementById('infoTiempos').style.display = 'block';
-                    } else {
-                        document.getElementById('infoTiempos').style.display = 'none';
+                    const infoT = document.getElementById('infoTiempos');
+                    if (tiempoRespuesta && tiempoResolucion && infoT) {
+                        const tR = document.getElementById('tiempoRespuesta');
+                        const tZ = document.getElementById('tiempoResolucion');
+                        if (tR) tR.textContent = tiempoRespuesta;
+                        if (tZ) tZ.textContent = tiempoResolucion;
+                        infoT.style.display = 'block';
+                    } else if (infoT) {
+                        infoT.style.display = 'none';
                     }
-
-                    // 👇 NUEVO: funciona para cualquier caso (no solo informática)
-                    autoSelectIndicadorDesdeTipo(selected.value, document.getElementById('indicador'));
                 });
             }
 
