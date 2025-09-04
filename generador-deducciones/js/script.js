@@ -109,7 +109,6 @@ const FACTOR_FD = {
     FD2: 0.001556,
     FD3: 0.000564
 };
-let FACTORES_ZONA = { critica: 1.05, grave: 1.0375, leve: 1.025 }; // fallback por si no viniera en el JSON
 
 // Mapa para saber a qué nivel (critica | grave | leve) pertenece un área funcional concreta
 const AREA_A_NIVEL = {};
@@ -119,7 +118,7 @@ function fdPorNivel(nivel) {
     const n = String(nivel).toLowerCase();
     if (n === 'critica' || n === 'crítica') return 'FD1';
     if (n === 'grave') return 'FD2';
-    if (n === 'leve') return 'FD3';
+    if (n === 'leve')  return 'FD3';
     return null;
 }
 
@@ -128,7 +127,7 @@ function fcPorNivel(nivel) {
     const n = String(nivel).toLowerCase();
     if (n === 'critica' || n === 'crítica') return 'FC1';
     if (n === 'grave') return 'FC2';
-    if (n === 'leve') return 'FC3';
+    if (n === 'leve')  return 'FC3';
     return null;
 }
 
@@ -162,16 +161,16 @@ function obtenerFactorFalloCalidadExplicito(cadenaFc) {
 ================================ */
 function evaluarDeduccion() {
     const fechaRespMax = parseFecha(document.getElementById('fechaRespuestaMaxima').value);
-    const fechaResp = parseFecha(document.getElementById('fechaRespuesta').value);
-    const fechaResMax = parseFecha(document.getElementById('fechaResolucionMaxima').value);
-    const fechaRes = parseFecha(document.getElementById('fechaResolucion').value);
+    const fechaResp    = parseFecha(document.getElementById('fechaRespuesta').value);
+    const fechaResMax  = parseFecha(document.getElementById('fechaResolucionMaxima').value);
+    const fechaRes     = parseFecha(document.getElementById('fechaResolucion').value);
 
     if (!fechaRespMax || !fechaResp || !fechaResMax || !fechaRes) {
         alert("Por favor, asegúrate de introducir todas las fechas correctamente (DD/MM/AAAA hh:mm:ss).");
         return;
     }
 
-    const excesoRespuesta = calcularDiasExceso(fechaRespMax, fechaResp);
+    const excesoRespuesta  = calcularDiasExceso(fechaRespMax, fechaResp);
     const excesoResolucion = calcularDiasExceso(fechaResMax, fechaRes);
 
     // numeroDias: excesoRespuesta o excesoResolucion (si ambos > 0, el mayor)
@@ -203,9 +202,9 @@ function evaluarDeduccion() {
     }
 
     // Área elegida
-    const areaSelect = document.getElementById('areaFuncional');
+    const areaSelect  = document.getElementById('areaFuncional');
     const areaElegida = areaSelect ? areaSelect.value : "";
-    const nivelArea = areaElegida ? AREA_A_NIVEL[areaElegida] : null;
+    const nivelArea   = areaElegida ? AREA_A_NIVEL[areaElegida] : null;
 
     // Indicador → fallo_calidad y genera_FD
     const indicadorSelect = document.getElementById('indicador');
@@ -248,20 +247,13 @@ function evaluarDeduccion() {
         }
     }
 
-    // Factor de zona
-    let factor_zona = 1;
-    if (nivelArea) {
-        const clave = String(nivelArea).toLowerCase(); // 'critica' | 'grave' | 'leve'
-        factor_zona = Number(FACTORES_ZONA[clave]) || 1;
-    }
-
-    // Fórmula: deducción = días * 0.8 * tas * factor_zona * (factor_fc + factor_fd)
+    // Fórmula: deducción = días * 0.8 * tas * (factor_fc + factor_fd)
     const sumaFactores = factor_fallo_calidad + factor_fallo_disponibilidad;
-    const deduccion = numeroDias * 0.8 * tas * factor_zona * sumaFactores;
+    const deduccion = numeroDias * 0.8 * tas * sumaFactores;
 
     // Render
     let detalle = `💰 Importe de deducción: ${deduccion.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
-
+    
     const contMsg = document.getElementById('mensajeDeduccion');
     const contRes = document.getElementById('resultadoDeduccion');
     if (contMsg && contRes) {
@@ -274,7 +266,7 @@ function evaluarDeduccion() {
    Pegar desde portapapeles
 ================================ */
 document.querySelectorAll('.btn-pegar').forEach(boton => {
-    boton.addEventListener('click', async function () {
+    boton.addEventListener('click', async function() {
         const inputId = this.getAttribute('data-target');
         const input = document.getElementById(inputId);
         try {
@@ -296,11 +288,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(json => {
             if (!json.servicios || !Array.isArray(json.servicios) || json.servicios.length === 0) {
                 throw new Error("El archivo JSON no contiene un array 'servicios' válido o está vacío.");
-            }
-            if (json.factores_zona) {
-                FACTORES_ZONA = Object.fromEntries(
-                    Object.entries(json.factores_zona).map(([k, v]) => [String(k).toLowerCase(), Number(v)])
-                );
             }
 
             const servicios = json.servicios;
@@ -378,10 +365,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Limpia visuales
                     const infoT = document.getElementById('infoTiempos');
                     const infoI = document.getElementById('infoIndicador');
-                    const resD = document.getElementById('resultadoDeduccion');
+                    const resD  = document.getElementById('resultadoDeduccion');
                     if (infoT) infoT.style.display = 'none';
                     if (infoI) infoI.style.display = 'none';
-                    if (resD) resD.style.display = 'none';
+                    if (resD)  resD.style.display = 'none';
                 });
             }
 

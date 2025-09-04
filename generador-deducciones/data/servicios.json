@@ -37,11 +37,6 @@
       "Vestuarios, aseos, talleres, exteriores y viales y otras zonas"
     ]
   },
-  "factores_zona": {
-    "critica": 1.05,
-    "grave": 1.0375,
-    "leve": 1.025
-  },
   "servicios": [
     {
       "nombre": "Reprografía",
