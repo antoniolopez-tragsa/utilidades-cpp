@@ -219,8 +219,8 @@ function evaluarDeduccion() {
         const cadenaFc = opt.dataset.falloCalidad; // "FC" | "FC1, FC2" | etc.
         generaFD = (opt.dataset.falloDisponibilidad === "true");
 
-        // --- Regla especial SOLO para este caso: FC genérico y NO genera FD
-        if (cadenaFc && cadenaFc.trim() === "FC" && !generaFD) {
+        // --- Regla especial SOLO para este caso: FC genérico
+        if (cadenaFc && cadenaFc.trim() === "FC") {
             const fcCode = fcPorNivel(nivelArea); // FC1 | FC2 | FC3
             if (fcCode && FACTOR_FC[fcCode] != null) {
                 factor_fallo_calidad = FACTOR_FC[fcCode];
@@ -250,7 +250,7 @@ function evaluarDeduccion() {
     // Fórmula: deducción = días * 0.8 * tas * (factor_fc + factor_fd)
     const sumaFactores = factor_fallo_calidad + factor_fallo_disponibilidad;
     const deduccion = numeroDias * 0.8 * tas * sumaFactores;
-    console.log(numeroDias + "x 0.8 x " + tas + " x " + sumaFactores);
+    console.log(numeroDias + " x 0.8 x " + tas + " x " + sumaFactores);
 
     // Render
     let detalle = `💰 Importe de deducción: ${deduccion.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
