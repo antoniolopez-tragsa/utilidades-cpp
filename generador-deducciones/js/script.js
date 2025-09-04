@@ -250,6 +250,7 @@ function evaluarDeduccion() {
     // Fórmula: deducción = días * 0.8 * tas * (factor_fc + factor_fd)
     const sumaFactores = factor_fallo_calidad + factor_fallo_disponibilidad;
     const deduccion = numeroDias * 0.8 * tas * sumaFactores;
+    console.log(numeroDias + "x 0.8 x " + tas + " x " + sumaFactores);
 
     // Render
     let detalle = `💰 Importe de deducción: ${deduccion.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
